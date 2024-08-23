@@ -1,0 +1,59 @@
+nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 245px;
+	border-right: 1px solid #272727;
+	padding: 13.5px;
+	padding-bottom: 26px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 10px;
+}
+.instagram-logo {
+	display: flex;
+	align-items: center;
+	height: 83px;
+}
+.instagram-logo svg {
+	margin-left: 10px;
+}
+.home, .search, .explore, .reels,
+.messages, .notifications, .create,
+.profile, .more-option {
+	/* padding: 10.5px 10px; */
+	padding: 10.8px 10px;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	column-gap: 16px;
+	font-size: 15px;
+	/* font-weight: bold; */
+	letter-spacing: .6px;
+	transition: background-color 300ms ease;
+	cursor: pointer;
+}
+.home:hover, .search:hover, .explore:hover, .reels:hover,
+.messages:hover, .notifications:hover, .create:hover,
+.profile:hover, .more-option:hover {
+	background-color: #222222;
+}
+.home:hover svg, .search:hover svg, 
+.explore:hover svg, .reels:hover svg,
+.messages:hover svg, .notifications:hover svg, .create:hover svg ,
+.profile:hover div:nth-child(1), .more-option:hover svg {
+	scale: 1.05;
+}
+.profile div:nth-child(1) img {
+	height: 24px;
+	width: 24px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border-radius: 50%;
+	/* background-image: url('images/435031363_1364445837602935_2491872393277349611_n.jpg'); */
+}
+.more-option {
+	margin-top: auto;
+}
