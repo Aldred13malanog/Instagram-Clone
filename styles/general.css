@@ -14,3 +14,6 @@ body {
 	color: #F5F5F5;
 	padding-left: 245px;
 }
+svg {
+	cursor: pointer;
+}
