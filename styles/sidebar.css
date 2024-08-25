@@ -46,13 +46,17 @@ nav {
 	scale: 1.05;
 }
 .profile div:nth-child(1) img {
-	height: 24px;
-	width: 24px;
+	height: 100%;
+	width: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
 	border-radius: 50%;
 	/* background-image: url('images/435031363_1364445837602935_2491872393277349611_n.jpg'); */
+}
+.profile-picture {
+	height: 24px;
+	width: 24px;
 }
 .more-option {
 	margin-top: auto;
