@@ -22,10 +22,16 @@ header {
 	background-color: #fff;
 	border-radius: 50%;
 	margin-bottom: 4px;
+	padding: 2px;
+	background: linear-gradient(45deg, #ffee00, #e74307, #d80d2c, #d4115f, #db0798);
 }
-
-
-
+.people-profile img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 2px solid black;
+}
 
 
 .right-side {
@@ -46,7 +52,12 @@ header {
 	height: 44px;
 	width: 44px;
 	border-radius: 50%;
-	background-color: #fff;
+	overflow: hidden;
+}
+.my-profile img, .suggested-profile img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .header-profile-container div:nth-child(2) {
 	flex: 1;
@@ -125,21 +136,28 @@ header {
 	margin-top: 21px;
 }
 
-.videos {
+.videos-images {
 	display: flex;
-	/* flex-direction: column; */
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 .video-container {
 	width: 468px;
 	border-bottom: 1px solid #272727;
 	padding-bottom: 16px;
+	margin-bottom: 20px;
 }
 .video-profile {
 	height: 32px;
 	width: 32px;
 	background-color: #fff;
 	border-radius: 50%;
+	overflow: hidden;
+}
+.video-profile img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 .video-header {
 	display: flex;
@@ -162,8 +180,13 @@ header {
 	max-height: 585px;
 	/* background-color: #fff; */
 	border-radius: 4px;
+	overflow-x: scroll;
+	scrollbar-width: none;
+	display: flex;
+	scroll-snap-type: x mandatory;
 }
 .video-image img {
+	scroll-snap-align: center;
 	object-fit: contain;
 	width: 100%;
 	height: 100%;
