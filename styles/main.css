@@ -1,6 +1,5 @@
 main {
 	display: grid;
-	height: 200vh;
 	grid-template-columns: 630px 1fr;
 	padding-left: 45px;
 	padding-right: 45px;
@@ -175,21 +174,67 @@ header {
 	font-weight: 400;
 }
 .video-image {
-	width: 100%;
+	width: 468px;
 	min-height: 468px;
 	max-height: 585px;
-	/* background-color: #fff; */
 	border-radius: 4px;
-	overflow-x: scroll;
-	scrollbar-width: none;
 	display: flex;
-	scroll-snap-type: x mandatory;
+	position: relative;
+	overflow: hidden;
 }
-.video-image img {
-	scroll-snap-align: center;
+.video-image .images {
+	display: flex;
+	transition: transform 0.3s ease;
+}
+.video-image .images div {
+	width: 468px;
+}
+
+.prev-button, .next-button {
+	position: absolute;
+	background-color: #e9e9e9;
+	border: none;
+	border-radius: 50%;
+	height: 24px;
+	width: 24px;
+	color: #737373;
+	font-size: 18px;
+	cursor: pointer;
+	top: 45%;
+}
+.prev-button {
+	left: 8px;
+}
+/* .prev-button.inactive {
+	display: none;
+} */
+.next-button {	
+	right: 8px;
+}
+
+.video-image img,.video-image video {
 	object-fit: contain;
 	width: 100%;
 	height: 100%;
+	position: relative;
+}
+.sound-button {
+	position: absolute;
+	background-color: #272727;
+	border-radius: 50%;
+	border: none;
+	padding: 4px;
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+	display: flex;	
+	align-items: center;
+	justify-content: center;
+	bottom: 22px;
+	right: 16px;
+}
+.soundup-icon, .nosound-icon {
+	fill: #fff;
 }
 
 .video-icons-container {
