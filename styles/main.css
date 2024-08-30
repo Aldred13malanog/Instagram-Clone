@@ -51,11 +51,132 @@ header {
 	height: 44px;
 	width: 44px;
 	border-radius: 50%;
-	overflow: hidden;
 }
+.suggested-profile, .video-profile {
+	cursor: pointer;
+	position: relative;
+}
+.suggested-profile:hover .suggested-profile-tooltip,
+.video-profile:hover .video-profile-tooltip {
+	opacity: 1;
+}
+.suggested-profile-tooltip, .video-profile-tooltip {
+	opacity: 0;
+	position: absolute;
+	background-color: #000;
+	border-radius: 12px;
+	box-shadow: 0 0 15px #737373;
+	z-index: 1;
+	left: -28px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 16px;
+	pointer-events: none;
+	transition: all .15s;
+}
+.profile-tooltip-container {
+	display: flex;
+	align-items: center;
+	padding: 20px 12px 0 16px;
+}
+.profile-tooltip {
+	height: 54px;
+	width: 54px;
+	margin-right: 14px;
+}
+.profile-tooltip img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 50%;
+}
+.tooltip-name {
+	font-weight: 700;
+	font-size: 15px;
+}
+.tooltip-sub-name {
+	color: #737373;
+	font-weight: 500;
+	font-size: 13px;
+}
+.tooltip-pff {
+	display: grid;
+	grid-template-columns: repeat(3, 50px);
+	width: 360px;
+	justify-content: space-around;
+}
+
+.tooltip-pff div {	
+	display: flex;
+	flex-direction: column; 
+	justify-content: center;
+	align-items: center;
+}
+.tooltip-pff div div:first-child {
+	font-weight: 700;
+}
+.tooltip-pff div div:last-child {
+	font-size: 14px;
+}
+.tooltip-posts {
+	border-top: 1px solid #272727;
+	border-bottom: 1px solid #272727;
+	padding: 10px 0;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	flex-direction: column;
+}
+.tooltip-has-posts {
+	column-gap: 4px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+.tooltip-post {
+	background-color: #fff;
+	height: 120px;
+}
+.tooltip-image-con {
+	height: 44px;
+	width: 44px;
+}
+.tooltip-image-con img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	object-position: top;
+}
+.no-post {
+	font-weight: 700;
+}
+.no-post-text {
+	color: #737373;
+	font-weight: 500;
+}
+.tooltip-follow {
+	display: flex;
+	padding: 0 12px 16px;
+}
+.tooltip-follow button {
+	flex: 1;
+	border-radius: 8px;
+	background-color: #0095F6;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 8px;
+	color: white;
+	fill: white;
+	column-gap: 6px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
 .my-profile img, .suggested-profile img {
 	width: 100%;
 	height: 100%;
+	border-radius: 50%;
 	object-fit: cover;
 }
 .header-profile-container div:nth-child(2) {
@@ -73,6 +194,10 @@ header {
 	color: #0095F6;
 	font-size: 12px;
 	cursor: pointer;
+	transition: color .15s ease;
+}
+.switch-button:hover, .follow-button:hover {
+	color: #fff;
 }
 
 .suggestions {
@@ -98,6 +223,11 @@ header {
 	color: #F5F5F5;
 	font-size: 12px;
 	font-weight: 500;
+	cursor: pointer;
+	transition: 300ms ease;
+}
+.seeall-button:hover {
+	color: #737373;
 }
 
 .suggested-profile-container {
@@ -151,12 +281,12 @@ header {
 	width: 32px;
 	background-color: #fff;
 	border-radius: 50%;
-	overflow: hidden;
 }
 .video-profile img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	border-radius: 50%;
 }
 .video-header {
 	display: flex;
@@ -240,6 +370,14 @@ header {
 .video-icons-container {
 	margin: 2px 0;
 	display: flex;
+	transition: all .15s ease;
+}
+.video-icons-container div svg {
+	stroke: white;
+}
+.video-icons-container div svg:hover {
+	fill: #737373;
+	stroke: #737373;
 }
 .video-icons-container div {
 	height: 40px;

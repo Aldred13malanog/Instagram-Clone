@@ -1,6 +1,6 @@
 let currentIndex = 0;
 
-function showSlide(index, element,) {
+function showSlide(index, element) {
 	const images = element.classList[0] === 'prev-button' ? element.previousElementSibling : element;
 	const slides = images.children.length;
 	
