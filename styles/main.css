@@ -56,14 +56,19 @@ header {
 	cursor: pointer;
 	position: relative;
 }
+.suggested-name-container {
+	position: relative;
+}
 .suggested-profile:hover .suggested-profile-tooltip,
 .video-profile:hover .video-profile-tooltip,
-.names:hover + .video-username-tooltip	{
+.names:hover + .video-username-tooltip,
+.suggested-name:hover + .suggested-profile-name-tooltip	{
 	opacity: 1;
 	transition: all .15s 300ms;
 }
 .suggested-profile-tooltip, .video-profile-tooltip,
-.video-username-tooltip {
+.video-username-tooltip,
+.suggested-profile-name-tooltip {
 	opacity: 0;
 	position: absolute;
 	background-color: #000;
@@ -76,6 +81,9 @@ header {
 	row-gap: 16px;
 	pointer-events: none;
 	transition: all .15s;
+}
+ .suggested-profile-name-tooltip {
+	left: -80px;
 }
 .profile-tooltip-container {
 	display: flex;
@@ -217,6 +225,7 @@ header {
 }
 .my-name, .suggested-name {
 	font-weight: 500;
+	cursor: pointer;
 }
 .my-email, .suggested {
 	color: #A8A8A8;
