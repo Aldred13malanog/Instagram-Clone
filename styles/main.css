@@ -57,10 +57,13 @@ header {
 	position: relative;
 }
 .suggested-profile:hover .suggested-profile-tooltip,
-.video-profile:hover .video-profile-tooltip {
+.video-profile:hover .video-profile-tooltip,
+.names:hover + .video-username-tooltip	{
 	opacity: 1;
+	transition: all .15s 300ms;
 }
-.suggested-profile-tooltip, .video-profile-tooltip {
+.suggested-profile-tooltip, .video-profile-tooltip,
+.video-username-tooltip {
 	opacity: 0;
 	position: absolute;
 	background-color: #000;
@@ -118,7 +121,7 @@ header {
 .tooltip-pff div div:last-child {
 	font-size: 14px;
 }
-.tooltip-posts {
+.tooltip-posts, .tooltip-private-posts {
 	border-top: 1px solid #272727;
 	border-bottom: 1px solid #272727;
 	padding: 10px 0;
@@ -146,14 +149,20 @@ header {
 	object-fit: cover;
 	object-position: top;
 }
-.no-post {
+.tooltip-private-posts .tooltip-image-con img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+	object-position: bottom;
+}
+.no-post, .private-post {
 	font-weight: 700;
 }
-.no-post-text {
+.no-post-text, .private-post-text {
 	color: #737373;
 	font-weight: 500;
 }
-.tooltip-follow {
+.tooltip-follow, .tooltip-following {
 	display: flex;
 	padding: 0 12px 16px;
 }
@@ -171,6 +180,30 @@ header {
 	column-gap: 6px;
 	font-weight: 600;
 	cursor: pointer;
+}
+.tooltip-following {
+	column-gap: 10px;
+}
+.tooltip-message-button, .tooltip-following-button {
+	padding: 5px;
+	flex: 1;
+	border-radius: 8px;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	fill: white;
+	column-gap: 6px;
+	font-weight: 600;
+	font-size: 15px;
+	cursor: pointer;
+}
+.tooltip-message-button {
+	background-color: #0095F6;
+}
+.tooltip-following-button {
+	background-color: #272727;
 }
 
 .my-profile img, .suggested-profile img {
@@ -293,15 +326,25 @@ header {
 	align-items: center;
 	column-gap: 10px;
 	margin-bottom: 10px;
+	justify-content: space-between;
+}
+.persons-name-section {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	column-gap: 6px;
+	position: relative;
 }
 .names {
-	flex: 1;
 	font-size: 14px;
 	font-weight: 500;
+	cursor: pointer;
 }
-.names span {
+/* .persons-name-section div:nth-child(2), */
+.time	{
 	color: #A8A8A8;
 	font-weight: 400;
+	font-size: 14px;
 }
 .video-image {
 	width: 468px;
@@ -374,6 +417,7 @@ header {
 }
 .video-icons-container div svg {
 	stroke: white;
+	transition: all 150ms;
 }
 .video-icons-container div svg:hover {
 	fill: #737373;
