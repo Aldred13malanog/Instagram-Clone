@@ -34,6 +34,9 @@ nav {
 	transition: background-color 300ms ease;
 	cursor: pointer;
 }
+.home.current-page {
+	font-weight: bold;
+}
 .home:hover, .search:hover, .explore:hover, .reels:hover,
 .messages:hover, .notifications:hover, .create:hover,
 .profile:hover, .more-option:hover {
