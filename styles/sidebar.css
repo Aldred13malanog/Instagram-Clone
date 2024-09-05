@@ -5,38 +5,190 @@ nav {
 	bottom: 0;
 	width: 245px;
 	border-right: 1px solid #272727;
-	padding: 13.5px;
+	padding: 12px;
 	padding-bottom: 26px;
 	display: flex;
 	flex-direction: column;
 	row-gap: 10px;
+	z-index: 5;
+	background-color: #000;
+	transition: width 0.25s ease-in-out;
+}
+nav .current-page {
+	font-weight: bold;
+}
+nav svg,
+nav .profile-picture {
+	flex-shrink: 0;
 }
 .instagram-logo {
 	display: flex;
 	align-items: center;
 	height: 83px;
+	position: relative;
+}
+.instagram-logo-text {
+	transition: scale .25s;
 }
 .instagram-logo svg {
 	margin-left: 10px;
+}
+.instagram {
+	position: absolute;
+	left: 0;
+	top: 22px;
+	scale: 0;
+	transition: all 0.25s;
 }
 .home, .search, .explore, .reels,
 .messages, .notifications, .create,
 .profile, .more-option {
 	/* padding: 10.5px 10px; */
-	padding: 10.8px 10px;
+	padding: 10px;
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	column-gap: 16px;
 	font-size: 15px;
-	/* font-weight: bold; */
 	letter-spacing: .6px;
-	transition: background-color 300ms ease;
+	transition: all 300ms ease;
 	cursor: pointer;
 }
-.home.current-page {
-	font-weight: bold;
+.home div, .search div, .explore div, .reels div,
+.messages div, .notifications div, .create div,
+.profile div:nth-child(2), .more-option div {
+	transition: scale .20s;
 }
+
+.search-nav-container {
+	position: fixed;
+	width: 397px;
+	background-color: #000000;
+	left: 72px;
+	top: 0;
+	bottom: 0;
+	border-right: 1px solid #272727;
+	border-top-right-radius: 12px;
+	border-bottom-right-radius: 12px;
+	transform: translateX(-100%);
+	transition: transform .25s ease-in,	opacity .15s ease;
+	opacity: 0;
+	z-index: -1;
+	pointer-events: none;
+
+	& h1 {
+		font-weight: 500;
+		margin-left: 10px;
+		pointer-events: none;
+	}
+}
+.search-bar-con {
+	padding: 16px;
+	padding-top: 23px;
+	border-bottom: 1px solid #272727;
+
+	& input {
+		margin-top: 34px;
+		margin-bottom: 12px;
+		padding: 10px;
+		padding-left: 16px;
+		background-color: #272727;
+		font-size: 16px;
+		border: none;
+		border-radius: 8px;
+		width: 100%;
+		color: white;
+	}
+	& input:focus {
+		outline: none;
+		border: none;
+	}
+}
+.search-inp-con {
+	position: relative;
+}
+.search-clear-button {
+	position: absolute;
+	right: 10px;
+	top: 45px;
+	width: 20px;
+	height: 20px;
+	padding-bottom: 8px;
+	border: none;
+	border-radius: 50%;
+	background-color: #A8A8A8;
+	cursor: pointer;
+}
+.search-history-con {
+	display: flex;
+	padding: 16px 22px;
+	flex-direction: column;
+}
+.search-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 500;
+}
+.search-clear {
+	font-size: 14px;
+	color: #0095F6;
+	cursor: pointer;
+	transition: all 0.15s;
+}
+.search-clear:hover {
+	color: #fff;
+}
+.recent-search-con {
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+}
+.user-recent-search {
+	display: flex;
+	align-items: center;
+	padding: 7px 22px;
+	font-size: 14px;
+	transition: all 0.15s ease;
+	cursor: pointer;
+
+	& div:nth-child(2) {
+		margin-right: auto;
+	}
+}
+.user-recent-search:hover {
+	background-color: #272727;
+}
+.recent-search-profile {
+	height: 46px;
+	width: 46px;
+	margin-right: 8px;
+
+	& img {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		border-radius: 50%;
+	}
+}
+.search-name {
+	font-weight: 500;
+}
+.search-user {
+	color:#A8A8A8;
+}
+
+.search-icon {
+	position: relative;
+	transition: 0.25s;
+}
+.search-icon-active {
+	opacity: 0;
+	position: absolute;
+	transition: 0.25s;
+
+}
+
 .home:hover, .search:hover, .explore:hover, .reels:hover,
 .messages:hover, .notifications:hover, .create:hover,
 .profile:hover, .more-option:hover {

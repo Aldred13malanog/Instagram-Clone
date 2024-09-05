@@ -24,3 +24,7 @@ svg {
 video::-webkit-media-controls {
 	display: none;
 }
+a {
+	text-decoration: none;
+	color: #fff;
+}
