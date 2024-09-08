@@ -304,3 +304,135 @@ nav .profile-picture {
 .more-option {
 	margin-top: auto;
 }
+.create-post-popup {
+	position: fixed; 
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0%);
+	z-index: 10;
+	width: 420px;
+	background-color: #272727;
+	height: 72%;
+	border-radius: 12px;
+	transition: all 0.15s ease-in-out;
+	pointer-events: none;
+}
+.create-post-popup.active {
+	transform: translate(-50%, -50%) scale(100%);
+	pointer-events: all;
+}
+.create-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #000000ad;
+	z-index: 9;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.15s;
+	
+	& svg {
+		position: fixed;
+		top: 18px;
+		right: 18px;
+	}
+}
+.create-overlay.active {
+	opacity: 1;
+	pointer-events: all;
+}
+.create-header {
+	text-align: center;
+	border-bottom: 1px solid #444444;
+	padding: 10px;
+	font-weight: 500;
+}
+.create-post-con {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	padding-top: 120px;
+	
+	& div {
+		font-size: 20px;
+		margin-top: 18px;
+		margin-bottom: 18px;
+	}
+
+	& button {
+		padding: 8px 18px;
+		background-color: #0095F6;
+		border: none;
+		border-radius: 8px;
+		color: white;
+		font-weight: 500;
+		cursor: pointer;
+	}
+}
+
+.more-option {
+	transition: none;
+}
+.more-options-container {
+	opacity: 0;
+	pointer-events: none;
+	position:	absolute;
+	background-color: #272727;
+	bottom: 75px;
+	border-radius: 16px;
+	left: 12px;
+}
+.more-options-container.active {
+	opacity: 1;
+	pointer-events: all;
+}
+.settings-option, .your-activity-option,
+.saved-option, .theme-option, .report-option,
+.thread-option, .switch-account-option, .logout-option {
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	font-size: 13px;
+	column-gap: 12px;
+	cursor: pointer;
+	z-index: 7;
+	width: 250px;
+	border-radius: 10px;
+	transition: all 0.15s;
+
+	& div {
+		flex: 1;
+	}
+}
+.settings-option:hover, .your-activity-option:hover, .saved-option:hover,
+.theme-option:hover, .report-option:hover, .thread-option:hover, .switch-account-option:hover,
+.logout-option:hover {
+	background-color: #444444;
+}
+.thread-option:hover .ion {
+	fill: #A8A8A8;
+}
+.line-break {
+	height: 5px;
+	width: 100%;
+	background-color: #5555554D;
+}
+.options1, .option2, .option3, .option4 {
+	padding: 8px;
+	display: flex;
+	flex-direction: column;
+}
+.option3 {
+	border-bottom: 1px solid #55555580;
+}
+.options-overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	pointer-events: none;
+}
