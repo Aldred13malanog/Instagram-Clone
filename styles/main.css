@@ -94,11 +94,11 @@ header {
 	position: relative;
 	overflow: hidden;
 }
-.video-image .images {
+.video-image .images-videos {
 	display: flex;
 	transition: transform 0.3s ease;
 }
-.video-image .images div {
+.video-image .images-videos div {
 	width: 468px;
 }
 
@@ -117,9 +117,10 @@ header {
 .prev-button {
 	left: 8px;
 }
-/* .prev-button.inactive {
+.prev-button.inactive,
+.next-button.inactive {
 	display: none;
-} */
+}
 .next-button {	
 	right: 8px;
 }

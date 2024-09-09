@@ -8,11 +8,11 @@ function loadPage() {
 			<div class="video-container">
 				<div class="video-header">
 					<div class="user-profile">
-						<img src="${data.userProfile}" alt="Profile">
+						<img src="${data.profile}" alt="Profile">
 						<div class="user-profile-tooltip">
 							<div class="profile-tooltip-container">
 								<div class="profile-tooltip">
-									<img src="${data.userProfile}">
+									<img src="${data.profile}">
 								</div>
 								<div>
 									<div class="tooltip-name">${data.name}</div>
@@ -22,7 +22,7 @@ function loadPage() {
 
 							<div class="tooltip-pff">
 								<div>
-									<div class="tooltip-post-count">${data.userPostCount}</div>
+									<div class="tooltip-post-count">${data.postCount}</div>
 									<div>posts</div>
 								</div>
 								<div>
@@ -54,7 +54,7 @@ function loadPage() {
 							<div class="video-username-tooltip">
 								<div class="profile-tooltip-container">
 									<div class="profile-tooltip">
-										<img src="${data.userProfile}">
+										<img src="${data.profile}">
 									</div>
 									<div>
 										<div class="tooltip-name">${data.name}</div>
@@ -64,7 +64,7 @@ function loadPage() {
 
 								<div class="tooltip-pff">
 									<div>
-										<div class="tooltip-post-count">${data.userPostCount}</div>
+										<div class="tooltip-post-count">${data.postCount}</div>
 										<div>posts</div>
 									</div>
 									<div>
@@ -130,18 +130,19 @@ function loadPage() {
 			</div>
 		`;
 	});
+	document.querySelector('.js-videos-images').innerHTML = homeHTML;
 
 	function checkPost(typePost, data) {
 		if (typePost === 'image') {
 			return `
 				<div>
-					<img src="${data.userPost}">
+					<img src="${data.post}">
 				</div>
 			`;
 		}
 		if (typePost === 'video') {
 			return `
-				<video src="${data.userPost}"></video>
+				<video src="${data.post}"></video>
 				<button class="sound-button">
 					<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
 				</button>
@@ -149,24 +150,100 @@ function loadPage() {
 		}
 		if (typePost === 'images') {
 			let posts = '';
-			data.userPost.forEach(post => {
+			data.post.forEach(post => {
 				posts += `
-					<div class="images">
-						<div>
-							<img class="slide" src="${post}">
-						</div>
+					<div>
+						<img class="slide" src="${post}">
 					</div>
 				`;
 			});
-
-			return posts;
+			return `
+				<div class="images-videos">
+					${posts}
+				</div>
+				<button data-id="${data.id}" class="prev-button">&#10094;</button>
+				<button data-id="${data.id}" class="next-button">&#10095;</button>
+			`;
 		}
 	}
 
-	document.querySelector('.js-videos-images').innerHTML = homeHTML;
+	function videoAutoPlay() {
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				const video = entry.target;
+		
+				if (entry.isIntersecting) {
+					video.play();
+				} else {
+					video.pause();
+				}
+			});
+		}, {
+			threshold: 0.4
+		});
+		
+		const videos = document.querySelectorAll('video');
+		
+		videos.forEach(video => {
+			observer.observe(video);
+		});
+		
+		const soundBtn = document.querySelectorAll('.sound-button');
+		
+		soundBtn.forEach((button) => {
+			button.addEventListener('click',() => {
+				const video = button.previousElementSibling;
+				if (video.muted) {
+					video.muted = false;
+					button.innerHTML = `
+					<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>`
+				} else {
+					video.muted = true;
+					button.innerHTML = `
+						<svg class="nosound-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><title>Audio is muted</title><path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Z"/></svg>
+					`;
+				}
+			})
+		});
+	}
+	videoAutoPlay();
+	
+	let currentIndex = 0;
+	let id;
+	
+	document.querySelectorAll('.prev-button').forEach((prev) => {
+		prev.addEventListener('click', () => {
+			const images = prev.previousElementSibling;
+			const slides = images.children.length;
+			const imgId = prev.dataset.id;
+
+			if (id !== imgId) {
+				currentIndex = 0;
+			}
+			
+			id = imgId;
+			if (currentIndex <= 0) return;
+			currentIndex--;
+			images.style.transform = `translateX(${-currentIndex * (100 / slides)}%)`;
+		});
+	});
+	
+	document.querySelectorAll('.next-button').forEach((next) => {
+		next.addEventListener('click', () => {
+			const prevElemSib = next.previousElementSibling;			
+			const images = prevElemSib.previousElementSibling;
+			const slides = images.children.length;
+			const imgId = next.dataset.id;
+
+			if (id !== imgId) {
+				currentIndex = 0;
+			}
+			
+			id = imgId;
+			if (currentIndex >= slides - 1) return;
+			currentIndex++;
+			images.style.transform = `translateX(${-currentIndex * (100 / slides)}%)`;
+		});
+	});
 }
 loadPage();
-
-// button slider 
-//<button class="prev-button inactive">&#10094;</button>
-//<button class="next-button">&#10095;</button>
