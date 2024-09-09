@@ -1,0 +1,120 @@
+export const fypData = [{
+	userProfile: 'images/profile-pictures/439569681_1506351150225590_6884425732722025783_n.jpg',
+	name: 'gotnocontext',
+	userName: 'meme 🔌',
+	timePosted: '5d',
+	userPost: 'images/456036016_17908906671005216_2301621398217315790_n.jpg',
+	typePost: 'image',
+	likeCount: 4088,
+	commentCount: 37,
+	userPostCount: 1060,
+	userFollowers: '289K',
+	userFollowing: 20
+}, {
+	userProfile: 'images/profile-pictures/376235112_856885885870151_5381045761512455911_n.jpg',
+	userName: 'Space Club',
+	name: 'spaceclub',
+	timePosted: '5d',
+	userPost: [
+		'images/456280243_18323906743149200_7573442816776639681_n.jpg',
+		'images/456300845_18323906755149200_8017102237953669691_n.jpg'
+	],
+	typePost: 'images',
+	likeCount: 4088,
+	commentCount: 46,
+	userPostCount: 1518,
+	userFollowers: '609K',
+	userFollowing: 227
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 29',
+	userPost: 'videos/2ef708320cadd722a62209f426ec2bb0.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: [
+		'images/Snaptik.app_736833265708151936611.jpg',
+		'images/Snaptik.app_736833265708151936613.jpg',
+		'images/Snaptik.app_736833265708151936615.jpg',
+		'images/Snaptik.app_736833265708151936617.jpg',
+		'images/Snaptik.app_73683326570815193665.jpg',
+		'images/Snaptik.app_73683326570815193667.jpg',
+		'images/Snaptik.app_73683326570815193669.jpg'
+	],
+	typePost: 'images',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: 'videos/Snaptik.app_7356131429182410000.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: 'videos/Snaptik.app_7193141068131552538.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: 'videos/Snaptik.app_7342079688350633221.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: 'videos/Snaptik.app_7343949051953466630.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}, {
+	userProfile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
+	name: 'aaaaaaaaaaldma',
+	userName: 'Aaaaaaaaaa',
+	timePosted: 'June 14',
+	userPost: 'videos/Snaptik.app_7346646673009003822.mp4',
+	typePost: 'video',
+	likeCount: 4088,
+	commentCount: 9,
+	userPostCount: 58,
+	userFollowers: '0',
+	userFollowing: 13
+}]; 
