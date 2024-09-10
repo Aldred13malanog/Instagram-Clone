@@ -96,10 +96,23 @@ header {
 }
 .video-image .images-videos {
 	display: flex;
-	transition: transform 0.3s ease;
+	transition: transform 0.2s ease;
 }
-.video-image .images-videos div {
+.video-image .images-videos .img-con {
 	width: 468px;
+}
+
+.img-con {
+	position: relative;
+}
+.image-like {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 70px;
+	width: 70px;
+	transform: translate(-50%, -50%) scale(0);
+	transition: all 0.25s ease;
 }
 
 .prev-button, .next-button {
@@ -158,6 +171,16 @@ header {
 .video-icons-container div svg {
 	stroke: white;
 	transition: all 150ms;
+}
+.unlike-icon {
+	position: absolute;
+	opacity: 0;
+	scale: 0;
+}
+.unlike-icon.active {
+	position: absolute;
+	opacity: 1;
+	scale: 1;
 }
 .video-icons-container div svg:hover {
 	fill: #737373;

@@ -102,7 +102,8 @@ function loadPage() {
 
 				<div class="video-icons-container">
 					<div class="like-button">
-						<svg aria-label="Like" class="x1lliihq x1n2onr6 x1cp0k07" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
+						<svg aria-label="Like" class="like-icon js-like-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
+						<svg aria-label="Unlike" class="unlike-icon js-like-button" fill="currentColor" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 					</div>
 
 					<div class="comment-button">
@@ -135,14 +136,20 @@ function loadPage() {
 	function checkPost(typePost, data) {
 		if (typePost === 'image') {
 			return `
-				<div>
+				<div class="img-con">
 					<img src="${data.post}">
+					<div class="image-like js-image-like">
+						<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+					</div>
 				</div>
 			`;
 		}
 		if (typePost === 'video') {
 			return `
 				<video src="${data.post}"></video>
+				<div class="image-like js-image-like">
+					<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				</div>
 				<button class="sound-button">
 					<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
 				</button>
@@ -152,8 +159,11 @@ function loadPage() {
 			let posts = '';
 			data.post.forEach(post => {
 				posts += `
-					<div>
+					<div class="img-con">
 						<img class="slide" src="${post}">
+						<div class="image-like js-image-like">
+							<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+						</div>
 					</div>
 				`;
 			});
@@ -161,7 +171,7 @@ function loadPage() {
 				<div class="images-videos">
 					${posts}
 				</div>
-				<button data-id="${data.id}" class="prev-button">&#10094;</button>
+				<button data-id="${data.id}" class="prev-button inactive">&#10094;</button>
 				<button data-id="${data.id}" class="next-button">&#10095;</button>
 			`;
 		}
@@ -208,11 +218,13 @@ function loadPage() {
 	}
 	videoAutoPlay();
 	
+	// image slider
 	let currentIndex = 0;
 	let id;
 	
 	document.querySelectorAll('.prev-button').forEach((prev) => {
 		prev.addEventListener('click', () => {
+			const nextSib = prev.nextElementSibling;
 			const images = prev.previousElementSibling;
 			const slides = images.children.length;
 			const imgId = prev.dataset.id;
@@ -224,6 +236,12 @@ function loadPage() {
 			id = imgId;
 			if (currentIndex <= 0) return;
 			currentIndex--;
+			if (currentIndex === 0) {
+				prev.classList.add('inactive');
+			}
+			if (currentIndex < slides - 1) {
+				nextSib.classList.remove('inactive');
+			}
 			images.style.transform = `translateX(${-currentIndex * (100 / slides)}%)`;
 		});
 	});
@@ -242,8 +260,79 @@ function loadPage() {
 			id = imgId;
 			if (currentIndex >= slides - 1) return;
 			currentIndex++;
+			if (currentIndex > 0) {
+				prevElemSib.classList.remove('inactive');
+			}
+			if (currentIndex === slides - 1) {
+				next.classList.add('inactive');
+			}
 			images.style.transform = `translateX(${-currentIndex * (100 / slides)}%)`;
 		});
 	});
+
+	// like button effect
+
+	function bouncyEffect(elem) {
+		elem.style.transition = 'transform 0.15s ease'; // Start transition
+		elem.style.transform = 'scale(1.2)'; // Scale up on unhover
+				
+		setTimeout(() => {
+			elem.style.transform = 'scale(1)'; // Bounce back to original size
+		}, 100); // Delay to bounce back after scaling up
+	}
+
+	document.querySelectorAll('.js-like-button').forEach(icon => {
+		icon.addEventListener('click', () => {
+			if (icon.classList.contains('like-icon')) {
+				const nextSib = icon.nextElementSibling;
+				nextSib.classList.add('active');
+			} else {
+				icon.classList.remove('active');
+			}
+			
+			bouncyEffect(icon);
+		})
+	
+		icon.addEventListener('mouseleave', () => {
+			bouncyEffect(icon);	
+		});
+	})
+
+	let count = 0;
+	let timeoutId;
+
+	function imgVidLike(elem) {
+		const parentElem = elem.parentElement; 
+		const imglike = parentElem.children[1];
+		clearTimeout(timeoutId);
+		count++;
+
+		if (count === 2) {
+			imglike.style.transform = 'translate(-50%, -50%) scale(1.2)';
+			setTimeout(() => {
+				imglike.style.transform = 'translate(-50%, -50%) scale(1)';
+			}, 250);
+			setTimeout(() => {
+				imglike.style.transform = 'translate(-50%, -50%) scale(0)';
+			}, 1000);
+		}
+		timeoutId = setTimeout(() => {
+			count = 0;
+		}, 200);
+	}
+
+	// when clicking the image/video twice the like icon appear
+	document.querySelectorAll('.js-video-image img').forEach(img => {
+		img.addEventListener('click', () => {
+			imgVidLike(img);
+		})
+	});
+	
+	document.querySelectorAll('.js-video-image video').forEach(vid => {
+		vid.addEventListener('click', () => {
+			imgVidLike(vid);
+		})
+	}) 
+	
 }
 loadPage();
