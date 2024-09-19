@@ -19,16 +19,52 @@ export const fypData = [{
 	timePosted: '5d',
 	post: [
 		'images/456280243_18323906743149200_7573442816776639681_n.jpg',
-		'images/456300845_18323906755149200_8017102237953669691_n.jpg'
+		'images/456300845_18323906755149200_8017102237953669691_n.jpg',
+		'images/moon3.jpg'
 	],
+	index: 0,
 	typePost: 'images',
-	likeCount: 4088,
+	likeCount: 10722,
 	commentCount: 46,
 	postCount: 1518,
 	userFollowers: '609K',
 	userFollowing: 227
 }, {
 	id: '2',
+	profile: 'images/profile-pictures/295452217_634946657631062_8329313819020271629_n.jpg',
+	name: 'bugatti',
+	userName: 'Bugatti',
+	timePosted: '2d',
+	post: 'images/bugatti1.jpg',
+	typePost: 'image',
+	likeCount: 232486,
+	commentCount: 14,
+	postCount: "?",
+	userFollowers: '?',
+	userFollowing: "?"
+}, {
+	id: '3',
+	profile: 'images/profile-pictures/295452217_634946657631062_8329313819020271629_n.jpg',
+	name: 'bugatti',
+	userName: 'Bugatti',
+	timePosted: 'August 16',
+	post: [
+		'images/b2.jpg',
+		'images/b3.jpg',
+		'images/b4.jpg',
+		'images/b5.jpg',
+		'images/b6.jpg',
+		'images/b7.jpg',
+	],
+	index: 0,
+	typePost: 'images',
+	likeCount: 479720,
+	commentCount: 23,
+	postCount: "?",
+	userFollowers: '?',
+	userFollowing: "?"
+}, {
+	id: '4',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -41,7 +77,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '3',
+	id: '5',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -55,6 +91,7 @@ export const fypData = [{
 		'images/Snaptik.app_73683326570815193667.jpg',
 		'images/Snaptik.app_73683326570815193669.jpg'
 	],
+	index: 0,
 	typePost: 'images',
 	likeCount: 4088,
 	commentCount: 9,
@@ -62,7 +99,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '4',
+	id: '6',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -75,7 +112,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '5',
+	id: '7',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -88,7 +125,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '6',
+	id: '8',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -101,7 +138,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '7',
+	id: '9',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',
@@ -114,7 +151,7 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }, {
-	id: '8',
+	id: '10',
 	profile: 'images/profile-pictures/435031363_1364445837602935_2491872393277349611_n.jpg',
 	name: 'aaaaaaaaaaldma',
 	userName: 'Aaaaaaaaaa',

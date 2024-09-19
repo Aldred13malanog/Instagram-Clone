@@ -5,7 +5,7 @@ export function checkPost(data) {
 	if (data.typePost === 'image') {
 		return `
 			<div class="img-con">
-				<img src="${data.post}">
+				<img src="${data.post}" data-id="${data.id}">
 				<div class="image-like js-image-like">
 					<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 				</div>
@@ -15,7 +15,7 @@ export function checkPost(data) {
 	if (data.typePost === 'video') {
 		return `
 			<div class="vid-con">
-				<video src="${data.post}" class="js-video-${data.id}"></video>
+				<video src="${data.post}" data-id="${data.id}"></video>
 				<div class="image-like js-image-like">
 					<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 				</div>
@@ -30,7 +30,7 @@ export function checkPost(data) {
 		data.post.forEach(post => {
 			posts += `
 				<div class="img-con">
-					<img class="slide" src="${post}">
+					<img class="slide" data-id="${data.id}" src="${post}">
 					<div class="image-like js-image-like">
 						<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 					</div>
@@ -90,29 +90,30 @@ export function videoFunction() {
 }
 
 // image slider
-let currentIndex = 0;
-let id;
 export function imageSlider(button) {
 	const imgId = button.dataset.id;
 	let images;
 	let slides;
+	let datas;
+
+	fypData.forEach(data => {
+		if (imgId === data.id) {
+			datas = data;
+		}
+	});
+	
 
 	if (button.textContent == '❮') {
 		const nextSib = button.nextElementSibling;
 		images = button.previousElementSibling;
 		slides = images.children.length;
-
-		if (id !== imgId) {
-			currentIndex = 0;
-		}
-
-		id = imgId;
 		
-		currentIndex--;
-		if (currentIndex === 0) {
+		datas.index--;
+
+		if (datas.index === 0) {
 			button.classList.add('inactive');
 		}
-		if (currentIndex < slides - 1) {
+		if (datas.index < slides - 1) {
 			nextSib.classList.remove('inactive');
 		}
 	}
@@ -122,22 +123,17 @@ export function imageSlider(button) {
 		images = prevElemSib.previousElementSibling;
 		slides = images.children.length;
 
-		if (id !== imgId) {
-			currentIndex = 0;
-		}
-		
-		id = imgId;
+		datas.index++;
 
-		currentIndex++;
-		if (currentIndex > 0) {
+		if (datas.index > 0) {
 			prevElemSib.classList.remove('inactive');
 		}
-		if (currentIndex === slides - 1) {
+		if (datas.index === slides - 1) {
 			button.classList.add('inactive');
 		}
 	}
 
-	images.style.transform = `translateX(${-currentIndex * (100 / slides)}%)`;
+	images.style.transform = `translateX(${-datas.index * (100 / slides)}%)`;
 }
 
 // img/vid like
@@ -146,10 +142,30 @@ let timeoutId;
 export function imgVidLike(elem) {
 	const parentElem = elem.parentElement; 
 	const imglike = parentElem.children[1];
+	const {id} = elem.dataset;
+	let matchingData;
+
+	fypData.forEach(data => {
+		if (id === data.id) {
+			matchingData = data;
+		}
+	});
+
 	clearTimeout(timeoutId);
 	count++;
 
 	if (count === 2) {
+		const likeCountElem = document.querySelector(`.js-like-counts-${matchingData.id}`);
+		const likeBtn = document.querySelector(`.js-like-btn-${matchingData.id}`);
+
+		let likeCount = matchingData.likeCount;
+		likeCount++;
+		likeCountElem.innerHTML = `${likeCount} likes`;
+		likeBtn.innerHTML = `
+			<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+		`;
+		bouncyEffect(likeBtn);
+
 		imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
 		setTimeout(() => {
 			imglike.style.transform = 'translate(-50%, -50%)';
@@ -170,7 +186,7 @@ export function bouncyEffect(elem) {
 	
 	setTimeout(() => {
 		elem.style.transform = 'scale(1)'; // Bounce back to original size
-	}, 100); // Delay to bounce back after scaling up
+	}, 150); // Delay to bounce back after scaling up
 }
 
 // view comment function
