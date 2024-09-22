@@ -368,6 +368,9 @@ header {
 	border-bottom: 1px solid #272727;
 	padding: 16px;
 	row-gap: 20px;
+	overflow-y: scroll;
+	scrollbar-width: none;
+	position: relative;
 }
 .comment {
 	display: flex;
@@ -389,7 +392,7 @@ header {
 }
 .comment-text {
 	font-size: 14px;
-	line-height: 16px;
+	line-height: 20px;
 	flex: 1;
 }
 .comment-name {
@@ -409,6 +412,20 @@ header {
 	color: #A8A8A8;
 	font-weight: 500;
 	font-size: 12px;
+}
+.no-comment-con {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+}
+.no-comment-text {
+	font-size: 24px;
+	font-weight: bold;
+}
+.no-comment-text1 {
+	font-size: 14px;
 }
 
 .comment-icon-con {
