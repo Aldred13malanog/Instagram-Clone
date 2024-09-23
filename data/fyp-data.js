@@ -164,3 +164,15 @@ export const fypData = [{
 	userFollowers: '0',
 	userFollowing: 13
 }]; 
+
+export function getMatchingData(id) {
+	let matchingData;
+
+	fypData.forEach(data => {
+		if (id === data.id) {
+			matchingData = data;
+		};
+	});
+
+	return matchingData;
+}

@@ -77,3 +77,15 @@ export const commentsData = [{
 	id: '10',
 	comments: []
 }];
+
+export function getMatchingCommentsData(id) {
+	let matchingData;
+
+	commentsData.forEach(data => {
+		if (id === data.id) {
+			matchingData = data;
+		}
+	});
+
+	return matchingData;
+}

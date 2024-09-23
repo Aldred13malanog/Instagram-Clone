@@ -29,8 +29,7 @@ header {
 }
 .users-story-profile img {
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	/* object-fit: cover; */
 	border-radius: 50%;
 	border: 2px solid black;
 }
@@ -62,8 +61,8 @@ header {
 }
 .user-profile img {
 	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	/* height: 100%; */
+	/* object-fit: cover; */
 	border-radius: 50%;
 }
 
@@ -131,24 +130,20 @@ header {
 
 .video-image {
 	width: 468px;
-	min-height: 468px;
-	max-height: 585px;
+	/* height: max-content; */
+	max-height: 565px;
 	border-radius: 4px;
 	display: flex;
 	position: relative;
 	overflow: hidden;
 }
-.video-image .images-videos {
+.images-videos {
 	display: flex;
 	transition: transform 0.2s ease;
 }
-.video-image .images-videos .img-con,
-.video-image .images-videos .vid-con {
-	width: 468px;
-}
-
 .img-con,
 .vid-con {
+	width: 468px;
 	position: relative;
 }
 .image-like {
@@ -184,10 +179,14 @@ header {
 	right: 8px;
 }
 
-.video-image img, .video-image video {
+.video-image img{
 	object-fit: contain;
 	width: 100%;
-	height: 100%;
+	position: relative;
+} 
+.video-image video {
+	object-fit: contain;
+	width: 100%;
 	position: relative;
 }
 .sound-button {
@@ -334,7 +333,7 @@ header {
 	border-left: 1px solid #272727;
 
 	& img {
-		height: 100%;
+		/* height: 100%; */
 		width: 100%;
 		object-fit: cover;
 
@@ -589,6 +588,11 @@ header {
 	margin-top: 8px;
 	display: flex;
 	align-items: center;
+
+	& button {
+		margin: 0 10px;
+		display: none;
+	}
 }
 .comment-section input {
 	flex: 1;
@@ -626,7 +630,7 @@ header {
 }
 .my-profile img, .suggested-profile img {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; */
 	border-radius: 50%;
 	object-fit: cover;
 }
