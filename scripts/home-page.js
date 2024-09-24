@@ -11,7 +11,9 @@ import {
 	shareBtnFunction,
 	saveBtnFunction,
 	moreOptionBtnFunction,
-} from "./home-page-scripts.js";
+	tooltipMouseleave,
+	tooltipMouseover
+} from "./home-page-functions/scripts.js";
 
 function loadPage() {
 	let homeHTML = '';
@@ -20,8 +22,8 @@ function loadPage() {
 		homeHTML += `
 			<div class="video-container js-video-container-${data.id}">
 				<div class="video-header">
-					<div class="user-profile">
-						<img src="${data.profile}" alt="Profile">
+					<div class="user-profile js-user-profile">
+						<img src="${data.profile}" alt="Profile" class="js-user-image">
 						<div class="user-profile-tooltip">
 							<div class="profile-tooltip-container">
 								<div class="profile-tooltip">
@@ -35,7 +37,7 @@ function loadPage() {
 
 							<div class="tooltip-pff">
 								<div>
-									<div class="tooltip-post-count">${data.postCount}</div>
+									<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
 									<div>posts</div>
 								</div>
 								<div>
@@ -62,7 +64,7 @@ function loadPage() {
 						</div>
 					</div>
 					<div class="username-section">
-						<div class="username-container">
+						<div class="username-container js-username-container">
 							<div class="username">${data.name}</div>
 							<div class="video-username-tooltip">
 								<div class="profile-tooltip-container">
@@ -77,7 +79,7 @@ function loadPage() {
 
 								<div class="tooltip-pff">
 									<div>
-										<div class="tooltip-post-count">${data.postCount}</div>
+										<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
 										<div>posts</div>
 									</div>
 									<div>
@@ -175,13 +177,19 @@ function loadPage() {
 
 	// when clicking the image/video twice the like icon appear
 	document.querySelectorAll('.js-video-image img').forEach(img => {
-		img.addEventListener('click', () => {
-			imgVidLike(img);
+		img.addEventListener('dblclick', () => {
+			const {id} = img.dataset;
+			const likeCount =	document.querySelector(`.js-like-counts-${id}`);
+			const likeBtn = document.querySelector(`.js-like-btn-${id}`);
+			imgVidLike(img, likeCount, likeBtn);
 		})
 	});
 	document.querySelectorAll('.js-video-image video').forEach(vid => {
-		vid.addEventListener('click', () => {
-			imgVidLike(vid);
+		vid.addEventListener('dblclick', () => {
+			const {id} = vid.dataset;
+			const likeCount =	document.querySelector(`.js-like-counts-${id}`);
+			const likeBtn = document.querySelector(`.js-like-btn-${id}`);
+			imgVidLike(vid, likeCount, likeBtn);
 		});
 	});
 
@@ -238,12 +246,31 @@ function loadPage() {
 			const {id} = button.dataset;
 			let matchingData = getMatchingCommentsData(id);
 
+			if (comment === '') return;
 			matchingData.comments.push({
 				username: 'aaaaaaaaaaldma',
 				comment
 			});
 
 			input.value = '';
+		});
+	});
+
+	// tooltip mouseover/mouseleave
+	document.querySelectorAll('.js-user-profile').forEach(img => {
+		img.addEventListener('mouseover', () => {
+			tooltipMouseover(img);
+		});
+		img.addEventListener('mouseleave', () => {
+			tooltipMouseleave(img);
+		});
+	});
+	document.querySelectorAll('.js-username-container').forEach(name => {
+		name.addEventListener('mouseover', () => {
+			tooltipMouseover(name);
+		});
+		name.addEventListener('mouseleave', () => {
+			tooltipMouseleave(name);
 		});
 	});
 

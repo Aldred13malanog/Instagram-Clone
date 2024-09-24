@@ -1,5 +1,5 @@
-import { getMatchingData } from "../data/fyp-data.js";
-import { getMatchingCommentsData } from "../data/comments-data.js";
+import { getMatchingData } from "../../data/fyp-data.js";
+import { getMatchingCommentsData } from "../../data/comments-data.js";
 
 // check post fun
 export function checkPost(data) {
@@ -71,7 +71,7 @@ export function videoFunction() {
 	soundBtn.forEach((button) => {
 		button.addEventListener('click',() => {
 			const prevSib = button.previousElementSibling;
-			const video = prevSib.children[0];
+			const video = prevSib.previousElementSibling;
 			if (video.muted) {
 				video.muted = false;
 				button.innerHTML = `
@@ -127,40 +127,30 @@ export function imageSlider(button) {
 }
 
 // img/vid like
-let count = 0;
-let timeoutId;
-export function imgVidLike(elem) {
+export function imgVidLike(elem, elem2, elem3) {
 	const parentElem = elem.parentElement; 
 	const imglike = parentElem.children[1];
 	const {id} = elem.dataset;
 	let matchingData = getMatchingData(id);
 
-	clearTimeout(timeoutId);
-	count++;
+	const likeCountElem = elem2;
+	const likeBtn = elem3;
+	
+	let likeCount = matchingData.likeCount;
+	likeCount++;
+	likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
+	likeBtn.innerHTML = `
+		<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+	`;
+	bouncyEffect(likeBtn);
 
-	if (count === 2) {
-		const likeCountElem = document.querySelector(`.js-like-counts-${matchingData.id}`);
-		const likeBtn = document.querySelector(`.js-like-btn-${matchingData.id}`);
-
-		let likeCount = matchingData.likeCount;
-		likeCount++;
-		likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
-		likeBtn.innerHTML = `
-			<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-		`;
-		bouncyEffect(likeBtn);
-
-		imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
-		setTimeout(() => {
-			imglike.style.transform = 'translate(-50%, -50%)';
-		}, 250);
-		setTimeout(() => {
-			imglike.style.transform = 'translate(-50%, -50%) scale(0)';
-		}, 700);
-	}
-	timeoutId = setTimeout(() => {
-		count = 0;
-	}, 500);
+	imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
+	setTimeout(() => {
+		imglike.style.transform = 'translate(-50%, -50%)';
+	}, 250);
+	setTimeout(() => {
+		imglike.style.transform = 'translate(-50%, -50%) scale(0)';
+	}, 700);
 }
 
 // like button
@@ -338,6 +328,18 @@ export function bouncyEffect(elem) {
 	}, 150); // Delay to bounce back after scaling up
 }
 
+export function tooltipMouseover(elem) {
+	const tooltip = elem.children[1];
+	tooltip.style.opacity = '1';
+	tooltip.style.pointerEvents = 'auto';
+}
+
+export function tooltipMouseleave(elem) {
+	const tooltip = elem.children[1];
+	tooltip.style.opacity = '0';
+	tooltip.style.pointerEvents = 'none';
+}
+
 // view comment function
 export function viewCommentSection(button) {
 	const elem = document.createElement('div');
@@ -394,10 +396,88 @@ export function viewCommentSection(button) {
 		</div>
 		<div class="comment-right-section">
 			<div class="comment-header">
-				<div class="comment-profile">
+				<div class="comment-profile js-comment-profile">
 					<img src="${matchingData.profile}">
+					<div class="user-profile-tooltip">
+						<div class="profile-tooltip-container">
+							<div class="profile-tooltip">
+								<img src="${matchingData.profile}">
+							</div>
+							<div>
+								<div class="tooltip-name">${matchingData.name}</div>
+								<div class="tooltip-sub-name">${matchingData.userName}</div>
+							</div>
+						</div>
+
+						<div class="tooltip-pff">
+							<div>
+								<div class="tooltip-post-count">${matchingData.postCount.toLocaleString()}</div>
+								<div>posts</div>
+							</div>
+							<div>
+								<div>${matchingData.userFollowers}</div>
+								<div>followers</div>
+							</div>
+							<div>
+								<div>${matchingData.userFollowing}</div>
+								<div>following</div>
+							</div>
+						</div>
+
+						<div class="tooltip-has-posts">
+							<div class="tooltip-post"></div>
+							<div class="tooltip-post"></div>
+							<div class="tooltip-post"></div>
+						</div>
+						<div class="tooltip-following">
+							<button class="tooltip-message-button">
+								<svg aria-label="Messenger" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Messenger</title><path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.876 10.876 0 0 1-2.895-.384.798.798 0 0 0-.533.04l-1.984.876a.801.801 0 0 1-1.123-.708l-.054-1.78a.806.806 0 0 0-.27-.569 9.49 9.49 0 0 1-3.14-7.175 9.65 9.65 0 0 1 10-9.7Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z" fill-rule="evenodd"></path></svg>Message
+							</button>
+							<button class="tooltip-following-button">Following</button>
+						</div>
+					</div>
 				</div>
-				<div class="comment-username">${matchingData.name}</div>
+				<div class="comment-username-con js-cname-con">
+					<div class="comment-username">${matchingData.name}</div>
+					<div class="video-username-tooltip">
+						<div class="profile-tooltip-container">
+							<div class="profile-tooltip">
+								<img src="${matchingData.profile}">
+							</div>
+							<div>
+								<div class="tooltip-name">${matchingData.name}</div>
+								<div class="tooltip-sub-name">${matchingData.userName}</div>
+							</div>
+						</div>
+
+						<div class="tooltip-pff">
+							<div>
+								<div class="tooltip-post-count">${matchingData.postCount.toLocaleString()}</div>
+								<div>posts</div>
+							</div>
+							<div>
+								<div>${matchingData.userFollowers}</div>
+								<div>followers</div>
+							</div>
+							<div>
+								<div>${matchingData.userFollowing}</div>
+								<div>following</div>
+							</div>
+						</div>
+
+						<div class="tooltip-has-posts">
+							<div class="tooltip-post"></div>
+							<div class="tooltip-post"></div>
+							<div class="tooltip-post"></div>
+						</div>
+						<div class="tooltip-following">
+							<button class="tooltip-message-button">
+								<svg aria-label="Messenger" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Messenger</title><path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.876 10.876 0 0 1-2.895-.384.798.798 0 0 0-.533.04l-1.984.876a.801.801 0 0 1-1.123-.708l-.054-1.78a.806.806 0 0 0-.27-.569 9.49 9.49 0 0 1-3.14-7.175 9.65 9.65 0 0 1 10-9.7Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z" fill-rule="evenodd"></path></svg>Message
+							</button>
+							<button class="tooltip-following-button">Following</button>
+						</div>
+					</div>
+				</div>
 				<div>
 					<svg aria-label="More options" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
@@ -439,8 +519,9 @@ export function viewCommentSection(button) {
 
 	setTimeout(() => {
 		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
-	}, 100)
+	}, 100);
 
+	// this function returns specific comments based on the post
 	function showComments(id) {
 		let commentsHtml = '';
 		let matchingData = getMatchingCommentsData(id);
@@ -487,9 +568,8 @@ export function viewCommentSection(button) {
 	const saveBtn = document.querySelector('.js-csave-button'); 
 	const postBtn = document.querySelector('.js-cpost-btn');
 	const moreOptionBtn = document.querySelector('.js-cmore-option-button');
-
-	let count = 0;
-	let timeoutId;
+  const profile = document.querySelector('.js-comment-profile');
+	const name = document.querySelector('.js-cname-con');
 
 	overlay.addEventListener('click', () => {
 		container.removeChild(elem);
@@ -531,6 +611,7 @@ export function viewCommentSection(button) {
 		const comment = input.value;
 		let matchingData = getMatchingCommentsData(id);
 
+		if (comment === '') return;
 		matchingData.comments.push({
 			username: 'aaaaaaaaaaldma',
 			comment
@@ -545,73 +626,34 @@ export function viewCommentSection(button) {
 	});
 
 	document.querySelectorAll('.js-cimagevideo-con img').forEach(img => {
-		img.addEventListener('click', () => {
-			const parent = img.parentElement;
-			const imglike = parent.children[1];
-			let matchingData = getMatchingData(id);
-	
-			clearTimeout(timeoutId);
-			count++;
-	
-			if (count === 2) {
-				const likeCountElem = document.querySelector(`.js-clike-counts`);
-				const likeBtn = document.querySelector(`.js-clike-button`);
-	
-				let likeCount = matchingData.likeCount;
-				likeCount++;
-				likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
-				likeBtn.innerHTML = `
-					<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-				`;
-				bouncyEffect(likeBtn);
-	
-				imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
-				setTimeout(() => {
-					imglike.style.transform = 'translate(-50%, -50%)';
-				}, 250);
-				setTimeout(() => {
-					imglike.style.transform = 'translate(-50%, -50%) scale(0)';
-				}, 700);
-			}
-			timeoutId = setTimeout(() => {
-				count = 0;
-			}, 500);
+		img.addEventListener('dblclick', () => {
+			const likeCount = document.querySelector(`.js-clike-counts`);
+			const likeBtn = document.querySelector(`.js-clike-button`);
+			imgVidLike(img, likeCount, likeBtn);
 		});
 	});
 	
 	document.querySelectorAll('.js-cimagevideo-con video').forEach(vid => {
-		vid.addEventListener('click', () => {
-			const parent = vid.parentElement;
-			const imglike = parent.children[1];
-			let matchingData = getMatchingData(id);
-	
-			clearTimeout(timeoutId);
-			count++;
-	
-			if (count === 2) {
-				const likeCountElem = document.querySelector(`.js-clike-counts`);
-				const likeBtn = document.querySelector(`.js-clike-button`);
-	
-				let likeCount = matchingData.likeCount;
-				likeCount++;
-				likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
-				likeBtn.innerHTML = `
-					<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-				`;
-				bouncyEffect(likeBtn);
-	
-				imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
-				setTimeout(() => {
-					imglike.style.transform = 'translate(-50%, -50%)';
-				}, 250);
-				setTimeout(() => {
-					imglike.style.transform = 'translate(-50%, -50%) scale(0)';
-				}, 700);
-			}
-			timeoutId = setTimeout(() => {
-				count = 0;
-			}, 500);
+		vid.addEventListener('dblclick', () => {
+			const likeCount = document.querySelector(`.js-clike-counts`);
+			const likeBtn = document.querySelector(`.js-clike-button`);
+			imgVidLike(vid, likeCount, likeBtn);
 		});
+	});
+
+	// tooltip function
+	profile.addEventListener('mouseover', () => {
+		tooltipMouseover(profile);
+	});
+	profile.addEventListener('mouseleave', () => {
+		tooltipMouseleave(profile);
+	});
+
+	name.addEventListener('mouseover', () => {
+		tooltipMouseover(name);
+	});
+	name.addEventListener('mouseleave', () => {
+		tooltipMouseleave(name);
 	});
 
 	// functions if the post is images/video

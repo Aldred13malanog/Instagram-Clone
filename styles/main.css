@@ -351,14 +351,21 @@ header {
 	width: 34px;
 	height: 34px;
 	border-radius: 50%;
+	position: relative;
+	cursor: pointer;
 	& img {
 		border-radius: 50%;
 	}
 }
+.comment-username-con {
+	/* flex: 1; */
+	margin-right: auto;
+	position: relative;
+}
 .comment-username {
 	font-weight: 500;
 	font-size: 14px;
-	flex: 1;
+	cursor: pointer;
 }
 .comments {
 	display: flex;
@@ -731,15 +738,14 @@ header {
 }
 
 /* tooltips */
-.suggested-profile-tooltip, .user-profile-tooltip,
-.video-username-tooltip,
+.suggested-profile-tooltip,
 .suggested-profile-name-tooltip {
 	opacity: 0;
 	position: absolute;
 	background-color: #000;
 	border-radius: 12px;
 	box-shadow: 0 0 15px #737373;
-	z-index: 1;
+	z-index: 10;
 	left: -28px;
 	display: flex;
 	flex-direction: column;
@@ -747,7 +753,28 @@ header {
 	pointer-events: none;
 	transition: all .15s;
 }
- .suggested-profile-name-tooltip {
+.user-profile-tooltip,
+.video-username-tooltip {
+	opacity: 0;
+	top: 32px;
+	position: absolute;
+	background-color: #000;
+	border-radius: 12px;
+	box-shadow: 0 0 15px #737373;
+	z-index: 10;
+	left: -28px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 16px;
+	pointer-events: none;
+	cursor: auto;
+	transition: all .15s 300ms;
+}
+.video-username-tooltip {
+	top: 18px;
+}
+
+.suggested-profile-name-tooltip {
 	left: -80px;
 }
 .profile-tooltip-container {
@@ -881,8 +908,6 @@ header {
 
 /* tooltip hovering effects */
 .suggested-profile:hover .suggested-profile-tooltip,
-.user-profile:hover .user-profile-tooltip,
-.username:hover + .video-username-tooltip,
 .suggested-name:hover + .suggested-profile-name-tooltip	{
 	opacity: 1;
 	transition: all .15s 300ms;
