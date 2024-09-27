@@ -115,7 +115,7 @@ header {
 	.report-btn,
 	.unfollow-btn {
 		font-weight: bold;
-		color: #f54343;
+		color: #ED4956;
 	}
 }
 .more-option-overlay {
@@ -241,7 +241,8 @@ header {
 .video-icons-container button:last-child {
 	justify-content: flex-end;
 }
-.saved-icon {
+.save-button {
+	color: white;
 	stroke-width: 0;
 }
 
@@ -464,6 +465,7 @@ header {
 	margin-top: 10px;
 	font-weight: 500;
 	font-size: 14px;
+	cursor: pointer;
 }
 .comment-time {
 	color: #A8A8A8;
@@ -584,12 +586,101 @@ header {
 	font-weight: 500;
 	line-height: 28px;
 	cursor: pointer;
+	transition: all 0.15s;
 }
+.like-counts:hover {
+	color: #A8A8A8;
+}
+.likes-container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0%);
+	width: 400px;
+	height: 400px;
+	background-color: #272727;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	z-index: 10;
+	transition: all 0.15s;
+}
+.likes-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #000000ad;
+	z-index: 8;
+}
+.likes-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-bottom: 1px solid #737373;
+	padding: 12px;
+	font-weight: 500;
+	width: 400px;
+	position: relative;
+	& svg {
+		position: absolute;
+		right: 16px;
+	}
+}
+.like-con {
+	flex: 1;
+	overflow-y: scroll;
+	scrollbar-color: black;
+}
+.like {
+	display: flex;
+	padding: 8px 18px;
+	align-items: center;
+	margin-bottom: 2px;
+}
+.like-profile {
+	width: 42px;
+	height: 42px;
+	border-radius: 50%;
+	background-color: #fff;
+	flex-shrink: 0;
+	cursor: pointer;
+}
+.like-name-con {
+	margin-left: 12px;
+	font-size: 14px;
+	flex: 1;
+	line-height: 18px;
+	& div:first-child {
+		font-weight: 500;
+		cursor: pointer;
+	}
+	& div:last-child {
+		color: #A8A8A8;
+	}
+}
+.like-followbtn {
+	padding: 7px 20px;
+	border: none;
+	border-radius: 8px;
+	background-color: #0095F6;
+	font-weight: 500;
+	color: white;
+	font-size: 14px;
+	cursor: pointer;
+}
+
 .view-all-comments {
 	font-size: 14px;
 	color: #A8A8A8;
 	cursor: pointer;
 	display: inline-block;
+	transition: all 0.15s;
+}
+.view-all-comments:hover {
+	color: #737373;
 }
 .comment-section {
 	margin-top: 8px;
@@ -613,7 +704,58 @@ header {
 	border: none;
 	outline: none;
 }
+.emojis-container {
+	position: relative;
+}
+.emoji-icon:hover {
+	fill: #A8A8A8;
+}
+.emoji-container {
+	position: absolute;
+	height: 330px;
+	width: 330px;
+	background-color: #272727;
+	border-radius: 6px;
+	bottom: 30px;
+	font-size: 14px;
+	color: #A8A8A8;
+	font-weight: 500;
+	overflow: hidden;
+	display: flex;
+	z-index: 9;
+	/* flex-direction: column; */
+}
+.emoji-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 8;
+}
+.emojis {
+	overflow-y: scroll;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	row-gap: 14px;
+	padding: 12px 8px;
+}
+.mostpopular {
+	display: grid;
+	font-size: 32px;
+	grid-template-columns:repeat(7, 1fr);
 
+	& div {
+		/* width: 32px; */
+		cursor: pointer;
+		text-align: center;
+		/* height: 32px; */
+	}
+	& div:hover {
+		background-color: #737373;
+	}
+}
 
 /* main right section */
 .right-side {

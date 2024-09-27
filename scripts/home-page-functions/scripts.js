@@ -7,7 +7,7 @@ export function checkPost(data) {
 		return `		
 			<img src="${data.post}" data-id="${data.id}">
 			<div class="image-like js-image-like">
-				<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 			</div>
 		`;
 	}
@@ -15,7 +15,7 @@ export function checkPost(data) {
 		return `
 			<video src="${data.post}" data-id="${data.id}" class="js-video-${data.id}"></video>
 			<div class="image-like js-image-like">
-				<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 			</div>
 			<button class="sound-button">
 				<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
@@ -29,7 +29,7 @@ export function checkPost(data) {
 				<div class="img-con">
 					<img data-id="${data.id}" src="${post}">
 					<div class="image-like js-image-like">
-						<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+						<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 					</div>
 				</div>
 			`;
@@ -140,7 +140,7 @@ export function imgVidLike(elem, elem2, elem3) {
 	likeCount++;
 	likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
 	likeBtn.innerHTML = `
-		<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+		<svg aria-label="Unlike" fill="rgb(255, 48, 64)" stroke-width="0" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 	`;
 	bouncyEffect(likeBtn);
 
@@ -167,7 +167,7 @@ export function likeBtnFunction(button, likeCount) {
 		likeCountElem.innerHTML = `${count.toLocaleString()} likes`;
 
 		button.innerHTML = `
-			<svg aria-label="Unlike" fill="white" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+			<svg aria-label="Unlike" fill="rgb(255, 48, 64)" height="24" stroke-width="0" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 		`;
 	} else {
 		let count = matchingData.likeCount;
@@ -340,6 +340,293 @@ export function tooltipMouseleave(elem) {
 	tooltip.style.pointerEvents = 'none';
 }
 
+export function emojiBtnFunction(button, input) {
+	const parent = button.parentElement;
+	const elem = document.createElement('div');
+	const overlay = document.createElement('div');
+	elem.classList.add('emoji-container');
+	overlay.classList.add('emoji-overlay');
+	elem.innerHTML = `
+		<div class="emojis">
+			<div>
+				<div>Most popular</div>
+				<div class="mostpopular">
+					<div class="js-emoji">😂</div>
+					<div class="js-emoji">😮</div>
+					<div class="js-emoji">😍</div>
+					<div class="js-emoji">😥</div>
+					<div class="js-emoji">👏</div>
+					<div class="js-emoji">🔥</div>
+					<div class="js-emoji">🎉</div>
+					<div class="js-emoji">💯</div>
+					<div class="js-emoji">💖</div>
+					<div class="js-emoji">🤣</div>
+					<div class="js-emoji">🥰</div>
+					<div class="js-emoji">😘</div>
+					<div class="js-emoji">😭</div>
+					<div class="js-emoji">😊</div>
+				</div>
+			</div>
+
+			<div>
+				<div>Activities</div>
+				<div class="mostpopular">
+					<div class="js-emoji" title="">🕴</div>
+					<div class="js-emoji" title="">🧗‍♂️</div>
+					<div class="js-emoji" title="">🧗‍♀️</div>
+					<div class="js-emoji" title="">🏇</div>
+					<div class="js-emoji" title="">🏂</div>
+					<div class="js-emoji" title="">🏌️‍♂️</div>
+					<div class="js-emoji" title="">🏌️‍♀️</div>
+					<div class="js-emoji" title="">🏄‍♂️</div>
+					<div class="js-emoji" title="">🏄‍♀️</div>
+					<div class="js-emoji" title="">🚣‍♂️</div>
+					<div class="js-emoji" title="">🚣‍♀️</div>
+					<div class="js-emoji" title="">🏊‍♂️</div>
+					<div class="js-emoji" title="">🏊‍♀️</div>
+					<div class="js-emoji" title="">⛹️‍♂️</div>
+					<div class="js-emoji" title="">⛹️‍♀️</div>
+					<div class="js-emoji" title="">🏋️‍♂️</div>
+					<div class="js-emoji" title="">🏋️‍♀️</div>
+					<div class="js-emoji" title="">🚴‍♂️</div>
+					<div class="js-emoji" title="">🚴‍♀️</div>
+					<div class="js-emoji" title="">🚵‍♂️</div>
+					<div class="js-emoji" title="">🚵‍♀️</div>
+					<div class="js-emoji" title="">🤸‍♂️</div>
+					<div class="js-emoji" title="">🤸‍♀️</div>
+					<div class="js-emoji" title="">🤽‍♂️</div>
+					<div class="js-emoji" title="">🤽‍♀️</div>
+					<div class="js-emoji" title="">🤾‍♂️</div>
+					<div class="js-emoji" title="">🤾‍♀️</div>
+					<div class="js-emoji" title="">🤹‍♂️</div>
+					<div class="js-emoji" title="">🤹‍♀️</div>
+					<div class="js-emoji" title="">🧘‍♂️</div>
+					<div class="js-emoji" title="">🧘‍♀️</div>
+					<div class="js-emoji" title="">🎪</div>
+					<div class="js-emoji" title="">🛹</div>
+					<div class="js-emoji" title="">🎗</div>
+					<div class="js-emoji" title="">🎫</div>
+					<div class="js-emoji" title="">🏆</div>
+					<div class="js-emoji" title="">🎖</div>
+					<div class="js-emoji" title="">🥇</div>
+					<div class="js-emoji" title="">🥈</div>
+					<div class="js-emoji" title="">🥉</div>
+					<div class="js-emoji" title="">🏅</div>
+					<div class="js-emoji" title="">⚽</div>
+					<div class="js-emoji" title="">⚾</div>
+					<div class="js-emoji" title="">🥎</div>
+					<div class="js-emoji" title="">🏐</div>
+					<div class="js-emoji" title="">🏀</div>
+					<div class="js-emoji" title="">🏈</div>
+					<div class="js-emoji" title="">🏉</div>
+					<div class="js-emoji" title="">🎾</div>
+					<div class="js-emoji" title="">🥏</div>
+					<div class="js-emoji" title="">🎳</div>
+					<div class="js-emoji" title="">🏏</div>
+					<div class="js-emoji" title="">🏑</div>
+					<div class="js-emoji" title="">🏒</div>
+					<div class="js-emoji" title="">🥍</div>
+					<div class="js-emoji" title="">🏓</div>
+					<div class="js-emoji" title="">🏸</div>
+					<div class="js-emoji" title="">🥊</div>
+					<div class="js-emoji" title="">🥋</div>
+					<div class="js-emoji" title="">⛳</div>
+					<div class="js-emoji" title="">⛸</div>
+					<div class="js-emoji" title="">🎣</div>
+					<div class="js-emoji" title="">🎽</div>
+					<div class="js-emoji" title="">🎿</div>
+					<div class="js-emoji" title="">🛷</div>
+					<div class="js-emoji" title="">🥌</div>
+					<div class="js-emoji" title="">🎯</div>
+					<div class="js-emoji" title="">🎱</div>
+					<div class="js-emoji" title="">🎮</div>
+					<div class="js-emoji" title="">🎰</div>
+					<div class="js-emoji" title="">🎲</div>
+					<div class="js-emoji" title="">🧩</div>
+					<div class="js-emoji" title="">♟</div>
+					<div class="js-emoji" title="">🎭</div>
+					<div class="js-emoji" title="">🎨</div>
+					<div class="js-emoji" title="">🧵</div>
+					<div class="js-emoji" title="">🧶</div>
+					<div class="js-emoji" title="">🎼</div>
+					<div class="js-emoji" title="">🎤</div>
+					<div class="js-emoji" title="">🎧</div>
+					<div class="js-emoji" title="">🎧</div>
+					<div class="js-emoji" title="">🎷</div>
+					<div class="js-emoji" title="">🎸</div>
+					<div class="js-emoji" title="">🎹</div>
+					<div class="js-emoji" title="">🎻</div>
+					<div class="js-emoji" title="">🎺</div>
+					<div class="js-emoji" title="">🥁</div>
+					<div class="js-emoji" title="">🎬</div>
+					<div class="js-emoji" title="">🏹</div>
+
+				</div>
+			</div>
+		</div>
+	`;
+
+	parent.appendChild(elem);
+	parent.appendChild(overlay);
+
+	overlay.addEventListener('click', () => {
+		parent.removeChild(elem);
+		parent.removeChild(overlay);
+	});
+
+	document.querySelectorAll('.js-emoji').forEach(emoji => {
+		emoji.addEventListener('click', () => {
+			input.value += emoji.innerHTML;
+		});
+	});
+}
+
+export function likeCountFunction() {
+	const container = document.querySelector('.js-videos-images');
+	const elem = document.createElement('div');
+	const overlay = document.createElement('div');
+	elem.classList.add('likes-container');
+	overlay.classList.add('likes-overlay');
+
+	elem.innerHTML = `
+		<div class="likes-header">
+			<div>Likes</div> 
+			<svg aria-label="Close" class="js-lclose-icon" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
+		</div>
+		<div class="like-con">
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>beaner.faggit</div>
+					<div>weird thing</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>zodiyak777</div>
+					<div>Ben</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>deadpoolmakesmewetandsticky_</div>
+					<div>what</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>ihate.walmart</div>
+					<div>Ezekiel</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>henryschwerin</div>
+					<div>Henry Schwerin</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>cjaguy2002</div>
+					<div>Cameron Antone</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>loowitrail</div>
+					<div>Mason</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>joseph.chm</div>
+					<div>yosef</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>sjacqus3s</div>
+					<div>livv</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>ye.ah6398</div>
+					<div>Sam J</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>charlesthewu</div>
+					<div>Charles Wu</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>jamestooshifty</div>
+					<div>james</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>maddox_____jones</div>
+					<div>james</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+			<div class="like">
+				<div class="like-profile"></div>
+				<div class="like-name-con">
+					<div>gabrielfdz_0</div>
+					<div>Ing. A. Turrona</div>
+				</div>
+				<button class="like-followbtn">Follow</button>
+			</div>
+		</div>
+	`;
+
+	container.appendChild(elem);
+	container.appendChild(overlay);
+
+	setTimeout(() => {
+		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
+	}, 100);
+
+	overlay.addEventListener('click', () => {
+		container.removeChild(elem);
+		container.removeChild(overlay);
+	});
+
+	document.querySelector('.js-lclose-icon').addEventListener('click', () => {
+		container.removeChild(elem);
+		container.removeChild(overlay);
+	});
+}
+
 // view comment function
 export function viewCommentSection(button) {
 	const elem = document.createElement('div');
@@ -356,14 +643,14 @@ export function viewCommentSection(button) {
 		post = `
 			<img src="${matchingData.post}" data-id="${matchingData.id}">
 			<div class="image-like js-cimage-like">
-				<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 			</div>
 		`;
 	} else if (matchingData.typePost === 'video') {
 		post = `
 			<video autoplay loop src="${matchingData.post}" data-id="${matchingData.id}"></video>
 			<div class="image-like js-cimage-like">
-				<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 			</div>
 			<button class="csound-button">
 				<svg class="csoundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
@@ -376,7 +663,7 @@ export function viewCommentSection(button) {
 				<div class="cimage">
 					<img src="${imgs}" data-id="${matchingData.id}">
 					<div class="image-like js-cimage-like">
-						<svg aria-label="Unlike" fill="currentColor" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+						<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
 					</div>
 				</div>
 			`;
@@ -504,7 +791,9 @@ export function viewCommentSection(button) {
 				<span class="comment-time">${matchingData.timePosted}</span>
 			</div>
 			<div class="comment-type-sec">
-				<svg aria-label="Emoji" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Emoji</title><path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path></svg>
+				<div class="emojis-container">
+					<svg aria-label="Emoji" class="js-cemoji-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Emoji</title><path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path></svg>
+				</div>
 				<input type="text" class="js-cinput" placeholder="Add a comment...">
 				<button class="comment-post-button js-cpost-btn">Post</button>
 			</div>
@@ -570,6 +859,8 @@ export function viewCommentSection(button) {
 	const moreOptionBtn = document.querySelector('.js-cmore-option-button');
   const profile = document.querySelector('.js-comment-profile');
 	const name = document.querySelector('.js-cname-con');
+	const likeCountElem = document.querySelector(`.js-clike-counts`);
+	const emojiBtn = document.querySelector('.js-cemoji-button');
 
 	overlay.addEventListener('click', () => {
 		container.removeChild(elem);
@@ -583,8 +874,7 @@ export function viewCommentSection(button) {
 
 	// like btn
 	likeBtn.addEventListener('click', () => {
-		const elem = document.querySelector(`.js-clike-counts`);
-		likeBtnFunction(likeBtn, elem);
+		likeBtnFunction(likeBtn, likeCountElem);
 		bouncyEffect(likeBtn);
 	});
 	likeBtn.addEventListener('mouseleave', () => {
@@ -623,6 +913,15 @@ export function viewCommentSection(button) {
 
 	moreOptionBtn.addEventListener('click', () => {
 		moreOptionBtnFunction();
+	});
+
+	likeCountElem.addEventListener('click', () => {
+		likeCountFunction();
+	});
+
+	emojiBtn.addEventListener('click', () => {
+		const input = document.querySelector(`.js-cinput`);
+		emojiBtnFunction(emojiBtn, input);		
 	});
 
 	document.querySelectorAll('.js-cimagevideo-con img').forEach(img => {
