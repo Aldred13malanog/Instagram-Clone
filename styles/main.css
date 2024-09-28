@@ -462,10 +462,15 @@ header {
 	margin-left: auto;
 }
 .comment-post-like {
+	display: inline-block;
 	margin-top: 10px;
 	font-weight: 500;
 	font-size: 14px;
 	cursor: pointer;
+	transition: all 0.15s;
+}
+.comment-post-like:hover {
+	color: #A8A8A8;
 }
 .comment-time {
 	color: #A8A8A8;

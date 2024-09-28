@@ -1,7 +1,9 @@
 import { getMatchingData } from "../../data/fyp-data.js";
 import { getMatchingCommentsData } from "../../data/comments-data.js";
+import { getMatchingLikedData } from "../../data/post-likes-data.js";
+import { loadPage } from "../home-page.js";
 
-// check post fun
+// check post function
 export function checkPost(data) {
 	if (data.typePost === 'image') {
 		return `		
@@ -44,7 +46,7 @@ export function checkPost(data) {
 	}
 }
 
-// video function
+// video autoplay function & sound button function
 export function videoFunction() {
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
@@ -126,23 +128,28 @@ export function imageSlider(button) {
 	images.style.transform = `translateX(${-datas.index * (100 / slides)}%)`;
 }
 
-// img/vid like
-export function imgVidLike(elem, elem2, elem3) {
+// when double click the post the like icon appear and increases the like count of the post
+export function onDlClickPost(elem, likeCountElem, likeButton) {
 	const parentElem = elem.parentElement; 
 	const imglike = parentElem.children[1];
 	const {id} = elem.dataset;
 	let matchingData = getMatchingData(id);
+	let matchingLikes = getMatchingLikedData(id);
 
-	const likeCountElem = elem2;
-	const likeBtn = elem3;
-	
-	let likeCount = matchingData.likeCount;
-	likeCount++;
-	likeCountElem.innerHTML = `${likeCount.toLocaleString()} likes`;
-	likeBtn.innerHTML = `
-		<svg aria-label="Unlike" fill="rgb(255, 48, 64)" stroke-width="0" height="24" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-	`;
-	bouncyEffect(likeBtn);
+	matchingData.isLiked = true;
+	likeButton.innerHTML = handleLikeIcon(id);
+
+	if (matchingLikes.users.length == 0 || matchingLikes.users[0].username !== 'aaaaaaaaaaldma') {
+		matchingLikes.users.unshift({
+			username: 'aaaaaaaaaaldma',
+			name: 'Aaaaaaaaaa'
+		});
+		matchingData.likeCount++;
+	}
+
+	likeCountElem.innerHTML = `${matchingData.likeCount.toLocaleString()} likes`
+
+	bouncyEffect(likeButton);
 
 	imglike.style.transform = 'translate(-50%, -50%) scale(1.2) rotate(-20deg)';
 	setTimeout(() => {
@@ -153,33 +160,32 @@ export function imgVidLike(elem, elem2, elem3) {
 	}, 700);
 }
 
-// like button
-export function likeBtnFunction(button, likeCount) {
+// like button when clicked the like icon color will be coloured
+// and the like count will increase
+export function onClickLikeButton(button, likeCount) {
 	const {id} = button.dataset;
-	const svg = button.children[0];
-	const likeCountElem = likeCount;
-
 	let matchingData = getMatchingData(id);
+	let matchingLikes = getMatchingLikedData(id);
 
-	if (svg.ariaLabel === 'Like') {
-		let count = matchingData.likeCount;
-		count++;
-		likeCountElem.innerHTML = `${count.toLocaleString()} likes`;
-
-		button.innerHTML = `
-			<svg aria-label="Unlike" fill="rgb(255, 48, 64)" height="24" stroke-width="0" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-		`;
+	if (!matchingData.isLiked) {
+		matchingData.isLiked = true;
+		button.innerHTML = handleLikeIcon(id);
+		matchingData.likeCount += 1;
+		matchingLikes.users.unshift({
+			username: 'aaaaaaaaaaldma',
+			name: 'Aaaaaaaaaa'
+		});
 	} else {
-		let count = matchingData.likeCount;
-		likeCountElem.innerHTML = `${count.toLocaleString()} likes`;
-
-		button.innerHTML = `
-			<svg aria-label="Like" class="like-icon" fill="white" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
-		`;
+		matchingData.isLiked = false;
+		button.innerHTML = handleLikeIcon(id);
+		matchingData.likeCount -= 1;
+		matchingLikes.users.splice(0, 1);
 	}
+
+	likeCount.innerHTML = `${matchingData.likeCount.toLocaleString()} likes`
 }
 
-export function shareBtnFunction() {
+export function onClickShareButton() {
 	const shareContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
@@ -267,7 +273,7 @@ export function shareBtnFunction() {
 	});
 }
 
-export function saveBtnFunction(button) {
+export function onClickSaveButton(button) {
 	const svg = button.children[0];
 	if (svg.ariaLabel == 'Save') {
 		button.innerHTML = `
@@ -280,7 +286,7 @@ export function saveBtnFunction(button) {
 	}
 }
 
-export function moreOptionBtnFunction() {
+export function onClickMoreOptionButton() {
 	const moreOptionsContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
@@ -340,7 +346,7 @@ export function tooltipMouseleave(elem) {
 	tooltip.style.pointerEvents = 'none';
 }
 
-export function emojiBtnFunction(button, input) {
+export function onClickEmojiButton(button, input) {
 	const parent = button.parentElement;
 	const elem = document.createElement('div');
 	const overlay = document.createElement('div');
@@ -472,21 +478,44 @@ export function emojiBtnFunction(button, input) {
 	overlay.addEventListener('click', () => {
 		parent.removeChild(elem);
 		parent.removeChild(overlay);
+		input.focus();
 	});
 
 	document.querySelectorAll('.js-emoji').forEach(emoji => {
 		emoji.addEventListener('click', () => {
 			input.value += emoji.innerHTML;
+			input.focus();
+			parent.previousElementSibling.style.display = 'initial';
 		});
 	});
+	input.focus();
 }
 
-export function likeCountFunction() {
+export function likeCountFunction(id) {
 	const container = document.querySelector('.js-videos-images');
 	const elem = document.createElement('div');
 	const overlay = document.createElement('div');
 	elem.classList.add('likes-container');
 	overlay.classList.add('likes-overlay');
+	let matchingData = getMatchingLikedData(id);
+
+	function getUsersWhoLike() {
+		let html = '';
+		matchingData.users.forEach(data => {
+			html += `
+				<div class="like">
+					<div class="like-profile"></div>
+					<div class="like-name-con">
+						<div>${data.username}</div>
+						<div>${data.name}</div>
+					</div>
+					<button class="like-followbtn">Follow</button>
+				</div>
+			`;
+		});
+
+		return html;
+	}
 
 	elem.innerHTML = `
 		<div class="likes-header">
@@ -494,118 +523,7 @@ export function likeCountFunction() {
 			<svg aria-label="Close" class="js-lclose-icon" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
 		</div>
 		<div class="like-con">
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>beaner.faggit</div>
-					<div>weird thing</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>zodiyak777</div>
-					<div>Ben</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>deadpoolmakesmewetandsticky_</div>
-					<div>what</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>ihate.walmart</div>
-					<div>Ezekiel</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>henryschwerin</div>
-					<div>Henry Schwerin</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>cjaguy2002</div>
-					<div>Cameron Antone</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>loowitrail</div>
-					<div>Mason</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>joseph.chm</div>
-					<div>yosef</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>sjacqus3s</div>
-					<div>livv</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>ye.ah6398</div>
-					<div>Sam J</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>charlesthewu</div>
-					<div>Charles Wu</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>jamestooshifty</div>
-					<div>james</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>maddox_____jones</div>
-					<div>james</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
-			<div class="like">
-				<div class="like-profile"></div>
-				<div class="like-name-con">
-					<div>gabrielfdz_0</div>
-					<div>Ing. A. Turrona</div>
-				</div>
-				<button class="like-followbtn">Follow</button>
-			</div>
+			${getUsersWhoLike()}
 		</div>
 	`;
 
@@ -625,6 +543,20 @@ export function likeCountFunction() {
 		container.removeChild(elem);
 		container.removeChild(overlay);
 	});
+}
+
+export function handleLikeIcon(id) {
+	const matchingData = getMatchingData(id);
+
+	if (matchingData.isLiked) {
+		return `
+			<svg aria-label="Unlike" fill="rgb(255, 48, 64)" height="24" stroke-width="0" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+		`;
+	} else {
+		return `
+			<svg aria-label="Like" class="like-icon" fill="white" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
+		`;
+	}
 }
 
 // view comment function
@@ -775,7 +707,7 @@ export function viewCommentSection(button) {
 			<div class="comment-icon-con">
 				<div class="comment-icon">
 					<button class="js-clike-button" data-id="${matchingData.id}">
-						<svg aria-label="Like" class="x1lliihq x1n2onr6 x1cp0k07" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z"></path></svg>
+						${handleLikeIcon(matchingData.id)}
 					</button>
 					<button class="js-ccomment-button">
 						<svg aria-label="Comment" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Comment</title><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path></svg>
@@ -787,7 +719,9 @@ export function viewCommentSection(button) {
 						<svg aria-label="Save" class="x1lliihq x1n2onr6 x1roi4f4" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Save</title><polygon fill="none" points="20 21 12 13.44 4 21 4 3 20 3 20 21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polygon></svg>
 					</button>
 				</div>
-				<span class="comment-post-like js-clike-counts">${matchingData.likeCount.toLocaleString()} likes</span>
+				<div>
+					<span class="comment-post-like js-clike-counts">${matchingData.likeCount.toLocaleString()} likes</span>
+				</div>
 				<span class="comment-time">${matchingData.timePosted}</span>
 			</div>
 			<div class="comment-type-sec">
@@ -865,16 +799,12 @@ export function viewCommentSection(button) {
 	overlay.addEventListener('click', () => {
 		container.removeChild(elem);
 		container.removeChild(overlay);
-		if (matchingData.typePost === 'video') {
-			setTimeout(() => {
-				document.querySelector(`.js-video-${id}`).play();
-			}, 500);
-		}
+		loadPage();
 	});
 
 	// like btn
 	likeBtn.addEventListener('click', () => {
-		likeBtnFunction(likeBtn, likeCountElem);
+		onClickLikeButton(likeBtn, likeCountElem);
 		bouncyEffect(likeBtn);
 	});
 	likeBtn.addEventListener('mouseleave', () => {
@@ -888,12 +818,12 @@ export function viewCommentSection(button) {
 
 	// share btn
 	shareBtn.addEventListener('click', () => {
-		shareBtnFunction();
+		onClickShareButton();
 	});
 
 	// save btn
 	saveBtn.addEventListener('click', () => {
-		saveBtnFunction(saveBtn);
+		onClickSaveButton(saveBtn);
 	});
 
 	postBtn.addEventListener('click', () => {
@@ -912,23 +842,23 @@ export function viewCommentSection(button) {
 	});
 
 	moreOptionBtn.addEventListener('click', () => {
-		moreOptionBtnFunction();
+		onClickMoreOptionButton();
 	});
 
 	likeCountElem.addEventListener('click', () => {
-		likeCountFunction();
+		likeCountFunction(id);
 	});
 
 	emojiBtn.addEventListener('click', () => {
 		const input = document.querySelector(`.js-cinput`);
-		emojiBtnFunction(emojiBtn, input);		
+		onClickEmojiButton(emojiBtn, input);		
 	});
 
 	document.querySelectorAll('.js-cimagevideo-con img').forEach(img => {
 		img.addEventListener('dblclick', () => {
 			const likeCount = document.querySelector(`.js-clike-counts`);
 			const likeBtn = document.querySelector(`.js-clike-button`);
-			imgVidLike(img, likeCount, likeBtn);
+			onDlClickPost(img, likeCount, likeBtn);
 		});
 	});
 	
@@ -936,7 +866,7 @@ export function viewCommentSection(button) {
 		vid.addEventListener('dblclick', () => {
 			const likeCount = document.querySelector(`.js-clike-counts`);
 			const likeBtn = document.querySelector(`.js-clike-button`);
-			imgVidLike(vid, likeCount, likeBtn);
+			onDlClickPost(vid, likeCount, likeBtn);
 		});
 	});
 

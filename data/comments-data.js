@@ -1,5 +1,5 @@
 export const commentsData = [{
-	id: '0',
+	id: '1',
 	comments: [{
 		username: 'jacoblokietek_',
 		comment: 'bro straightened his neck, stopped pushing out his core, and changed the lighting, wow so impressive'
@@ -14,7 +14,7 @@ export const commentsData = [{
 		comment: "I'm so confused"
 	}]
 }, {
-	id: '1',
+	id: '2',
 	comments: [{
 		username: 'g4ybirey',
 		comment: 'Cok guzel :)'
@@ -29,7 +29,7 @@ export const commentsData = [{
 		comment: "So detailed you can see the were the dust settled from impact craters, and yet no landing sites..."
 	}]
 }, {
-	id: '2',
+	id: '3',
 	comments: [{
 		username: 'bugatti',
 		comment: 'BUGATTI is the center stage at Chantilly Arts & Elegance Richard Mille - a unique celebration of the art of living, automotive haute couture, and refinement set against the majestic backdrop of Chateau de Chantilly. Here, each detail, much like every BUGATTI crafted, tells a story.'
@@ -41,7 +41,7 @@ export const commentsData = [{
 		comment: 'Beautiful stories being told'
 	}]
 }, {
-	id: '3',
+	id: '4',
 	comments: [{
 		username: 'fettyshane13',
 		comment: 'Yeahh ima need slide 2-3 framed!'
@@ -55,9 +55,6 @@ export const commentsData = [{
 		username: 'sneakybruh_',
 		comment: 'My favorite hypercar ever'
 	}]
-}, {
-	id: '4',
-	comments: []
 }, {
 	id: '5',
 	comments: []
@@ -75,6 +72,9 @@ export const commentsData = [{
 	comments: []
 }, {
 	id: '10',
+	comments: []
+}, {
+	id: '11',
 	comments: []
 }];
 
