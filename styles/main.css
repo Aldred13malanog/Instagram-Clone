@@ -88,7 +88,7 @@ header {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%) scale(0%);
+	transform: translate(-50%, -50%) scale(100%);
 	transition: transform .15s;
 	background-color: #272727;
 	z-index: 13;
@@ -97,15 +97,17 @@ header {
 	border-radius: 12px;
 	font-size: 14px;
 	overflow: hidden;
+	max-width: 400px;
 
-	& div {
+
+	& .buttons {
 		text-align: center;
 		width: 400px;
 		padding: 14px;
 		border-bottom: 1px solid #444444;
 		cursor: pointer;
 	}
-	& div:active {
+	& .buttons:active {
 		background-color: #222222;
 	}
 	.cancel-btn {
@@ -126,6 +128,112 @@ header {
 	bottom: 0;	
 	background-color: #000000ad;
 	z-index: 12;
+}
+.report-header {
+	width: 400px;
+	padding: 12px;
+	font-size: 16px;
+	font-weight: 500;
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid #737373;
+	position: relative;
+
+	& svg {
+		position: absolute;
+		right: 12px;
+		top: 14px;
+	}
+}
+.report-heading {
+	font-weight: 500;
+	font-size: 16px;
+	margin: 18px 15px;
+}
+.reason {
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+	transition: all .15s;
+
+	& svg {
+		fill: #737373;
+	}
+}
+.reason:hover {
+	background-color: #444444;
+}
+.report-success-container {
+	display: flex;
+	flex-direction: column;
+}
+.report-success-texts {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	padding: 12px;
+	margin-bottom: 20px;
+	& svg {
+		margin: 20px 0;
+	}
+}
+.report-text {
+	font-size: 16px;
+	font-weight: 500;
+}
+.report-text1 {
+	color: #A8A8A8;
+	margin-top: 10px;
+	& span {
+		color: white;
+		cursor: pointer;
+	}
+}
+.block-button {
+	color: #ee4444;
+}
+.report-close-button {
+	border: none;
+	background-color: #0095F6;
+	color: white;
+	margin: 16px;
+	font-weight: 500;
+	padding: 8px;
+	border-radius: 8px;
+	cursor: pointer;
+}
+.block-container {
+	display: flex;
+	flex-direction: column;
+
+	& button {
+		border: none;
+		border-top: 1px solid #7373733b;
+		padding: 14px;
+		background-color: transparent;
+		cursor: pointer;
+	}
+	& button:last-child {
+		color: white;
+	}
+}
+.block-btn {
+	color: #ED4956;
+	font-weight: bold;
+	font-size: 14px;
+}
+.block-texts {
+	padding: 26px;
+	text-align: center;
+	& div:first-child {
+		font-size: 20px;
+	}
+	& div:last-child {
+		color: #A8A8A8;
+	}
 }
 
 .video-image {

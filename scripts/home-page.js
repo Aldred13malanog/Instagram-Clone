@@ -112,7 +112,7 @@ export function loadPage() {
 						<div>&#8226;</div>
 						<div class="time">${data.timePosted}</div>
 					</div>
-					<svg aria-label="More options" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-id="${data.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 
 				<div class="video-image js-video-image">
@@ -233,7 +233,7 @@ export function loadPage() {
 	// more option button
 	document.querySelectorAll('.js-more-options').forEach(button => {
 		button.addEventListener('click', () => {
-			onClickMoreOptionButton();
+			onClickMoreOptionButton(button.dataset.id);
 		});
 	});
 

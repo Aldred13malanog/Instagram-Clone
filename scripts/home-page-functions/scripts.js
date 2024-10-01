@@ -300,25 +300,26 @@ export function onClickSaveButton(button) {
 		`;
 	}
 }
-
-export function onClickMoreOptionButton() {
+export function onClickMoreOptionButton(buttonId) {
 	const moreOptionsContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
+	const id = buttonId;
+	let matchingData = getMatchingData(id);
 
 	moreOptionsContainer.classList.add('more-option-container');
 	overlay.classList.add('more-option-overlay');
 
 	moreOptionsContainer.innerHTML = `
-		<div class="report-btn">Report</div>
-		<div class="unfollow-btn">Unfollow</div>
-		<div>Add to favorites</div>
-		<div>Go to post</div>
-		<div>Share to...</div>
-		<div>Copy link</div>
-		<div>Embed</div>
-		<div>About this account</div>
-		<div class="cancel-btn js-cancel-btn">Cancel</div>
+		<div class="buttons report-btn js-report-button">Report</div>
+		<div class="buttons unfollow-btn">Unfollow</div>
+		<div class="buttons">Add to favorites</div>
+		<div class="buttons">Go to post</div>
+		<div class="buttons">Share to...</div>
+		<div class="buttons">Copy link</div>
+		<div class="buttons">Embed</div>
+		<div class="buttons">About this account</div>
+		<div class="buttons cancel-btn js-cancel-btn">Cancel</div>
 	`;
 
 	container.appendChild(moreOptionsContainer);
@@ -336,6 +337,89 @@ export function onClickMoreOptionButton() {
 	document.querySelector('.js-cancel-btn').addEventListener('click', () => {
 		container.removeChild(moreOptionsContainer);
 		container.removeChild(overlay);
+	});
+
+	document.querySelector('.js-report-button').addEventListener('click', () => {
+		moreOptionsContainer.innerHTML = `
+			<div class="report-header">
+				<div>Report</div>
+				<svg aria-label="Close" class="js-close-button" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
+			</div>
+			<div class="report-heading">Why are you reporting this post?</div>
+			<div class="reason js-reason">I just don't like it 
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Bullying or unwanted contact 
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Suicide, self-injury or eating disorders
+					<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Violence, hate or exploitation 
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Selling or promoting restricted items 
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Nudity or sexual activity 
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">Scam, fraud or spam
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+			<div class="reason js-reason">False information
+				<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+			</div>
+		`;
+
+		document.querySelector('.js-close-button').addEventListener('click', () => {
+			container.removeChild(moreOptionsContainer);
+			container.removeChild(overlay);
+		});
+
+		document.querySelectorAll('.js-reason').forEach(reasons => {
+			reasons.addEventListener('click', () => {
+				moreOptionsContainer.innerHTML = `
+					<div class="report-success-container">
+						<div class="report-success-texts">
+							<svg aria-label="checkmark" class="x1lliihq x1n2onr6 x127hrn9" fill="rgb(88, 195, 34)" height="48" role="img" viewBox="0 0 24 24" width="48"><title>checkmark</title><path d="M12.001.504a11.5 11.5 0 1 0 11.5 11.5 11.513 11.513 0 0 0-11.5-11.5Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5ZM16.293 8.3l-5.792 5.788-2.794-2.796a1 1 0 1 0-1.414 1.414l3.5 3.503a1 1 0 0 0 1.414.001l6.5-6.495A1 1 0 0 0 16.293 8.3Z"></path></svg>
+							<div class="report-text">Thanks for your feedback</div>
+							<div class="report-text1">When you see something you don't like on Instagram, you can report it if it doesn't follow our <span>Community Guidelines</span>, or you can remove the person who shared it from your experience.</div>
+						</div>
+						<div class="reason block-button js-block-button">Block ${matchingData.name} 
+							<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+						</div>
+						<div class="reason">Learn more about Instagram's Community Guidelines
+							<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+						</div>
+						<button class="report-close-button js-close-button">Close</button>
+					</div>
+				`;
+
+				document.querySelector('.js-block-button').addEventListener('click', () => {
+					moreOptionsContainer.innerHTML = `
+						<div class="block-container">
+							<div class="block-texts">
+								<div>Block ${matchingData.name}?</div>
+								<div>They won't be able to find your profile, posts, or story on Instagram. Instagram won't let them know you blocked them.</div>
+							</div>
+							<button class="block-btn">Block</button>
+							<button class="js-close-button">Cancel</button>
+						</div>
+					`;
+
+					document.querySelector('.js-close-button').addEventListener('click', () => {
+						container.removeChild(moreOptionsContainer);
+						container.removeChild(overlay);
+					});
+				})
+
+				document.querySelector('.js-close-button').addEventListener('click', () => {
+					container.removeChild(moreOptionsContainer);
+					container.removeChild(overlay);
+				});
+			});
+		});
 	});
 }
 
