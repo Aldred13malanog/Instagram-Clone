@@ -3,6 +3,8 @@ import { getMatchingCommentsData } from "../../data/comments-data.js";
 import { getMatchingLikedData } from "../../data/post-likes-data.js";
 import { loadPage } from "../home-page.js";
 
+// handling functions
+
 // check post function
 export function checkPost(data) {
 	if (data.typePost === 'image') {
@@ -46,8 +48,8 @@ export function checkPost(data) {
 	}
 }
 
-// video autoplay function & sound button function
-export function videoFunction() {
+// video autoplay function
+export function videoAutoPlay() {
 	const observer = new IntersectionObserver((entries) => {
 		entries.forEach(entry => {
 			const video = entry.target;
@@ -67,66 +69,79 @@ export function videoFunction() {
 	videos.forEach(video => {
 		observer.observe(video);
 	});
-	
-	const soundBtn = document.querySelectorAll('.sound-button');
-	
-	soundBtn.forEach((button) => {
-		button.addEventListener('click',() => {
-			const prevSib = button.previousElementSibling;
-			const video = prevSib.previousElementSibling;
-			if (video.muted) {
-				video.muted = false;
-				button.innerHTML = `
-				<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>`
-			} else {
-				video.muted = true;
-				button.innerHTML = `
-					<svg class="nosound-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><title>Audio is muted</title><path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Z"/></svg>
-				`;
-			}
-		})
+}
+
+export function likeCountFunction(id) {
+	const container = document.querySelector('.js-videos-images');
+	const elem = document.createElement('div');
+	const overlay = document.createElement('div');
+	elem.classList.add('likes-container');
+	overlay.classList.add('likes-overlay');
+	let matchingData = getMatchingLikedData(id);
+
+	function getUsersWhoLike() {
+		let html = '';
+		matchingData.users.forEach(data => {
+			html += `
+				<div class="like">
+					<div class="like-profile"></div>
+					<div class="like-name-con">
+						<div>${data.username}</div>
+						<div>${data.name}</div>
+					</div>
+					<button class="like-followbtn">Follow</button>
+				</div>
+			`;
+		});
+
+		return html;
+	}
+
+	elem.innerHTML = `
+		<div class="likes-header">
+			<div>Likes</div> 
+			<svg aria-label="Close" class="js-lclose-icon" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
+		</div>
+		<div class="like-con">
+			${getUsersWhoLike()}
+		</div>
+	`;
+
+	container.appendChild(elem);
+	container.appendChild(overlay);
+
+	setTimeout(() => {
+		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
+	}, 100);
+
+	overlay.addEventListener('click', () => {
+		container.removeChild(elem);
+		container.removeChild(overlay);
+	});
+
+	document.querySelector('.js-lclose-icon').addEventListener('click', () => {
+		container.removeChild(elem);
+		container.removeChild(overlay);
 	});
 }
 
-// image slider
-export function imageSlider(button) {
-	const imgId = button.dataset.id;
-	let images;
-	let slides;
-	let datas = getMatchingData(imgId);	
+export function handleLikeIcon(id) {
+	const matchingData = getMatchingData(id);
 
-	if (button.textContent == '❮') {
-		const nextSib = button.nextElementSibling;
-		images = button.previousElementSibling;
-		slides = images.children.length;
-		
-		datas.index--;
-
-		if (datas.index === 0) {
-			button.classList.add('inactive');
-		}
-		if (datas.index < slides - 1) {
-			nextSib.classList.remove('inactive');
-		}
+	if (matchingData.isLiked) {
+		return `
+			<svg aria-label="Unlike" fill="rgb(255, 48, 64)" height="24" stroke-width="0" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+		`;
+	} else {
+		return `
+			<svg aria-label="Like" class="like-icon" fill="white" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
+		`;
 	}
-
-	if (button.textContent == '❯') {
-		const prevElemSib = button.previousElementSibling;			
-		images = prevElemSib.previousElementSibling;
-		slides = images.children.length;
-
-		datas.index++;
-
-		if (datas.index > 0) {
-			prevElemSib.classList.remove('inactive');
-		}
-		if (datas.index === slides - 1) {
-			button.classList.add('inactive');
-		}
-	}
-
-	images.style.transform = `translateX(${-datas.index * (100 / slides)}%)`;
 }
+
+/*----------------------------------------------------------*/
+
+// on clicks functions
 
 // when double click the post the like icon appear and increases the like count of the post
 export function onDlClickPost(elem, likeCountElem, likeButton) {
@@ -324,28 +339,6 @@ export function onClickMoreOptionButton() {
 	});
 }
 
-// bouncy effect
-export function bouncyEffect(elem) {
-	elem.style.transition = 'transform 0.15s ease'; // Start transition
-	elem.style.transform = 'scale(1.2)'; // Scale up on unhover
-	
-	setTimeout(() => {
-		elem.style.transform = 'scale(1)'; // Bounce back to original size
-	}, 150); // Delay to bounce back after scaling up
-}
-
-export function tooltipMouseover(elem) {
-	const tooltip = elem.children[1];
-	tooltip.style.opacity = '1';
-	tooltip.style.pointerEvents = 'auto';
-}
-
-export function tooltipMouseleave(elem) {
-	const tooltip = elem.children[1];
-	tooltip.style.opacity = '0';
-	tooltip.style.pointerEvents = 'none';
-}
-
 export function onClickEmojiButton(button, input) {
 	const parent = button.parentElement;
 	const elem = document.createElement('div');
@@ -491,73 +484,117 @@ export function onClickEmojiButton(button, input) {
 	input.focus();
 }
 
-export function likeCountFunction(id) {
-	const container = document.querySelector('.js-videos-images');
-	const elem = document.createElement('div');
-	const overlay = document.createElement('div');
-	elem.classList.add('likes-container');
-	overlay.classList.add('likes-overlay');
-	let matchingData = getMatchingLikedData(id);
+export function onClickPostButton(postButton, input) {
+	const comment = input.value;
+	const {id} = postButton.dataset;
+	let matchingCommentData = getMatchingCommentsData(id);
+	let matchingData = getMatchingData(id);
 
-	function getUsersWhoLike() {
-		let html = '';
-		matchingData.users.forEach(data => {
-			html += `
-				<div class="like">
-					<div class="like-profile"></div>
-					<div class="like-name-con">
-						<div>${data.username}</div>
-						<div>${data.name}</div>
-					</div>
-					<button class="like-followbtn">Follow</button>
-				</div>
-			`;
-		});
+	if (comment === '') return;
+	matchingCommentData.comments.push({
+		username: 'aaaaaaaaaaldma',
+		comment
+	});
 
-		return html;
-	}
-
-	elem.innerHTML = `
-		<div class="likes-header">
-			<div>Likes</div> 
-			<svg aria-label="Close" class="js-lclose-icon" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
-		</div>
-		<div class="like-con">
-			${getUsersWhoLike()}
-		</div>
+	matchingData.commentCount++;
+	document.querySelector(`.js-viewall-comment-${id}`).innerHTML = `
+		View all ${matchingData.commentCount} comments
 	`;
 
-	container.appendChild(elem);
-	container.appendChild(overlay);
+	input.value = '';
+}
 
-	setTimeout(() => {
-		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
-	}, 100);
-
-	overlay.addEventListener('click', () => {
-		container.removeChild(elem);
-		container.removeChild(overlay);
-	});
-
-	document.querySelector('.js-lclose-icon').addEventListener('click', () => {
-		container.removeChild(elem);
-		container.removeChild(overlay);
+export function onClickSoundButton() {
+	const soundBtn = document.querySelectorAll('.sound-button');
+	
+	soundBtn.forEach((button) => {
+		button.addEventListener('click',() => {
+			const prevSib = button.previousElementSibling;
+			const video = prevSib.previousElementSibling;
+			if (video.muted) {
+				video.muted = false;
+				button.innerHTML = `
+				<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>`
+			} else {
+				video.muted = true;
+				button.innerHTML = `
+					<svg class="nosound-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is muted</title><path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Z"/></svg>
+				`;
+			}
+		})
 	});
 }
 
-export function handleLikeIcon(id) {
-	const matchingData = getMatchingData(id);
+// image slider
+export function imageSlider(button) {
+	const imgId = button.dataset.id;
+	let images;
+	let slides;
+	let matchingData = getMatchingData(imgId);
 
-	if (matchingData.isLiked) {
-		return `
-			<svg aria-label="Unlike" fill="rgb(255, 48, 64)" height="24" stroke-width="0" role="img" viewBox="0 0 48 48" width="24"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-		`;
-	} else {
-		return `
-			<svg aria-label="Like" class="like-icon" fill="white" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Like</title><path d="M16.792 3.904A4.989 4.989 0 0 1 21.5 9.122c0 3.072-2.652 4.959-5.197 7.222-2.512 2.243-3.865 3.469-4.303 3.752-.477-.309-2.143-1.823-4.303-3.752C5.141 14.072 2.5 12.167 2.5 9.122a4.989 4.989 0 0 1 4.708-5.218 4.21 4.21 0 0 1 3.675 1.941c.84 1.175.98 1.763 1.12 1.763s.278-.588 1.11-1.766a4.17 4.17 0 0 1 3.679-1.938m0-2a6.04 6.04 0 0 0-4.797 2.127 6.052 6.052 0 0 0-4.787-2.127A6.985 6.985 0 0 0 .5 9.122c0 3.61 2.55 5.827 5.015 7.97.283.246.569.494.853.747l1.027.918a44.998 44.998 0 0 0 3.518 3.018 2 2 0 0 0 2.174 0 45.263 45.263 0 0 0 3.626-3.115l.922-.824c.293-.26.59-.519.885-.774 2.334-2.025 4.98-4.32 4.98-7.94a6.985 6.985 0 0 0-6.708-7.218Z" stroke="none"></path></svg>
-		`;
+	if (button.textContent == '❮') {
+		const nextSib = button.nextElementSibling;
+		images = button.previousElementSibling;
+		slides = images.children.length;
+		
+		matchingData.index--;
+
+		if (matchingData.index === 0) {
+			button.classList.add('inactive');
+		}
+		if (matchingData.index < slides - 1) {
+			nextSib.classList.remove('inactive');
+		}
 	}
+
+	if (button.textContent == '❯') {
+		const prevElemSib = button.previousElementSibling;			
+		images = prevElemSib.previousElementSibling;
+		slides = images.children.length;
+
+		matchingData.index++;
+
+		if (matchingData.index > 0) {
+			prevElemSib.classList.remove('inactive');
+		}
+		if (matchingData.index === slides - 1) {
+			button.classList.add('inactive');
+		}
+	}
+
+	images.style.transform = `translateX(${-matchingData.index * 100}%)`;
+	// images.style.transform = `translateX(${-matchingData.index * (100 / slides)}%)`;
 }
+
+/*----------------------------------------------------------*/
+
+// tooltips functions
+export function tooltipMouseover(elem) {
+	const tooltip = elem.children[1];
+	tooltip.style.opacity = '1';
+	tooltip.style.pointerEvents = 'auto';
+}
+
+export function tooltipMouseleave(elem) {
+	const tooltip = elem.children[1];
+	tooltip.style.opacity = '0';
+	tooltip.style.pointerEvents = 'none';
+}
+
+/*----------------------------------------------------------*/
+
+// animation function
+// bouncy effect
+export function bouncyEffect(elem) {
+	elem.style.transition = 'transform 0.15s ease'; // Start transition
+	elem.style.transform = 'scale(1.2)'; // Scale up on unhover
+	
+	setTimeout(() => {
+		elem.style.transform = 'scale(1)'; // Bounce back to original size
+	}, 150); // Delay to bounce back after scaling up
+}
+
+/*----------------------------------------------------------*/
 
 // view comment function
 export function viewCommentSection(button) {
@@ -569,49 +606,11 @@ export function viewCommentSection(button) {
 	const container = document.querySelector('.js-videos-images');
 	const {id} = button.dataset;
 	let matchingData = getMatchingData(id);
-	let post;
-
-	if (matchingData.typePost === 'image') {
-		post = `
-			<img src="${matchingData.post}" data-id="${matchingData.id}">
-			<div class="image-like js-cimage-like">
-				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-			</div>
-		`;
-	} else if (matchingData.typePost === 'video') {
-		post = `
-			<video autoplay loop src="${matchingData.post}" data-id="${matchingData.id}"></video>
-			<div class="image-like js-cimage-like">
-				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-			</div>
-			<button class="csound-button">
-				<svg class="csoundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
-			</button>
-		`;
-	} else if (matchingData.typePost === 'images') {
-		let posts = '';
-		matchingData.post.forEach(imgs => {
-			posts += `
-				<div class="cimage">
-					<img src="${imgs}" data-id="${matchingData.id}">
-					<div class="image-like js-cimage-like">
-						<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-					</div>
-				</div>
-			`;
-		});
-		post = `
-			<div class="cimages">
-				${posts}
-			</div>
-			<button class="prev-button inactive js-cprev">&#10094;</button>
-			<button class="next-button js-cnext">&#10095;</button>
-		`;
-	}
+	matchingData.index = 0;
 
 	elem.innerHTML = `
 		<div class="comment-img-section js-cimagevideo-con">
-			${post}
+			${post(matchingData.typePost)}
 		</div>
 		<div class="comment-right-section">
 			<div class="comment-header">
@@ -634,11 +633,11 @@ export function viewCommentSection(button) {
 								<div>posts</div>
 							</div>
 							<div>
-								<div>${matchingData.userFollowers}</div>
+								<div>${matchingData.followers}</div>
 								<div>followers</div>
 							</div>
 							<div>
-								<div>${matchingData.userFollowing}</div>
+								<div>${matchingData.following}</div>
 								<div>following</div>
 							</div>
 						</div>
@@ -675,11 +674,11 @@ export function viewCommentSection(button) {
 								<div>posts</div>
 							</div>
 							<div>
-								<div>${matchingData.userFollowers}</div>
+								<div>${matchingData.followers}</div>
 								<div>followers</div>
 							</div>
 							<div>
-								<div>${matchingData.userFollowing}</div>
+								<div>${matchingData.following}</div>
 								<div>following</div>
 							</div>
 						</div>
@@ -729,7 +728,7 @@ export function viewCommentSection(button) {
 					<svg aria-label="Emoji" class="js-cemoji-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Emoji</title><path d="M15.83 10.997a1.167 1.167 0 1 0 1.167 1.167 1.167 1.167 0 0 0-1.167-1.167Zm-6.5 1.167a1.167 1.167 0 1 0-1.166 1.167 1.167 1.167 0 0 0 1.166-1.167Zm5.163 3.24a3.406 3.406 0 0 1-4.982.007 1 1 0 1 0-1.557 1.256 5.397 5.397 0 0 0 8.09 0 1 1 0 0 0-1.55-1.263ZM12 .503a11.5 11.5 0 1 0 11.5 11.5A11.513 11.513 0 0 0 12 .503Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5Z"></path></svg>
 				</div>
 				<input type="text" class="js-cinput" placeholder="Add a comment...">
-				<button class="comment-post-button js-cpost-btn">Post</button>
+				<button class="comment-post-button js-cpost-btn" data-id="${matchingData.id}">Post</button>
 			</div>
 		</div>
 	`;
@@ -744,12 +743,55 @@ export function viewCommentSection(button) {
 		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
 	}, 100);
 
+	function post(typePost) {
+		if (typePost === 'image') {
+			return `
+				<img src="${matchingData.post}" data-id="${matchingData.id}">
+				<div class="image-like js-cimage-like">
+					<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				</div>
+			`;
+		} 
+		if (typePost === 'video') {
+			document.querySelector(`.js-video-${id}`).pause();
+			return `
+				<video autoplay loop src="${matchingData.post}" data-id="${matchingData.id}"></video>
+				<div class="image-like js-cimage-like">
+					<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				</div>
+				<button class="sound-button csound-button">
+					<svg class="csoundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
+				</button>
+			`;
+		}
+		if (typePost === 'images') {
+			let posts = '';
+			matchingData.post.forEach(imgs => {
+				posts += `
+					<div class="cimage">
+						<img src="${imgs}" data-id="${matchingData.id}">
+						<div class="image-like js-cimage-like">
+							<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+						</div>
+					</div>
+				`;
+			});
+			return `
+				<div class="cimages">
+					${posts}
+				</div>
+				<button class="prev-button inactive js-cprev" data-id="${matchingData.id}">&#10094;</button>
+				<button class="next-button js-cnext" data-id="${matchingData.id}">&#10095;</button>
+			`;
+		}
+	}
+
 	// this function returns specific comments based on the post
 	function showComments(id) {
 		let commentsHtml = '';
-		let matchingData = getMatchingCommentsData(id);
+		let matchingCommentData = getMatchingCommentsData(id);
 
-		if (matchingData.comments.length === 0) {
+		if (matchingCommentData.comments.length === 0) {
 			commentsHtml = `
 				<div class="no-comment-con">
 					<div class="no-comment-text">No comments yet.</div>
@@ -759,7 +801,7 @@ export function viewCommentSection(button) {
 			return commentsHtml;
 		}
 
-		matchingData.comments.forEach(data => {
+		matchingCommentData.comments.forEach(data => {
 			commentsHtml += `
 				<div class="comment">
 					<div class="comment-profile-pic"></div>
@@ -784,6 +826,8 @@ export function viewCommentSection(button) {
 		return commentsHtml;
 	}
 
+	onClickSoundButton();
+
 	// comment section functions/interactions
 	const likeBtn = document.querySelector('.js-clike-button');
 	const commentBtn = document.querySelector('.js-ccomment-button');
@@ -795,14 +839,18 @@ export function viewCommentSection(button) {
 	const name = document.querySelector('.js-cname-con');
 	const likeCountElem = document.querySelector(`.js-clike-counts`);
 	const emojiBtn = document.querySelector('.js-cemoji-button');
+	const prevBtn = document.querySelector('.js-cprev');
+	const nextBtn = document.querySelector('.js-cnext');
+	const input = document.querySelector('.js-cinput');
 
 	overlay.addEventListener('click', () => {
+		matchingData.index = 0;
 		container.removeChild(elem);
 		container.removeChild(overlay);
 		loadPage();
 	});
 
-	// like btn
+	// like button
 	likeBtn.addEventListener('click', () => {
 		onClickLikeButton(likeBtn, likeCountElem);
 		bouncyEffect(likeBtn);
@@ -811,49 +859,50 @@ export function viewCommentSection(button) {
 		bouncyEffect(likeBtn);
 	});
 
-	// comment btn
+	// comment button
 	commentBtn.addEventListener('click', () => {
 		document.querySelector('.js-cinput').focus();
 	});
 
-	// share btn
+	// share button
 	shareBtn.addEventListener('click', () => {
 		onClickShareButton();
 	});
 
-	// save btn
+	// save button
 	saveBtn.addEventListener('click', () => {
 		onClickSaveButton(saveBtn);
 	});
 
+	// comment post button
 	postBtn.addEventListener('click', () => {
-		const input = document.querySelector('.js-cinput');
-		const comment = input.value;
-		let matchingData = getMatchingCommentsData(id);
-
-		if (comment === '') return;
-		matchingData.comments.push({
-			username: 'aaaaaaaaaaldma',
-			comment
-		});
-
+		onClickPostButton(postBtn, input);
 		document.querySelector('.comments').innerHTML = showComments(id);
-		input.value = '';
 	});
+	input.addEventListener('keydown', (event) => {
+		if (event.key === 'Enter') {
+			onClickPostButton(postBtn, input);
+			document.querySelector('.comments').innerHTML = showComments(id);
+		}
+	})
 
+	// more option button
 	moreOptionBtn.addEventListener('click', () => {
 		onClickMoreOptionButton();
 	});
 
+	// like count
 	likeCountElem.addEventListener('click', () => {
 		likeCountFunction(id);
 	});
 
+	// emoji button
 	emojiBtn.addEventListener('click', () => {
 		const input = document.querySelector(`.js-cinput`);
 		onClickEmojiButton(emojiBtn, input);		
 	});
 
+	// double click post
 	document.querySelectorAll('.js-cimagevideo-con img').forEach(img => {
 		img.addEventListener('dblclick', () => {
 			const likeCount = document.querySelector(`.js-clike-counts`);
@@ -861,7 +910,6 @@ export function viewCommentSection(button) {
 			onDlClickPost(img, likeCount, likeBtn);
 		});
 	});
-	
 	document.querySelectorAll('.js-cimagevideo-con video').forEach(vid => {
 		vid.addEventListener('dblclick', () => {
 			const likeCount = document.querySelector(`.js-clike-counts`);
@@ -885,52 +933,14 @@ export function viewCommentSection(button) {
 		tooltipMouseleave(name);
 	});
 
-	// functions if the post is images/video
-	if (matchingData.typePost === 'video') {
-		const button = document.querySelector('.csound-button');
-
-		document.querySelector(`.js-video-${id}`).pause();
-
-		button.addEventListener('click', () => {
-			const prev = button.previousElementSibling;
-			const video = prev.previousElementSibling;
-			if (video.muted) {
-				video.muted = false;
-				button.innerHTML = `
-				<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>`;
-			} else {
-				video.muted = true;
-				button.innerHTML = `
-					<svg class="nosound-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is muted</title><path d="M792-56 671-177q-25 16-53 27.5T560-131v-82q14-5 27.5-10t25.5-12L480-368v208L280-360H120v-240h128L56-792l56-56 736 736-56 56Zm-8-232-58-58q17-31 25.5-65t8.5-70q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 53-14.5 102T784-288ZM650-422l-90-90v-130q47 22 73.5 66t26.5 96q0 15-2.5 29.5T650-422ZM480-592 376-696l104-104v208Z"/></svg>
-				`;
-			}
-		})
-	}
-
+	// functions if the post is images
 	if (matchingData.typePost === 'images') {
-		let index = 0;
-		const prevBtn = document.querySelector('.js-cprev');
-		const nextBtn = document.querySelector('.js-cnext');
-
 		nextBtn.addEventListener('click', () => {
-			const container = document.querySelector('.cimages');
-			index++;
-			if (index == container.children.length - 1) {
-				nextBtn.classList.add('inactive');
-			}
-			prevBtn.classList.remove('inactive');
-			container.style.transform = `translateX(-${index * 100}%)`;
+			imageSlider(nextBtn);
 		});
 
 		prevBtn.addEventListener('click', () => {
-			const container = document.querySelector('.cimages');		
-			nextBtn.classList.remove('inactive');
-			index--;
-			if (index == 0) {
-				prevBtn.classList.add('inactive');
-			}
-			container.style.transform = `translateX(-${index * 100}%)`;
+			imageSlider(prevBtn)
 		});
-		// imageSlider()
 	}
 }

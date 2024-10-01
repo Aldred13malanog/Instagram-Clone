@@ -130,20 +130,33 @@ header {
 
 .video-image {
 	width: 468px;
-	/* height: max-content; */
 	max-height: 565px;
 	border-radius: 4px;
-	display: flex;
 	position: relative;
 	overflow: hidden;
 }
 .images-videos {
 	display: flex;
+	/* width: 468px; */
 	transition: transform 0.2s ease;
+
+	& .img-con {
+		width: 468px;
+		/* max-height: 565px; */
+		flex-shrink: 0;
+		position: relative;
+	}
 }
-.img-con,
-.vid-con {
-	width: 468px;
+.video-image img{
+	/* object-fit: cover; */
+	width: 100%;
+	max-height: 565px;
+	position: relative;
+} 
+.video-image video {
+	object-fit: contain;
+	width: 100%;
+	max-height: 565px;
 	position: relative;
 }
 .image-like {
@@ -177,17 +190,6 @@ header {
 }
 .next-button {	
 	right: 8px;
-}
-
-.video-image img{
-	object-fit: contain;
-	width: 100%;
-	position: relative;
-} 
-.video-image video {
-	object-fit: contain;
-	width: 100%;
-	position: relative;
 }
 .sound-button {
 	position: absolute;
@@ -276,14 +278,12 @@ header {
 	}
 }
 .comment-img-section {
-	/* flex-shrink: 0; */
 	width: max-content;
 	display: flex;
 	overflow: hidden;
 	position: relative;
 
 	& video {
-		/* height: max-content; */
 		width: 100%;
 		object-fit: contain;
 	}
@@ -293,7 +293,6 @@ header {
 	display: flex;
 	width: 500px;
 	transition: all 0.25s;
-	/* transform: translateX(-100%); */
 
 	& .cimage {
 		flex-shrink: 0;

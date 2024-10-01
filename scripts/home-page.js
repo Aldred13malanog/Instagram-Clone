@@ -1,20 +1,21 @@
 import { fypData } from "../data/fyp-data.js";
-import { getMatchingCommentsData } from "../data/comments-data.js";
 import { 
-	videoFunction,
+	videoAutoPlay,
 	checkPost,
 	imageSlider,
-	onDlClickPost,
 	bouncyEffect,
 	viewCommentSection,
+	onDlClickPost,
 	onClickLikeButton,
 	onClickShareButton,
 	onClickSaveButton,
 	onClickMoreOptionButton,
-	tooltipMouseleave,
-	tooltipMouseover,
 	onClickEmojiButton,
+	onClickPostButton,
+	onClickSoundButton,
 	likeCountFunction,
+	tooltipMouseover,
+	tooltipMouseleave,
 	handleLikeIcon
 } from "./home-page-functions/scripts.js";
 
@@ -140,7 +141,7 @@ export function loadPage() {
 				<div class="like-count-con">
 					<div class="like-counts js-like-count js-like-counts-${data.id}" data-id="${data.id}">${data.likeCount.toLocaleString()} likes</div>
 				</div>
-				<div class="view-all-comments js-viewall-comment-button" data-id="${data.id}">View all ${data.commentCount} comments</div>
+				<div class="view-all-comments js-viewall-comment-button js-viewall-comment-${data.id}" data-id="${data.id}">View all ${data.commentCount} comments</div>
 
 				<div class="comment-section">
 					<input class="js-comment-input js-comment-input-${data.id}" placeholder="Add a comment...">
@@ -155,7 +156,8 @@ export function loadPage() {
 	});
 	document.querySelector('.js-videos-images').innerHTML = homeHTML;
 
-	videoFunction();
+	videoAutoPlay();
+	onClickSoundButton();
 	
 	// image slider
 	document.querySelectorAll('.prev-button').forEach((prev) => {
@@ -237,11 +239,16 @@ export function loadPage() {
 
 	// input element
 	document.querySelectorAll('.js-comment-input').forEach(input => {
-		input.addEventListener('keyup', () => {
+		input.addEventListener('keyup', (event) => {
+			const postButton = input.nextElementSibling;
 			if (input.value) {
-				input.nextElementSibling.style.display = 'initial';
+				postButton.style.display = 'initial';
 			} else {
-				input.nextElementSibling.style.display = 'none';
+				postButton.style.display = 'none';
+			}
+			if (event.key === 'Enter') {
+				onClickPostButton(postButton, input);
+				postButton.style.display = 'none';
 			}
 		});
 	});
@@ -250,36 +257,8 @@ export function loadPage() {
 	document.querySelectorAll('.js-post-button').forEach(button => {
 		button.addEventListener('click', () => {
 			const input = button.previousElementSibling;
-			const comment = input.value;
-			const {id} = button.dataset;
-			let matchingData = getMatchingCommentsData(id);
-
-			if (comment === '') return;
-			matchingData.comments.push({
-				username: 'aaaaaaaaaaldma',
-				comment
-			});
-
-			input.value = '';
+			onClickPostButton(button, input);
 			button.style.display = 'none';
-		});
-	});
-
-	// tooltip mouseover/mouseleave
-	document.querySelectorAll('.js-user-profile').forEach(img => {
-		img.addEventListener('mouseover', () => {
-			tooltipMouseover(img);
-		});
-		img.addEventListener('mouseleave', () => {
-			tooltipMouseleave(img);
-		});
-	});
-	document.querySelectorAll('.js-username-container').forEach(name => {
-		name.addEventListener('mouseover', () => {
-			tooltipMouseover(name);
-		});
-		name.addEventListener('mouseleave', () => {
-			tooltipMouseleave(name);
 		});
 	});
 
@@ -300,6 +279,25 @@ export function loadPage() {
 			const {id} = button.dataset;
 			const input = document.querySelector(`.js-comment-input-${id}`);
 			onClickEmojiButton(button, input);
+		});
+	});
+
+
+	// tooltip mouseover/mouseleave
+	document.querySelectorAll('.js-user-profile').forEach(img => {
+		img.addEventListener('mouseover', () => {
+			tooltipMouseover(img);
+		});
+		img.addEventListener('mouseleave', () => {
+			tooltipMouseleave(img);
+		});
+	});
+	document.querySelectorAll('.js-username-container').forEach(name => {
+		name.addEventListener('mouseover', () => {
+			tooltipMouseover(name);
+		});
+		name.addEventListener('mouseleave', () => {
+			tooltipMouseleave(name);
 		});
 	});
 }
