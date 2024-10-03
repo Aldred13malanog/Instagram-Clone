@@ -1,4 +1,4 @@
-import { getMatchingData } from "../../data/fyp-data.js";
+import { getMatchingData, removeFromData } from "../../data/fyp-data.js";
 import { getMatchingCommentsData } from "../../data/comments-data.js";
 import { getMatchingLikedData } from "../../data/post-likes-data.js";
 import { loadPage } from "../home-page.js";
@@ -300,6 +300,7 @@ export function onClickSaveButton(button) {
 		`;
 	}
 }
+
 export function onClickMoreOptionButton(buttonId) {
 	const moreOptionsContainer = document.createElement('div');
 	const overlay = document.createElement('div');
@@ -312,13 +313,15 @@ export function onClickMoreOptionButton(buttonId) {
 
 	moreOptionsContainer.innerHTML = `
 		<div class="buttons report-btn js-report-button">Report</div>
-		<div class="buttons unfollow-btn">Unfollow</div>
-		<div class="buttons">Add to favorites</div>
+		<div class="buttons unfollow-btn js-unfollow-button">Unfollow</div>
+		<div class="buttons js-add-to-favorites">
+			${matchingData.isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+		</div>
 		<div class="buttons">Go to post</div>
 		<div class="buttons">Share to...</div>
 		<div class="buttons">Copy link</div>
 		<div class="buttons">Embed</div>
-		<div class="buttons">About this account</div>
+		<div class="buttons js-about-button">About this account</div>
 		<div class="buttons cancel-btn js-cancel-btn">Cancel</div>
 	`;
 
@@ -327,19 +330,16 @@ export function onClickMoreOptionButton(buttonId) {
 
 	setTimeout(() => {
 		moreOptionsContainer.style.transform = 'translate(-50%, -50%) scale(100%)';
-	}, 150)
+	}, 150);
 
-	overlay.addEventListener('click', () => {
+
+	// functions
+	function hideContainer() {
 		container.removeChild(moreOptionsContainer);
 		container.removeChild(overlay);
-	});
+	}
 
-	document.querySelector('.js-cancel-btn').addEventListener('click', () => {
-		container.removeChild(moreOptionsContainer);
-		container.removeChild(overlay);
-	});
-
-	document.querySelector('.js-report-button').addEventListener('click', () => {
+	function onClickReportButton() {
 		moreOptionsContainer.innerHTML = `
 			<div class="report-header">
 				<div>Report</div>
@@ -372,54 +372,139 @@ export function onClickMoreOptionButton(buttonId) {
 			</div>
 		`;
 
-		document.querySelector('.js-close-button').addEventListener('click', () => {
-			container.removeChild(moreOptionsContainer);
-			container.removeChild(overlay);
-		});
-
 		document.querySelectorAll('.js-reason').forEach(reasons => {
 			reasons.addEventListener('click', () => {
-				moreOptionsContainer.innerHTML = `
-					<div class="report-success-container">
-						<div class="report-success-texts">
-							<svg aria-label="checkmark" class="x1lliihq x1n2onr6 x127hrn9" fill="rgb(88, 195, 34)" height="48" role="img" viewBox="0 0 24 24" width="48"><title>checkmark</title><path d="M12.001.504a11.5 11.5 0 1 0 11.5 11.5 11.513 11.513 0 0 0-11.5-11.5Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5ZM16.293 8.3l-5.792 5.788-2.794-2.796a1 1 0 1 0-1.414 1.414l3.5 3.503a1 1 0 0 0 1.414.001l6.5-6.495A1 1 0 0 0 16.293 8.3Z"></path></svg>
-							<div class="report-text">Thanks for your feedback</div>
-							<div class="report-text1">When you see something you don't like on Instagram, you can report it if it doesn't follow our <span>Community Guidelines</span>, or you can remove the person who shared it from your experience.</div>
-						</div>
-						<div class="reason block-button js-block-button">Block ${matchingData.name} 
-							<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
-						</div>
-						<div class="reason">Learn more about Instagram's Community Guidelines
-							<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
-						</div>
-						<button class="report-close-button js-close-button">Close</button>
-					</div>
-				`;
-
-				document.querySelector('.js-block-button').addEventListener('click', () => {
-					moreOptionsContainer.innerHTML = `
-						<div class="block-container">
-							<div class="block-texts">
-								<div>Block ${matchingData.name}?</div>
-								<div>They won't be able to find your profile, posts, or story on Instagram. Instagram won't let them know you blocked them.</div>
-							</div>
-							<button class="block-btn">Block</button>
-							<button class="js-close-button">Cancel</button>
-						</div>
-					`;
-
-					document.querySelector('.js-close-button').addEventListener('click', () => {
-						container.removeChild(moreOptionsContainer);
-						container.removeChild(overlay);
-					});
-				})
-
-				document.querySelector('.js-close-button').addEventListener('click', () => {
-					container.removeChild(moreOptionsContainer);
-					container.removeChild(overlay);
-				});
+				onClickReportReason();
 			});
 		});
+
+		document.querySelector('.js-close-button').addEventListener('click', () => {
+			hideContainer();
+		});
+	}
+
+	function onClickReportReason() {
+		moreOptionsContainer.innerHTML = `
+			<div class="report-success-container">
+				<div class="report-success-texts">
+					<svg aria-label="checkmark" class="x1lliihq x1n2onr6 x127hrn9" fill="rgb(88, 195, 34)" height="48" role="img" viewBox="0 0 24 24" width="48"><title>checkmark</title><path d="M12.001.504a11.5 11.5 0 1 0 11.5 11.5 11.513 11.513 0 0 0-11.5-11.5Zm0 21a9.5 9.5 0 1 1 9.5-9.5 9.51 9.51 0 0 1-9.5 9.5ZM16.293 8.3l-5.792 5.788-2.794-2.796a1 1 0 1 0-1.414 1.414l3.5 3.503a1 1 0 0 0 1.414.001l6.5-6.495A1 1 0 0 0 16.293 8.3Z"></path></svg>
+					<div class="report-text">Thanks for your feedback</div>
+					<div class="report-text1">When you see something you don't like on Instagram, you can report it if it doesn't follow our <span>Community Guidelines</span>, or you can remove the person who shared it from your experience.</div>
+				</div>
+				<div class="reason block-button js-block-user">Block ${matchingData.name} 
+					<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+				</div>
+				<div class="reason">Learn more about Instagram's Community Guidelines
+					<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
+				</div>
+				<button class="report-close-button js-close-button">Close</button>
+			</div>
+		`;
+
+		document.querySelector('.js-block-user').addEventListener('click', () => {
+			onClickBlockUser();
+		});
+
+		document.querySelector('.js-close-button').addEventListener('click', () => {
+			hideContainer();
+		});
+	}
+
+	function onClickBlockUser() {
+		moreOptionsContainer.innerHTML = `
+			<div class="block-container">
+				<div class="block-texts">
+					<div>Block ${matchingData.name}?</div>
+					<div>They won't be able to find your profile, posts, or story on Instagram. Instagram won't let them know you blocked them.</div>
+				</div>
+				<button class="block-btn js-block-button">Block</button>
+				<button class="js-close-button">Cancel</button>
+			</div>
+		`;
+
+		document.querySelector('.js-block-button').addEventListener('click', () => {
+			removeFromData(id);
+			hideContainer();
+			loadPage();
+		});
+
+		document.querySelector('.js-close-button').addEventListener('click', () => {
+			hideContainer();
+		});
+	}
+
+
+	// DOMs
+	document.querySelector('.js-report-button').addEventListener('click', () => {
+		onClickReportButton();
+	});
+
+	document.querySelector('.js-unfollow-button').addEventListener('click', () => {
+		removeFromData(id);
+		hideContainer();
+		loadPage();
+	});
+
+	document.querySelector('.js-add-to-favorites').addEventListener('click', () => {
+		const favoritedContainer = document.querySelector(`.js-favorited-container-${id}`);
+
+		if (matchingData.isFavorited) {
+			favoritedContainer.innerHTML = '';
+			matchingData.isFavorited = false;
+		} else {
+			favoritedContainer.innerHTML = `
+				<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>
+			`;
+			matchingData.isFavorited = true;
+		}
+		
+		hideContainer();
+	});
+
+	document.querySelector('.js-about-button').addEventListener('click', () => {
+		moreOptionsContainer.innerHTML = `
+			<div class="about-account-container">
+				<div class="about-header">About this account</div>
+				<div class="about-details-container">
+					<div class="detail-profile">
+						<img src="${matchingData.profile}">
+					</div>
+					<div class="detail-name">${matchingData.name}</div>
+					<div class="detail-texts">
+						To help keep our community authentic, we're showing information about accounts on Instagram. <span>See why this information is important.</span> 
+					</div>
+
+					<div class="detail-date-joined">
+						<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yy/r/nJ9gMnn51pn.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
+							<div>
+								<div>Date joined</div>
+								<div class="detail-date">${matchingData.dateJoined}</div>
+							</div>
+					</div>
+					<div class="detail-acc-basedin">
+						<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/y_/r/2GgQWB_xn93.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
+							<div>
+								<div>Account based in</div>
+								<div class="detail-place">${matchingData.accountBasedIn}</div>
+							</div>
+					</div>
+				</div>
+				<button class="detail-close-button js-close-button">Close</button>
+			</div>
+		`;
+
+		document.querySelector('.js-close-button').addEventListener('click', () => {
+			hideContainer();
+		});
+
+	});
+
+	document.querySelector('.js-cancel-btn').addEventListener('click', () => {
+		hideContainer();
+	});
+
+	overlay.addEventListener('click', () => {
+		hideContainer();
 	});
 }
 
@@ -781,7 +866,7 @@ export function viewCommentSection(button) {
 					</div>
 				</div>
 				<div>
-					<svg aria-label="More options" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-id="${matchingData.id}" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 			</div>
 			<div class="comments">
@@ -972,7 +1057,8 @@ export function viewCommentSection(button) {
 
 	// more option button
 	moreOptionBtn.addEventListener('click', () => {
-		onClickMoreOptionButton();
+		const {id} = moreOptionBtn.dataset;
+		onClickMoreOptionButton(id);
 	});
 
 	// like count
