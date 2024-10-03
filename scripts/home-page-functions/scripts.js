@@ -440,9 +440,26 @@ export function onClickMoreOptionButton(buttonId) {
 	});
 
 	document.querySelector('.js-unfollow-button').addEventListener('click', () => {
-		removeFromData(id);
-		hideContainer();
-		loadPage();
+		moreOptionsContainer.innerHTML = `
+			<div class="unfollow-container">
+				<div class="unfollow-profile">
+					<img src="${matchingData.profile}">
+				</div>
+				<div class="unfollow-name">Unfollow @${matchingData.name}?</div>
+				<div class="unfollow-button js-confirm-unfollow">Unfollow</div>
+				<div class="unfollow-cancel js-unfollow-cancel">Cancel</div>
+			</div>
+		`;
+
+		document.querySelector('.js-confirm-unfollow').addEventListener('click', () => {
+			removeFromData(id);
+			hideContainer();
+			loadPage();
+		});
+
+		document.querySelector('.js-unfollow-cancel').addEventListener('click', () => {
+			hideContainer();
+		});
 	});
 
 	document.querySelector('.js-add-to-favorites').addEventListener('click', () => {
@@ -469,7 +486,11 @@ export function onClickMoreOptionButton(buttonId) {
 					<div class="detail-profile">
 						<img src="${matchingData.profile}">
 					</div>
-					<div class="detail-name">${matchingData.name}</div>
+					<div class="detail-name">${matchingData.name}
+						<div>
+							${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+						</div>
+					</div>
 					<div class="detail-texts">
 						To help keep our community authentic, we're showing information about accounts on Instagram. <span>See why this information is important.</span> 
 					</div>
@@ -488,6 +509,25 @@ export function onClickMoreOptionButton(buttonId) {
 								<div class="detail-place">${matchingData.accountBasedIn}</div>
 							</div>
 					</div>
+					${
+						matchingData.isVerified ? `
+							<div class="detail-verified-container">
+								<div class="detail-verified">
+									<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yO/r/eGZ3v27WSRx.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
+									<div>Verified</div>
+								</div>
+
+								<div class="verify-texts">
+									Profiles can be verified by Meta, based on their activity across <br> Meta products or documents they provide. Verified badges are displayed on these profiles.
+								</div>
+								<div class="verify-texts1">
+									Some verified profiles are owned by a notable person, brand or <br> entity, while others subscribe to Meta Verified. <span>Learn more</span>
+								</div>
+								<div class="verify-button-container">
+									<button class="verify-button">Join the waitlist for Meta Verified</button>
+								</div>
+							</div>
+						` : ''}
 				</div>
 				<button class="detail-close-button js-close-button">Close</button>
 			</div>
@@ -738,14 +778,12 @@ export function imageSlider(button) {
 /*----------------------------------------------------------*/
 
 // tooltips functions
-export function tooltipMouseover(elem) {
-	const tooltip = elem.children[1];
+export function tooltipMouseover(tooltip) {
 	tooltip.style.opacity = '1';
 	tooltip.style.pointerEvents = 'auto';
 }
 
-export function tooltipMouseleave(elem) {
-	const tooltip = elem.children[1];
+export function tooltipMouseleave(tooltip) {
 	tooltip.style.opacity = '0';
 	tooltip.style.pointerEvents = 'none';
 }
@@ -785,13 +823,17 @@ export function viewCommentSection(button) {
 			<div class="comment-header">
 				<div class="comment-profile js-comment-profile">
 					<img src="${matchingData.profile}">
-					<div class="user-profile-tooltip">
+					<div class="user-profile-tooltip js-profile-tooltip">
 						<div class="profile-tooltip-container">
 							<div class="profile-tooltip">
 								<img src="${matchingData.profile}">
 							</div>
 							<div>
-								<div class="tooltip-name">${matchingData.name}</div>
+								<div class="tooltip-name">${matchingData.name}
+									<div>
+										${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+									</div>
+								</div>
 								<div class="tooltip-sub-name">${matchingData.userName}</div>
 							</div>
 						</div>
@@ -826,13 +868,20 @@ export function viewCommentSection(button) {
 				</div>
 				<div class="comment-username-con js-cname-con">
 					<div class="comment-username">${matchingData.name}</div>
-					<div class="video-username-tooltip">
+					<div class="verified-container">
+						${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+					</div>
+					<div class="video-username-tooltip js-username-tooltip">
 						<div class="profile-tooltip-container">
 							<div class="profile-tooltip">
 								<img src="${matchingData.profile}">
 							</div>
 							<div>
-								<div class="tooltip-name">${matchingData.name}</div>
+								<div class="tooltip-name">${matchingData.name}
+									<div>
+										${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+									</div>
+								</div>
 								<div class="tooltip-sub-name">${matchingData.userName}</div>
 							</div>
 						</div>
@@ -1090,17 +1139,21 @@ export function viewCommentSection(button) {
 
 	// tooltip function
 	profile.addEventListener('mouseover', () => {
-		tooltipMouseover(profile);
+		const tooltip = document.querySelector('.js-profile-tooltip');
+		tooltipMouseover(tooltip);
 	});
 	profile.addEventListener('mouseleave', () => {
-		tooltipMouseleave(profile);
+		const tooltip = document.querySelector('.js-profile-tooltip');
+		tooltipMouseleave(tooltip);
 	});
 
 	name.addEventListener('mouseover', () => {
-		tooltipMouseover(name);
+		const tooltip = document.querySelector('.js-username-tooltip');
+		tooltipMouseover(tooltip);
 	});
 	name.addEventListener('mouseleave', () => {
-		tooltipMouseleave(name);
+		const tooltip = document.querySelector('.js-username-tooltip');
+		tooltipMouseleave(tooltip);
 	});
 
 	// functions if the post is images

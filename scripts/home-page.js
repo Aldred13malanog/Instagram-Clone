@@ -26,15 +26,19 @@ export function loadPage() {
 		homeHTML += `
 			<div class="video-container js-video-container-${data.id}">
 				<div class="video-header">
-					<div class="user-profile js-user-profile">
+					<div class="user-profile js-user-profile" data-id="${data.id}">
 						<img src="${data.profile}" alt="Profile" class="js-user-image">
-						<div class="user-profile-tooltip">
+						<div class="user-profile-tooltip js-profile-tooltip-${data.id}">
 							<div class="profile-tooltip-container">
 								<div class="profile-tooltip">
 									<img src="${data.profile}">
 								</div>
 								<div>
-									<div class="tooltip-name">${data.name}</div>
+									<div class="tooltip-name">${data.name}
+										<div>
+											${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+										</div>
+									</div>
 									<div class="tooltip-sub-name">${data.userName}</div>
 								</div>
 							</div>
@@ -69,48 +73,56 @@ export function loadPage() {
 					</div>
 					<div class="username-section">
 						<div class="username-container js-username-container">
-							<div class="username">${data.name}</div>
-							<div class="video-username-tooltip">
-								<div class="profile-tooltip-container">
-									<div class="profile-tooltip">
-										<img src="${data.profile}">
+							<div class="username js-username" data-id="${data.id}">${data.name}
+								<div class="video-username-tooltip js-username-tooltip-${data.id}">
+									<div class="profile-tooltip-container">
+										<div class="profile-tooltip">
+											<img src="${data.profile}">
+										</div>
+										<div>
+											<div class="tooltip-name">${data.name}
+												<div>
+													${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+												</div>
+											</div>
+											<div class="tooltip-sub-name">${data.userName}</div>
+										</div>
 									</div>
-									<div>
-										<div class="tooltip-name">${data.name}</div>
-										<div class="tooltip-sub-name">${data.userName}</div>
-									</div>
-								</div>
 
-								<div class="tooltip-pff">
-									<div>
-										<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
-										<div>posts</div>
+									<div class="tooltip-pff">
+										<div>
+											<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
+											<div>posts</div>
+										</div>
+										<div>
+											<div>${data.followers}</div>
+											<div>followers</div>
+										</div>
+										<div>
+											<div>${data.following}</div>
+											<div>following</div>
+										</div>
 									</div>
-									<div>
-										<div>${data.followers}</div>
-										<div>followers</div>
-									</div>
-									<div>
-										<div>${data.following}</div>
-										<div>following</div>
-									</div>
-								</div>
 
-								<div class="tooltip-has-posts">
-									<div class="tooltip-post"></div>
-									<div class="tooltip-post"></div>
-									<div class="tooltip-post"></div>
+									<div class="tooltip-has-posts">
+										<div class="tooltip-post"></div>
+										<div class="tooltip-post"></div>
+										<div class="tooltip-post"></div>
+									</div>
+									<div class="tooltip-following">
+										<button class="tooltip-message-button">
+											<svg aria-label="Messenger" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Messenger</title><path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.876 10.876 0 0 1-2.895-.384.798.798 0 0 0-.533.04l-1.984.876a.801.801 0 0 1-1.123-.708l-.054-1.78a.806.806 0 0 0-.27-.569 9.49 9.49 0 0 1-3.14-7.175 9.65 9.65 0 0 1 10-9.7Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z" fill-rule="evenodd"></path></svg>Message
+										</button>
+										<button class="tooltip-following-button">Following</button>
+									</div>
 								</div>
-								<div class="tooltip-following">
-									<button class="tooltip-message-button">
-										<svg aria-label="Messenger" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Messenger</title><path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.876 10.876 0 0 1-2.895-.384.798.798 0 0 0-.533.04l-1.984.876a.801.801 0 0 1-1.123-.708l-.054-1.78a.806.806 0 0 0-.27-.569 9.49 9.49 0 0 1-3.14-7.175 9.65 9.65 0 0 1 10-9.7Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z" fill-rule="evenodd"></path></svg>Message
-									</button>
-									<button class="tooltip-following-button">Following</button>
-								</div>
+							</div>
+							<div>
+								${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 							</div>
 						</div>
 						<div>&#8226;</div>
-						<div class="time">${data.timePosted}</div>
+						<time class="time">${data.timePosted}</time>
 					</div>
 					<div class="js-favorited-container-${data.id}"></div>
 					<svg aria-label="More options" data-id="${data.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
@@ -287,18 +299,22 @@ export function loadPage() {
 	// tooltip mouseover/mouseleave
 	document.querySelectorAll('.js-user-profile').forEach(img => {
 		img.addEventListener('mouseover', () => {
-			tooltipMouseover(img);
+			const tooltip = document.querySelector(`.js-profile-tooltip-${img.dataset.id}`)
+			tooltipMouseover(tooltip);
 		});
 		img.addEventListener('mouseleave', () => {
-			tooltipMouseleave(img);
+			const tooltip = document.querySelector(`.js-profile-tooltip-${img.dataset.id}`)
+			tooltipMouseleave(tooltip);
 		});
 	});
-	document.querySelectorAll('.js-username-container').forEach(name => {
+	document.querySelectorAll('.js-username').forEach(name => {
 		name.addEventListener('mouseover', () => {
-			tooltipMouseover(name);
+			const tooltip = document.querySelector(`.js-username-tooltip-${name.dataset.id}`)
+			tooltipMouseover(tooltip);
 		});
 		name.addEventListener('mouseleave', () => {
-			tooltipMouseleave(name);
+			const tooltip = document.querySelector(`.js-username-tooltip-${name.dataset.id}`);
+			tooltipMouseleave(tooltip);
 		});
 	});
 }

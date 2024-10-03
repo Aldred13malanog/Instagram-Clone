@@ -78,6 +78,11 @@ header {
 	font-weight: 500;
 	cursor: pointer;
 }
+.username-container {
+	display: flex;
+	column-gap: 4px;
+	align-items: center;
+}
 .username-container + div,
 .time	{
 	color: #A8A8A8;
@@ -98,7 +103,7 @@ header {
 	font-size: 14px;
 	overflow: hidden;
 	max-width: 400px;
-
+	max-height: 92%;
 
 	& .buttons {
 		text-align: center;
@@ -235,6 +240,44 @@ header {
 		color: #A8A8A8;
 	}
 }
+.unfollow-container {
+	width: 400px;
+	display: flex;
+	/* align-items: center; */
+	text-align: center;
+	flex-direction: column;
+}
+.unfollow-profile {
+	width: 80px;
+	height: 80px;
+	border: 1px solid #7373733b;
+	border-radius: 50%;
+	margin-top: 36px;
+	margin-bottom: 36px;
+	margin-left: auto;
+	margin-right: auto;
+
+	& img {
+		width: 100%;
+		border-radius: 50%;
+	}
+}
+.unfollow-name {
+	margin-bottom: 28px;
+}
+.unfollow-button,
+.unfollow-cancel {
+	border-top: 1px solid #7373733b;
+	background-color: transparent;
+	padding: 14px;
+	cursor: pointer;
+}
+.unfollow-button {
+	color: #ED4956;
+	font-weight: 700;
+}
+
+
 .about-account-container {
 	/* max-width: 400px; */
 	display: flex;
@@ -252,16 +295,22 @@ header {
 	flex-direction: column;
 	text-align: center;
 	align-items: center;
-	justify-content: center;
+	/* justify-content: center; */
 	background-color: #000;
 	padding: 14px;
 	row-gap: 10px;
+	/* overflow-y: scroll; */
+	max-height: 450px;
+}
+.about-details-container:has(.detail-verified-container) {
+	overflow-y: scroll;
 }
 .detail-profile {
 	width: 80px;
 	height: 80px;
-	background-color: #fff;
+	/* background-color: #fff; */
 	border-radius: 50%;;
+	border: 1px solid #7373733b;
 
 	& img {
 		width: 100%;
@@ -271,6 +320,9 @@ header {
 .detail-name {
 	font-weight: 600;
 	font-size: 16px;
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
 }
 .detail-texts {
 	color: #A8A8A8;
@@ -285,7 +337,8 @@ header {
 	}
 }
 .detail-date-joined,
-.detail-acc-basedin {
+.detail-acc-basedin,
+.detail-verified {
 	width: 100%;
 	text-align: left;
 	font-size: 15px;
@@ -293,6 +346,41 @@ header {
 	display: flex;
 	align-items: center;
 	column-gap: 10px;
+}
+.detail-acc-basedin {
+	margin-top: 8px;
+}
+.detail-verified-container {
+	width: 100%;
+	margin-top: 8px;
+}
+.verify-texts,
+.verify-texts1 {
+	text-align: left;
+	color: #A8A8A8;
+	margin-top: 15px;
+	font-size: 12px;
+	line-height: 18px;
+	& span {
+		color: white;
+		cursor: pointer;
+	}
+}
+.verify-button-container {
+	padding-top: 12px;
+	margin-top: 10px;
+	border-top: 1px solid #7373733b;
+}
+.verify-button {
+	background-color: #0095F6;
+	color: white;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 4px;
+	font-weight: 500;
+	font-size: 14px;
+	cursor: pointer;
 }
 .detail-date, .detail-place {
 	color: #A8A8A8;
@@ -540,6 +628,9 @@ header {
 	/* flex: 1; */
 	margin-right: auto;
 	position: relative;
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
 }
 .comment-username {
 	font-weight: 500;
@@ -1121,6 +1212,9 @@ header {
 .tooltip-name {
 	font-weight: 700;
 	font-size: 15px;
+	display: flex;
+	align-items: center;
+	column-gap: 4px;
 }
 .tooltip-sub-name {
 	color: #737373;
