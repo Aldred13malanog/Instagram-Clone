@@ -56,8 +56,8 @@ header {
 .user-profile {
 	height: 32px;
 	width: 32px;
-	background-color: #fff;
 	border-radius: 50%;
+	border: 1px solid #7373733b;
 }
 .user-profile img {
 	width: 100%;
@@ -134,7 +134,8 @@ header {
 	background-color: #000000ad;
 	z-index: 12;
 }
-.report-header {
+.report-header,
+.share-to-header {
 	width: 400px;
 	padding: 12px;
 	font-size: 16px;
@@ -149,6 +150,11 @@ header {
 		right: 12px;
 		top: 14px;
 	}
+}
+.back-button {
+	left: 12px;
+	top: 14px;
+	rotate: -90deg;
 }
 .report-heading {
 	font-weight: 500;
@@ -393,6 +399,37 @@ header {
 	padding: 14px;
 	cursor: pointer;
 	border-top: 1px solid #7373733b;
+}
+.submit-report {
+	padding: 6px;
+	border-radius: 8px;
+	background-color: #0094f6af;
+	color: #c2c2c2;
+	margin: 16px;
+	margin-top: 28px;
+	text-align: center;
+	font-weight: 500;
+	pointer-events: none;
+}
+.share-to-container {
+	max-height: 350px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding: 10px 0;
+}
+.share-link {
+	padding: 14px 20px;
+	display: flex;
+	align-items: center;
+	column-gap: 16px;
+	cursor: pointer;
+	transition: all .15s;
+}
+.share-link:hover {
+	background-color: #444444;
+}
+.cancel-share {
+	padding-left: 60px;
 }
 
 .video-image {
