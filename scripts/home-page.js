@@ -1,4 +1,5 @@
 import { fypData } from "../data/fyp-data.js";
+import { getUsersData } from "../data/users-data.js";
 import { 
 	videoAutoPlay,
 	checkPost,
@@ -23,37 +24,41 @@ export function loadPage() {
 	let homeHTML = '';
 
 	fypData.forEach((data) => {
+
+		const usersData = getUsersData(data.usersId);
+		if (!usersData) return;
+
 		homeHTML += `
 			<div class="video-container js-video-container-${data.id}">
 				<div class="video-header">
 					<div class="user-profile js-user-profile" data-id="${data.id}">
-						<img src="${data.profile}" alt="Profile" class="js-user-image">
+						<img src="${usersData.profile}" alt="Profile" class="js-user-image">
 						<div class="user-profile-tooltip js-profile-tooltip-${data.id}">
 							<div class="profile-tooltip-container">
 								<div class="profile-tooltip">
-									<img src="${data.profile}">
+									<img src="${usersData.profile}">
 								</div>
 								<div>
-									<div class="tooltip-name">${data.name}
+									<div class="tooltip-name">${usersData.name}
 										<div>
-											${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+											${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 										</div>
 									</div>
-									<div class="tooltip-sub-name">${data.userName}</div>
+									<div class="tooltip-sub-name">${usersData.userName}</div>
 								</div>
 							</div>
 
 							<div class="tooltip-pff">
 								<div>
-									<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
+									<div class="tooltip-post-count">${usersData.postCount.toLocaleString()}</div>
 									<div>posts</div>
 								</div>
 								<div>
-									<div>${data.followers}</div>
+									<div>${usersData.followers}</div>
 									<div>followers</div>
 								</div>
 								<div>
-									<div>${data.following}</div>
+									<div>${usersData.following}</div>
 									<div>following</div>
 								</div>
 							</div>
@@ -73,33 +78,33 @@ export function loadPage() {
 					</div>
 					<div class="username-section">
 						<div class="username-container js-username-container">
-							<div class="username js-username" data-id="${data.id}">${data.name}
+							<div class="username js-username" data-id="${data.id}">${usersData.name}
 								<div class="video-username-tooltip js-username-tooltip-${data.id}">
 									<div class="profile-tooltip-container">
 										<div class="profile-tooltip">
-											<img src="${data.profile}">
+											<img src="${usersData.profile}">
 										</div>
 										<div>
-											<div class="tooltip-name">${data.name}
+											<div class="tooltip-name">${usersData.name}
 												<div>
-													${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+													${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 												</div>
 											</div>
-											<div class="tooltip-sub-name">${data.userName}</div>
+											<div class="tooltip-sub-name">${usersData.userName}</div>
 										</div>
 									</div>
 
 									<div class="tooltip-pff">
 										<div>
-											<div class="tooltip-post-count">${data.postCount.toLocaleString()}</div>
+											<div class="tooltip-post-count">${usersData.postCount.toLocaleString()}</div>
 											<div>posts</div>
 										</div>
 										<div>
-											<div>${data.followers}</div>
+											<div>${usersData.followers}</div>
 											<div>followers</div>
 										</div>
 										<div>
-											<div>${data.following}</div>
+											<div>${usersData.following}</div>
 											<div>following</div>
 										</div>
 									</div>
@@ -118,16 +123,16 @@ export function loadPage() {
 								</div>
 							</div>
 							<div>
-								${data.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+								${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 							</div>
 						</div>
 						<div>&#8226;</div>
 						<time class="time">${data.timePosted}</time>
 					</div>
 					<div class="js-favorited-container-${data.id}">
-						${data.isFavorited ? '<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>' : ''}
+						${usersData.isFavorited ? '<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>' : ''}
 					</div>
-					<svg aria-label="More options" data-id="${data.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-user-id="${usersData.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 
 				<div class="video-image js-video-image">
@@ -139,7 +144,7 @@ export function loadPage() {
 						${handleLikeIcon(data.id)}
 					</button>
 
-					<button class="comment-button js-comment-button" data-id="${data.id}">
+					<button class="comment-button js-comment-button" data-id="${data.id}" data-user-id="${data.usersId}">
 						<svg aria-label="Comment" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Comment</title><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke-linejoin="round" stroke-width="2"></path></svg>
 					</button>
 
@@ -156,7 +161,10 @@ export function loadPage() {
 				<div class="like-count-con">
 					<div class="like-counts js-like-count js-like-counts-${data.id}" data-id="${data.id}">${data.likeCount.toLocaleString()} likes</div>
 				</div>
-				<div class="view-all-comments js-viewall-comment-button js-viewall-comment-${data.id}" data-id="${data.id}">View all ${data.commentCount} comments</div>
+				
+				<div class="view-all-comments js-viewall-comment-button js-viewall-comment-${data.id}" data-id="${data.id}" data-user-id="${data.usersId}">
+					View all ${data.commentCount} comments
+				</div>
 
 				<div class="comment-section">
 					<input class="js-comment-input js-comment-input-${data.id}" placeholder="Add a comment...">
@@ -248,7 +256,8 @@ export function loadPage() {
 	// more option button
 	document.querySelectorAll('.js-more-options').forEach(button => {
 		button.addEventListener('click', () => {
-			onClickMoreOptionButton(button.dataset.id);
+			const {userId} = button.dataset;
+			onClickMoreOptionButton(userId);
 		});
 	});
 

@@ -1,7 +1,8 @@
-import { getMatchingData, removeFromData } from "../../data/fyp-data.js";
+import { getMatchingData } from "../../data/fyp-data.js";
 import { getMatchingCommentsData } from "../../data/comments-data.js";
 import { getMatchingLikedData } from "../../data/post-likes-data.js";
 import { loadPage } from "../home-page.js";
+import { getUsersData, removeUsersData } from "../../data/users-data.js";
 
 // handling functions
 
@@ -301,12 +302,11 @@ export function onClickSaveButton(button) {
 	}
 }
 
-export function onClickMoreOptionButton(buttonId) {
+export function onClickMoreOptionButton(userId) {
 	const moreOptionsContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
-	const id = buttonId;
-	let matchingData = getMatchingData(id);
+	const userData = getUsersData(userId);
 
 	moreOptionsContainer.classList.add('more-option-container');
 	overlay.classList.add('more-option-overlay');
@@ -315,7 +315,7 @@ export function onClickMoreOptionButton(buttonId) {
 		<div class="buttons report-btn js-report-button">Report</div>
 		<div class="buttons unfollow-btn js-unfollow-button">Unfollow</div>
 		<div class="buttons js-add-to-favorites">
-			${matchingData.isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+			${userData.isFavorited ? 'Remove from favorites' : 'Add to favorites'}
 		</div>
 		<div class="buttons">Go to post</div>
 		<div class="buttons js-share-to">Share to...</div>
@@ -647,7 +647,7 @@ export function onClickMoreOptionButton(buttonId) {
 					<div class="report-text">Thanks for your feedback</div>
 					<div class="report-text1">You'll get a notification once we review your report. Thanks for helping us keep Instagram a safe and supportive community.</div>
 				</div>
-				<div class="reason block-button js-block-user">Block ${matchingData.name} 
+				<div class="reason block-button js-block-user">Block ${userData.name} 
 					<svg aria-label="chevron" style="rotate: 90deg;" class="x1lliihq x1n2onr6 xb88cxz" fill="currentColor" height="17" role="img" viewBox="0 0 24 24" width="17"><title>chevron</title><path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path></svg>
 				</div>
 				<div class="reason">Learn more about Instagram's Community Guidelines
@@ -670,7 +670,7 @@ export function onClickMoreOptionButton(buttonId) {
 		moreOptionsContainer.innerHTML = `
 			<div class="block-container">
 				<div class="block-texts">
-					<div>Block ${matchingData.name}?</div>
+					<div>Block ${userData.name}?</div>
 					<div>They won't be able to find your profile, posts, or story on Instagram. Instagram won't let them know you blocked them.</div>
 				</div>
 				<button class="block-btn js-block-button">Block</button>
@@ -679,8 +679,7 @@ export function onClickMoreOptionButton(buttonId) {
 		`;
 
 		document.querySelector('.js-block-button').addEventListener('click', () => {
-			removeFromData(id);
-			hideContainer();
+			removeUsersData(userId);
 			loadPage();
 		});
 
@@ -699,17 +698,16 @@ export function onClickMoreOptionButton(buttonId) {
 		moreOptionsContainer.innerHTML = `
 			<div class="unfollow-container">
 				<div class="unfollow-profile">
-					<img src="${matchingData.profile}">
+					<img src="${userData.profile}">
 				</div>
-				<div class="unfollow-name">Unfollow @${matchingData.name}?</div>
+				<div class="unfollow-name">Unfollow @${userData.name}?</div>
 				<div class="unfollow-button js-confirm-unfollow">Unfollow</div>
 				<div class="unfollow-cancel js-unfollow-cancel">Cancel</div>
 			</div>
 		`;
 
 		document.querySelector('.js-confirm-unfollow').addEventListener('click', () => {
-			removeFromData(id);
-			hideContainer();
+			removeUsersData(userId);
 			loadPage();
 		});
 
@@ -719,10 +717,10 @@ export function onClickMoreOptionButton(buttonId) {
 	});
 
 	document.querySelector('.js-add-to-favorites').addEventListener('click', () => {
-		if (matchingData.isFavorited) {
-			matchingData.isFavorited = false;
+		if (userData.isFavorited) {
+			userData.isFavorited = false;
 		} else {
-			matchingData.isFavorited = true;
+			userData.isFavorited = true;
 		}
 		loadPage();
 	});
@@ -787,11 +785,11 @@ export function onClickMoreOptionButton(buttonId) {
 				<div class="about-header">About this account</div>
 				<div class="about-details-container">
 					<div class="detail-profile">
-						<img src="${matchingData.profile}">
+						<img src="${userData.profile}">
 					</div>
-					<div class="detail-name">${matchingData.name}
+					<div class="detail-name">${userData.name}
 						<div>
-							${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+							${userData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 						</div>
 					</div>
 					<div class="detail-texts">
@@ -802,18 +800,18 @@ export function onClickMoreOptionButton(buttonId) {
 						<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yy/r/nJ9gMnn51pn.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
 							<div>
 								<div>Date joined</div>
-								<div class="detail-date">${matchingData.dateJoined}</div>
+								<div class="detail-date">${userData.dateJoined}</div>
 							</div>
 					</div>
 					<div class="detail-acc-basedin">
 						<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/y_/r/2GgQWB_xn93.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
 							<div>
 								<div>Account based in</div>
-								<div class="detail-place">${matchingData.accountBasedIn}</div>
+								<div class="detail-place">${userData.accountBasedIn}</div>
 							</div>
 					</div>
 					${
-						matchingData.isVerified ? `
+						userData.isVerified ? `
 							<div class="detail-verified-container">
 								<div class="detail-verified">
 									<div data-bloks-name="ig.components.Icon" class="wbloks_1" style="mask-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yO/r/eGZ3v27WSRx.png&quot;); mask-size: contain; background-color: rgb(250, 250, 250); flex-shrink: 0; height: 24px; width: 24px;"></div>
@@ -1114,7 +1112,8 @@ export function viewCommentSection(button) {
 	overlay.classList.add('comment-overlay');
 
 	const container = document.querySelector('.js-videos-images');
-	const {id} = button.dataset;
+	const {id, userId} = button.dataset;
+	const usersData = getUsersData(userId);
 	let matchingData = getMatchingData(id);
 	matchingData.index = 0;
 
@@ -1125,33 +1124,33 @@ export function viewCommentSection(button) {
 		<div class="comment-right-section">
 			<div class="comment-header">
 				<div class="comment-profile js-comment-profile">
-					<img src="${matchingData.profile}">
+					<img src="${usersData.profile}">
 					<div class="user-profile-tooltip js-profile-tooltip">
 						<div class="profile-tooltip-container">
 							<div class="profile-tooltip">
-								<img src="${matchingData.profile}">
+								<img src="${usersData.profile}">
 							</div>
 							<div>
-								<div class="tooltip-name">${matchingData.name}
+								<div class="tooltip-name">${usersData.name}
 									<div>
-										${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+										${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 									</div>
 								</div>
-								<div class="tooltip-sub-name">${matchingData.userName}</div>
+								<div class="tooltip-sub-name">${usersData.userName}</div>
 							</div>
 						</div>
 
 						<div class="tooltip-pff">
 							<div>
-								<div class="tooltip-post-count">${matchingData.postCount.toLocaleString()}</div>
+								<div class="tooltip-post-count">${usersData.postCount.toLocaleString()}</div>
 								<div>posts</div>
 							</div>
 							<div>
-								<div>${matchingData.followers}</div>
+								<div>${usersData.followers}</div>
 								<div>followers</div>
 							</div>
 							<div>
-								<div>${matchingData.following}</div>
+								<div>${usersData.following}</div>
 								<div>following</div>
 							</div>
 						</div>
@@ -1170,36 +1169,36 @@ export function viewCommentSection(button) {
 					</div>
 				</div>
 				<div class="comment-username-con js-cname-con">
-					<div class="comment-username">${matchingData.name}</div>
+					<div class="comment-username">${usersData.name}</div>
 					<div class="verified-container">
-						${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+						${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 					</div>
 					<div class="video-username-tooltip js-username-tooltip">
 						<div class="profile-tooltip-container">
 							<div class="profile-tooltip">
-								<img src="${matchingData.profile}">
+								<img src="${usersData.profile}">
 							</div>
 							<div>
-								<div class="tooltip-name">${matchingData.name}
+								<div class="tooltip-name">${usersData.name}
 									<div>
-										${matchingData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
+										${usersData.isVerified ? '<svg aria-label="Verified" class="x1lliihq x1n2onr6" fill="rgb(0, 149, 246)" height="12" role="img" viewBox="0 0 40 40" width="12"><title>Verified</title><path d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z" fill-rule="evenodd"></path></svg>' : ''}
 									</div>
 								</div>
-								<div class="tooltip-sub-name">${matchingData.userName}</div>
+								<div class="tooltip-sub-name">${usersData.userName}</div>
 							</div>
 						</div>
 
 						<div class="tooltip-pff">
 							<div>
-								<div class="tooltip-post-count">${matchingData.postCount.toLocaleString()}</div>
+								<div class="tooltip-post-count">${usersData.postCount.toLocaleString()}</div>
 								<div>posts</div>
 							</div>
 							<div>
-								<div>${matchingData.followers}</div>
+								<div>${usersData.followers}</div>
 								<div>followers</div>
 							</div>
 							<div>
-								<div>${matchingData.following}</div>
+								<div>${usersData.following}</div>
 								<div>following</div>
 							</div>
 						</div>
@@ -1217,8 +1216,11 @@ export function viewCommentSection(button) {
 						</div>
 					</div>
 				</div>
+				<div class="js-favorited-container-${matchingData.id}">
+						${usersData.isFavorited ? '<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>' : ''}
+					</div>
 				<div>
-					<svg aria-label="More options" data-id="${matchingData.id}" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-user-id="${usersData.id}" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 			</div>
 			<div class="comments">
@@ -1409,8 +1411,8 @@ export function viewCommentSection(button) {
 
 	// more option button
 	moreOptionBtn.addEventListener('click', () => {
-		const {id} = moreOptionBtn.dataset;
-		onClickMoreOptionButton(id);
+		const {userId} = moreOptionBtn.dataset;
+		onClickMoreOptionButton(userId);
 	});
 
 	// like count
