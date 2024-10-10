@@ -1,185 +1,36 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>showModal Example</title>
-	<style>
-		/* Overlay */
-		.modal-overlay {
-			display: none; /* Hidden by default */
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1000; /* Ensure it appears above other elements */
-		}
-
-		/* Modal Box */
-		.modal {
-			background-color: white;
-			padding: 20px;
-			border-radius: 8px;
-			width: 300px;
-			max-width: 90%;
-			text-align: center;
-			box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-			animation: fadeIn 0.3s ease-out;
-		}
-
-		/* Modal Header */
-		.modal h2 {
-			margin-bottom: 15px;
-			font-size: 20px;
-		}
-
-		/* List of sharing options */
-		.modal ul {
-			list-style-type: none;
-			padding: 0;
-		}
-
-		.modal ul li {
-			margin-bottom: 10px;
-		}
-
-		.modal ul li a {
-			text-decoration: none;
-			color: #007bff;
-			font-weight: bold;
-		}
-
-		.modal button {
-			margin-top: 10px;
-			padding: 8px 16px;
-			background-color: #007bff;
-			color: white;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-
-		.modal button:hover {
-			background-color: #0056b3;
-		}
-
-		/* Fade in animation for the modal */
-		@keyframes fadeIn {
-			from {
-				opacity: 0;
-				transform: scale(0.9);
-			}
-			to {
-				opacity: 1;
-				transform: scale(1);
-			}
-		}
-
-	</style>
-</head>
-<body>
- 
-<button id="openDialog">Open Modal</button>
-
-<dialog id="myDialog">
-  <p>This is a modal dialog</p>
-  <button id="closeDialog">Close</button>
-</dialog> 
-<button id="shareButton">Share</button>
-
-<div id="modalOverlay" class="modal-overlay">
-  <div id="shareModal" class="modal">
-    <h2>Share this post</h2>
-    <ul>
-      <li><a href="#">Share to Facebook</a></li>
-      <li><a href="#">Share to Twitter</a></li>
-      <li><a href="#">Copy Link</a></li>
-    </ul>
-    <button id="closeModal">Close</button>
-  </div>
-</div>
-
-
-<script>
-  // const dialog = document.getElementById('myDialog');
-  // const openButton = document.getElementById('openDialog');
-  // const closeButton = document.getElementById('closeDialog');
-
-  // openButton.addEventListener('click', () => {
-  //   dialog.showModal(); // This opens the dialog as a modal
-  // });
-
-  // closeButton.addEventListener('click', () => {
-  //   dialog.close(); // This closes the dialog
-  // });
-
-	const shareButton = document.getElementById('shareButton');
-const modalOverlay = document.getElementById('modalOverlay');
-const closeModal = document.getElementById('closeModal');
-
-// Open the modal when the share button is clicked
-shareButton.addEventListener('click', () => {
-  modalOverlay.style.display = 'flex'; // Show the overlay and modal
-});
-
-// Close the modal when the close button is clicked
-closeModal.addEventListener('click', () => {
-  modalOverlay.style.display = 'none'; // Hide the overlay and modal
-});
-
-// Close the modal when clicking outside the modal content
-window.addEventListener('click', (event) => {
-  if (event.target === modalOverlay) {
-    modalOverlay.style.display = 'none';
-  }
-});
-
-</script>
-
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Facebook Share Example</title>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : 'YOUR_APP_ID',  // Replace with your App ID
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v12.0'
-      });
-    };
-
-    function shareImage() {
-      FB.ui({
-        method: 'share',
-        href: 'https://example.com/your-link',
-        quote: 'Check out this awesome content!'
-      }, function(response) {
-        if (response && !response.error_message) {
-          alert('Sharing successful!');
-        } else {
-          alert('Error while sharing.');
-        }
-      });
-    }
-		
-
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Display Image</title>
 </head>
 <body>
+    <input type="file"  id="imageInput" accept="image/*">
+    <img id="displayImage" alt="Uploaded Image" style="display:none; max-width: 300px; margin-top: 10px;">
 
-  <button onclick="shareImage()">Share on Facebook</button>
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const displayImage = document.getElementById('displayImage');
 
+				document.querySelector('button').addEventListener('click', (event) => {
+					document.querySelector('button').addEventListener('change', () => {
+						console.log('sdfa')
+					})
+				})
+
+        imageInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+						console.log( event)
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    displayImage.src = e.target.result;
+                    displayImage.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
 </body>
 </html>

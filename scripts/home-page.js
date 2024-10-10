@@ -2,7 +2,6 @@ import { fypData } from "../data/fyp-data.js";
 import { getUsersData } from "../data/users-data.js";
 import { 
 	videoAutoPlay,
-	checkPost,
 	imageSlider,
 	bouncyEffect,
 	viewCommentSection,
@@ -14,6 +13,7 @@ import {
 	onClickEmojiButton,
 	onClickPostButton,
 	onClickSoundButton,
+	onClickFavoritedIcon,
 	likeCountFunction,
 	tooltipMouseover,
 	tooltipMouseleave,
@@ -129,10 +129,10 @@ export function loadPage() {
 						<div>&#8226;</div>
 						<time class="time">${data.timePosted}</time>
 					</div>
-					<div class="js-favorited-container-${data.id}">
+					<div class="js-favorited js-favorited-container-${data.id}">
 						${usersData.isFavorited ? '<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>' : ''}
 					</div>
-					<svg aria-label="More options" data-user-id="${usersData.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-id="${data.id}" data-user-id="${usersData.id}" class="js-more-options" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 
 				<div class="video-image js-video-image">
@@ -144,11 +144,11 @@ export function loadPage() {
 						${handleLikeIcon(data.id)}
 					</button>
 
-					<button class="comment-button js-comment-button" data-id="${data.id}" data-user-id="${data.usersId}">
+					<button class="comment-button js-comment-button comment-${data.id}" data-id="${data.id}" data-user-id="${data.usersId}">
 						<svg aria-label="Comment" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Comment</title><path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke-linejoin="round" stroke-width="2"></path></svg>
 					</button>
 
-					<button class="share-button js-share-button">
+					<button class="share-button js-share-button" data-id="${data.id}">
 						<svg aria-label="Share" height="24" role="img" viewBox="0 0 24 24" width="24"><title>Share</title><line fill="none" stroke-linejoin="round" stroke-width="2" x1="22" x2="9.218" y1="3" y2="10.083"></line><polygon fill="none" points="11.698 20.334 22 3.001 2 3.001 9.218 10.084 11.698 20.334" stroke-linejoin="round" stroke-width="2"></polygon></svg>
 					</button>
 
@@ -181,6 +181,48 @@ export function loadPage() {
 
 	videoAutoPlay();
 	onClickSoundButton();
+
+	function checkPost(data) {
+		if (data.typePost === 'image') {
+			return `
+				<img src="${data.post}" data-id="${data.id}">
+				<div class="image-like js-image-like">
+					<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				</div>
+			`;
+		}
+		if (data.typePost === 'video') {
+			return `
+				<video src="${data.post}" data-id="${data.id}" class="js-video-${data.id}"></video>
+				<div class="image-like js-image-like">
+					<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+				</div>
+				<button class="sound-button">
+					<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
+				</button>
+			`;
+		}
+		if (data.typePost === 'images') {
+			let posts = '';
+			data.post.forEach(post => {
+				posts += `
+					<div class="img-con">
+						<img data-id="${data.id}" src="${post}">
+						<div class="image-like js-image-like">
+							<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
+						</div>
+					</div>
+				`;
+			});
+			return `
+				<div class="images-videos">
+					${posts}
+				</div>
+				<button data-id="${data.id}" class="prev-button inactive">&#10094;</button>
+				<button data-id="${data.id}" class="next-button">&#10095;</button>
+			`;
+		}
+	}
 	
 	// image slider
 	document.querySelectorAll('.prev-button').forEach((prev) => {
@@ -242,7 +284,8 @@ export function loadPage() {
 	// share button
 	document.querySelectorAll('.js-share-button').forEach(button => {
 		button.addEventListener('click', () => {
-			onClickShareButton();
+			const {id} = button.dataset;
+			onClickShareButton(id);
 		});
 	});
 
@@ -303,6 +346,12 @@ export function loadPage() {
 			const {id} = button.dataset;
 			const input = document.querySelector(`.js-comment-input-${id}`);
 			onClickEmojiButton(button, input);
+		});
+	});
+
+	document.querySelectorAll('.js-favorited').forEach(ver => {
+		ver.addEventListener('click', () => {
+			onClickFavoritedIcon();
 		});
 	});
 

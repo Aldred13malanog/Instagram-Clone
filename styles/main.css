@@ -3,6 +3,7 @@ main {
 	grid-template-columns: 630px 1fr;
 	padding-left: 45px;
 	padding-right: 45px;
+	margin-left: 245px;
 }
 
 /* main left section header */
@@ -89,11 +90,57 @@ header {
 	font-weight: 400;
 	font-size: 14px;
 }
+
+.favorited-container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0%);
+	transition: transform .15s;
+	background-color: #272727;
+	z-index: 13;
+	display: flex;
+	flex-direction: column;
+	row-gap: 18px;
+	align-items: center;
+	border-radius: 12px;
+	font-size: 14px;
+	overflow: hidden;
+	width: 400px;
+	max-height: 92%;
+}
+.favorited-overlay {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;	
+	background-color: #000000ad;
+	z-index: 12;
+}
+.ftext {
+	font-size: 24px;
+	font-weight: 500;
+}
+.ftext1 {
+	width: 290px;
+	font-weight: 200;
+	font-size: 14px;
+	text-align: center;
+}
+.fok {
+	width: 100%;
+	border-top: 1px solid #7373733b;
+	text-align: center;
+	padding: 14px;
+	cursor: pointer;
+}
+
 .more-option-container {
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -50%) scale(100%);
+	transform: translate(-50%, -50%) scale(0%);
 	transition: transform .15s;
 	background-color: #272727;
 	z-index: 13;
@@ -1367,4 +1414,17 @@ header {
 .suggested-name:hover + .suggested-profile-name-tooltip	{
 	opacity: 1;
 	transition: all .15s 300ms;
+}
+
+.copied-container {
+	z-index: 15;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #444444;
+	padding: 16px;
+	font-size: 15px;
+	transform: translateY(100%);
+	transition: all .35s;
 }

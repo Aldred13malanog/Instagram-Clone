@@ -6,49 +6,6 @@ import { getUsersData, removeUsersData } from "../../data/users-data.js";
 
 // handling functions
 
-// check post function
-export function checkPost(data) {
-	if (data.typePost === 'image') {
-		return `		
-			<img src="${data.post}" data-id="${data.id}">
-			<div class="image-like js-image-like">
-				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-			</div>
-		`;
-	}
-	if (data.typePost === 'video') {
-		return `
-			<video src="${data.post}" data-id="${data.id}" class="js-video-${data.id}"></video>
-			<div class="image-like js-image-like">
-				<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-			</div>
-			<button class="sound-button">
-				<svg class="soundup-icon" xmlns="http://www.w3.org/2000/svg" height="18px" viewBox="0 -960 960 960" width="18px" fill="#e8eaed"><title>Audio is playing</title><path d="M560-131v-82q90-26 145-100t55-168q0-94-55-168T560-749v-82q124 28 202 125.5T840-481q0 127-78 224.5T560-131ZM120-360v-240h160l200-200v640L280-360H120Zm440 40v-322q47 22 73.5 66t26.5 96q0 51-26.5 94.5T560-320Z"/></svg>
-			</button>
-		`;
-	}
-	if (data.typePost === 'images') {
-		let posts = '';
-		data.post.forEach(post => {
-			posts += `
-				<div class="img-con">
-					<img data-id="${data.id}" src="${post}">
-					<div class="image-like js-image-like">
-						<svg aria-label="Unlike" fill="rgb(255, 48, 64)" role="img" viewBox="0 0 48 48"><title>Unlike</title><path d="M34.6 3.1c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5s1.1-.2 1.6-.5c1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path></svg>
-					</div>
-				</div>
-			`;
-		});
-		return `
-			<div class="images-videos">
-				${posts}
-			</div>
-			<button data-id="${data.id}" class="prev-button inactive">&#10094;</button>
-			<button data-id="${data.id}" class="next-button">&#10095;</button>
-		`;
-	}
-}
-
 // video autoplay function
 export function videoAutoPlay() {
 	const observer = new IntersectionObserver((entries) => {
@@ -146,11 +103,11 @@ export function handleLikeIcon(id) {
 
 // when double click the post the like icon appear and increases the like count of the post
 export function onDlClickPost(elem, likeCountElem, likeButton) {
-	const parentElem = elem.parentElement; 
+	const parentElem = elem.parentElement;
 	const imglike = parentElem.children[1];
 	const {id} = elem.dataset;
-	let matchingData = getMatchingData(id);
-	let matchingLikes = getMatchingLikedData(id);
+	const matchingData = getMatchingData(id);
+	const matchingLikes = getMatchingLikedData(id);
 
 	matchingData.isLiked = true;
 	likeButton.innerHTML = handleLikeIcon(id);
@@ -201,69 +158,68 @@ export function onClickLikeButton(button, likeCount) {
 	likeCount.innerHTML = `${matchingData.likeCount.toLocaleString()} likes`
 }
 
-export function onClickShareButton() {
+export function onClickShareButton(id) {
 	const shareContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
+	const matchingData = getMatchingData(id);
 
 	shareContainer.classList.add('share-container');
 	overlay.classList.add('share-overlay');
 	shareContainer.innerHTML = `
 		<div class="share-header">
 			<div>Share</div>
-			<!-- <button class="sclose-button"> -->
 			<svg aria-label="Close" class="sclose-icon" fill="currentColor" height="18" role="img" viewBox="0 0 24 24" width="18"><title>Close</title><polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line></svg>
-			<!-- </button> -->
 		</div>
 		<div class="share-search-bar">
 			<!-- <svg aria-label="Search" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Search</title><path d="M19 10.5A8.5 8.5 0 1 1 10.5 2a8.5 8.5 0 0 1 8.5 8.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="16.511" x2="22" y1="16.511" y2="22"></line></svg> -->
 			<input type="text" placeholder="Search">
 		</div>
 		<div class="share-links">
-			<div class="copy-link">
-				<div class="copy-link-icon">
+			<div class="copy-link js-copy-link">
+				<div class="copy-link-icon" title="Copy link">
 					<svg aria-label="Copy link" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 24 24" width="20"><title>Copy link</title><path d="m9.726 5.123 1.228-1.228a6.47 6.47 0 0 1 9.15 9.152l-1.227 1.227m-4.603 4.603-1.228 1.228a6.47 6.47 0 0 1-9.15-9.152l1.227-1.227" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="8.471" x2="15.529" y1="15.529" y2="8.471"></line></svg>
 				</div>
 				<div>Copy link</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-fb-link">
+				<div class="social-link-icon" title="Facebook">
 					<svg aria-label="Facebook" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 24 24" width="20"><title>Facebook</title><circle cx="12" cy="12" fill="none" r="11.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle><path d="M16.671 15.469 17.203 12h-3.328V9.749a1.734 1.734 0 0 1 1.956-1.874h1.513V4.922a18.452 18.452 0 0 0-2.686-.234c-2.741 0-4.533 1.66-4.533 4.668V12H7.078v3.469h3.047v7.885a12.125 12.125 0 0 0 3.75 0V15.47Z" fill-rule="evenodd"></path></svg>
 				</div>
 				<div>Facebook</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-messenger-link">
+				<div class="social-link-icon" title="Messenger">
 					<svg aria-label="Messenger" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 24 24" width="20"><title>Messenger</title><path d="M12.003 2.001a9.705 9.705 0 1 1 0 19.4 10.876 10.876 0 0 1-2.895-.384.798.798 0 0 0-.533.04l-1.984.876a.801.801 0 0 1-1.123-.708l-.054-1.78a.806.806 0 0 0-.27-.569 9.49 9.49 0 0 1-3.14-7.175 9.65 9.65 0 0 1 10-9.7Z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.739"></path><path d="M17.79 10.132a.659.659 0 0 0-.962-.873l-2.556 2.05a.63.63 0 0 1-.758.002L11.06 9.47a1.576 1.576 0 0 0-2.277.42l-2.567 3.98a.659.659 0 0 0 .961.875l2.556-2.049a.63.63 0 0 1 .759-.002l2.452 1.84a1.576 1.576 0 0 0 2.278-.42Z" fill-rule="evenodd"></path></svg>
 				</div>
 				<div>Messenger</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-social-link">
+				<div class="social-link-icon" title="WhatsApp">
 					<svg aria-label="WhatsApp" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 31 31" width="20"><title>WhatsApp</title><path clip-rule="evenodd" d="M15.662.263A15.166 15.166 0 0 1 26.06 4.48a15.048 15.048 0 0 1 4.653 10.381 15.164 15.164 0 0 1-3.77 10.568 15.063 15.063 0 0 1-11.37 5.138c-2.273 0-4.526-.513-6.567-1.495l-7.93 1.764a.116.116 0 0 1-.138-.13l1.34-8.019a15.181 15.181 0 0 1-1.85-6.837A15.052 15.052 0 0 1 4.555 5.012 15.061 15.061 0 0 1 15.586.263h.075Zm-.085 2.629c-.12 0-.242.002-.364.005-6.902.198-12.356 5.975-12.158 12.877.06 2.107.654 4.176 1.717 5.982l.231.392-.993 5.441 5.385-1.271.407.212a12.527 12.527 0 0 0 6.13 1.402c6.901-.198 12.356-5.974 12.158-12.876-.195-6.78-5.773-12.164-12.513-12.164ZM10.34 8.095c.253.008.507.015.728.032.271.019.57.04.836.683.315.763.996 2.668 1.085 2.86.09.194.146.418.011.668-.134.25-.203.407-.4.623-.196.216-.414.484-.59.649-.197.184-.4.384-.19.771.21.388.934 1.657 2.033 2.7 1.413 1.34 2.546 1.783 2.996 1.993a.998.998 0 0 0 .415.112c.162 0 .292-.068.415-.193.237-.24.95-1.071 1.25-1.454.156-.2.299-.271.453-.271.123 0 .255.045.408.107.345.137 2.185 1.115 2.56 1.317.374.202.625.305.715.466.09.162.066.924-.278 1.803-.344.878-1.922 1.688-2.621 1.73-.205.012-.406.04-.668.04-.634 0-1.621-.166-3.865-1.133-3.817-1.643-6.136-5.683-6.318-5.942-.182-.26-1.489-2.111-1.432-3.983C7.94 9.8 8.951 8.91 9.311 8.54c.345-.355.74-.445.996-.445h.032Z" fill="currentColor" fill-rule="evenodd"></path></svg>
 				</div>
 				<div>WhatsApp</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-social-link">
+				<div class="social-link-icon" title="Email">
 					<svg aria-label="Email" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 24 24" width="20"><title>Email</title><rect fill="none" height="17.273" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" x="2" y="3.364"></rect><polyline fill="none" points="2 7.155 12.002 13.81 22 7.157" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
 				</div>
 				<div>Email</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-social-link">
+				<div class="social-link-icon" title="Threads">
 					<svg aria-label="Threads" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="18" role="img" viewBox="0 0 192 192" width="18"><title>Threads</title><path class="xcslo1z" d="M141.537 88.9883C140.71 88.5919 139.87 88.2104 139.019 87.8451C137.537 60.5382 122.616 44.905 97.5619 44.745C97.4484 44.7443 97.3355 44.7443 97.222 44.7443C82.2364 44.7443 69.7731 51.1409 62.102 62.7807L75.881 72.2328C81.6116 63.5383 90.6052 61.6848 97.2286 61.6848C97.3051 61.6848 97.3819 61.6848 97.4576 61.6855C105.707 61.7381 111.932 64.1366 115.961 68.814C118.893 72.2193 120.854 76.925 121.825 82.8638C114.511 81.6207 106.601 81.2385 98.145 81.7233C74.3247 83.0954 59.0111 96.9879 60.0396 116.292C60.5615 126.084 65.4397 134.508 73.775 140.011C80.8224 144.663 89.899 146.938 99.3323 146.423C111.79 145.74 121.563 140.987 128.381 132.296C133.559 125.696 136.834 117.143 138.28 106.366C144.217 109.949 148.617 114.664 151.047 120.332C155.179 129.967 155.42 145.8 142.501 158.708C131.182 170.016 117.576 174.908 97.0135 175.059C74.2042 174.89 56.9538 167.575 45.7381 153.317C35.2355 139.966 29.8077 120.682 29.6052 96C29.8077 71.3178 35.2355 52.0336 45.7381 38.6827C56.9538 24.4249 74.2039 17.11 97.0132 16.9405C119.988 17.1113 137.539 24.4614 149.184 38.788C154.894 45.8136 159.199 54.6488 162.037 64.9503L178.184 60.6422C174.744 47.9622 169.331 37.0357 161.965 27.974C147.036 9.60668 125.202 0.195148 97.0695 0H96.9569C68.8816 0.19447 47.2921 9.6418 32.7883 28.0793C19.8819 44.4864 13.2244 67.3157 13.0007 95.9325L13 96L13.0007 96.0675C13.2244 124.684 19.8819 147.514 32.7883 163.921C47.2921 182.358 68.8816 191.806 96.9569 192H97.0695C122.03 191.827 139.624 185.292 154.118 170.811C173.081 151.866 172.51 128.119 166.26 113.541C161.776 103.087 153.227 94.5962 141.537 88.9883ZM98.4405 129.507C88.0005 130.095 77.1544 125.409 76.6196 115.372C76.2232 107.93 81.9158 99.626 99.0812 98.6368C101.047 98.5234 102.976 98.468 104.871 98.468C111.106 98.468 116.939 99.0737 122.242 100.233C120.264 124.935 108.662 128.946 98.4405 129.507Z"></path></svg>
 				</div>
 				<div>Threads</div>
 			</div>
-			<div class="social-link">
-				<div class="social-link-icon">
+			<div class="social-link js-social-link">
+				<div class="social-link-icon" title="Twitter">
 					<svg data-name="Icons" viewBox="0 0 24 24" width="20px" height="20px" fill="currentColor" class="x1qx5ct2 xw4jnvo" color="rgb(var(--ig-primary-text))"><path d="m21.8 20.4-7.28-9.706 6.323-7.025a1 1 0 0 0-1.487-1.338l-6.058 6.733L8.3 2.4a.999.999 0 0 0-.8-.4H3a1 1 0 0 0-.8 1.6l7.28 9.706-6.323 7.025a1 1 0 0 0 1.487 1.338l6.058-6.733L15.7 21.6c.189.252.486.4.8.4H21a1 1 0 0 0 .8-1.6zM17 20 5 4h2l12 16h-2z"></path></svg>
 				</div>
 				<div>X</div>
 			</div>
 			<div class="social-link">
-				<div class="social-link-icon">
+				<div class="social-link-icon" title="See all">
 					<svg aria-label="See all" class="x1lliihq x1n2onr6 x5n08af" fill="currentColor" height="20" role="img" viewBox="0 0 24 24" width="20"><title>See all</title><path d="M23.247 10.465H9.185a8.438 8.438 0 0 0-8.438 8.438v2.819" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path><polyline fill="none" points="15.06 2.278 23.247 10.465 15.06 18.653" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></polyline></svg>
 				</div>
 				<div>See all</div>
@@ -277,6 +233,34 @@ export function onClickShareButton() {
 	setTimeout(() => {
 		shareContainer.style.transform = 'translate(-50%, -50%) scale(100%)';
 	}, 150);
+
+	document.querySelector('.js-copy-link').addEventListener('click', () => {
+		const container = document.createElement('div');
+		container.classList.add('copied-container');
+
+		let link;
+		if (matchingData.typePost === 'images') {
+			link = matchingData.postLinks[matchingData.index];
+		} else {
+			link = matchingData.postLink;
+		}
+		navigator.clipboard.writeText(link);
+
+		container.innerHTML = `
+			<div>Link copied to the clipboard</div>
+		`;
+		document.body.appendChild(container);
+
+		setTimeout(() => {
+			container.style.transform = "translateY(0%)";
+		}, 150);
+		setTimeout(() => {
+			container.style.transform = "translateY(100%)";
+		}, 1150);
+		setTimeout(() => {
+			document.body.removeChild(container);
+		}, 2210);
+	});
 
 	overlay.addEventListener('click', () => {
 		container.removeChild(shareContainer);
@@ -302,11 +286,12 @@ export function onClickSaveButton(button) {
 	}
 }
 
-export function onClickMoreOptionButton(userId) {
+export function onClickMoreOptionButton(userId, id) {
 	const moreOptionsContainer = document.createElement('div');
 	const overlay = document.createElement('div');
 	const container = document.querySelector('.js-videos-images');
 	const userData = getUsersData(userId);
+	const matchingData = getMatchingData(id);
 
 	moreOptionsContainer.classList.add('more-option-container');
 	overlay.classList.add('more-option-overlay');
@@ -717,10 +702,18 @@ export function onClickMoreOptionButton(userId) {
 	});
 
 	document.querySelector('.js-add-to-favorites').addEventListener('click', () => {
+		const commentContainer = document.querySelector('.comment-container');
 		if (userData.isFavorited) {
 			userData.isFavorited = false;
 		} else {
 			userData.isFavorited = true;
+		}
+		if (commentContainer) {
+			const commentButton = document.querySelector(`.comment-${matchingData.id}`);
+			container.removeChild(commentContainer);
+			viewCommentSection(commentButton);
+			hideContainer();
+			return;
 		}
 		loadPage();
 	});
@@ -1035,6 +1028,38 @@ export function onClickSoundButton() {
 	});
 }
 
+export function onClickFavoritedIcon() {
+	const favContainer = document.createElement('div');
+	const overlay = document.createElement('div');
+	const container = document.querySelector('.js-videos-images')
+	favContainer.classList.add('favorited-container');
+	overlay.classList.add('favorited-overlay');
+
+	favContainer.innerHTML = `
+		<i data-visualcompletion="css-img" aria-label="Favorites Image" class="" role="img" style="background-image: url(&quot;https://static.cdninstagram.com/rsrc.php/v3/yY/r/oCvaZ5i8BT7.png&quot;); background-position: 0px 0px; background-size: auto; width: 56px; height: 56px; background-repeat: no-repeat; display: inline-block; margin-top: 24px;"></i>
+		<div class="ftext">Favorites</div>
+		<div class="ftext1">New posts from your favorites will appear higher in feed.</div>
+		<div class="fok">OK</div>
+	`;
+
+	container.appendChild(favContainer);
+	container.appendChild(overlay);
+
+	setTimeout(() => {
+		favContainer.style.transform = 'translate(-50%, -50%) scale(100%)';
+	}, 150);
+
+	overlay.addEventListener('click', () => {
+		container.removeChild(favContainer);
+		container.removeChild(overlay);
+	});
+
+	document.querySelector('.fok').addEventListener('click', () => {
+		container.removeChild(favContainer);
+		container.removeChild(overlay);
+	});
+}
+
 // image slider
 export function imageSlider(button) {
 	const imgId = button.dataset.id;
@@ -1114,7 +1139,7 @@ export function viewCommentSection(button) {
 	const container = document.querySelector('.js-videos-images');
 	const {id, userId} = button.dataset;
 	const usersData = getUsersData(userId);
-	let matchingData = getMatchingData(id);
+	const matchingData = getMatchingData(id);
 	matchingData.index = 0;
 
 	elem.innerHTML = `
@@ -1216,11 +1241,11 @@ export function viewCommentSection(button) {
 						</div>
 					</div>
 				</div>
-				<div class="js-favorited-container-${matchingData.id}">
+				<div class="js-cfavorited js-favorited-container-${matchingData.id}">
 						${usersData.isFavorited ? '<svg aria-label="Favorited" fill="url(#favorite_icon_gradient)" height="16" role="img" viewBox="0 0 24 24" width="16"><defs><linearGradient gradientUnits="userSpaceOnUse" id="favorite_icon_gradient" x1="11.0831" x2="20.5113" y1="20.7141" y2="4.71407"><stop stop-color="#FDCB5C"></stop><stop offset="1" stop-color="#D10869"></stop></linearGradient></defs><path d="M18.18 22.51a.99.99 0 01-.513-.142L12 18.975l-5.667 3.393a1 1 0 01-1.492-1.062l1.37-6.544-4.876-4.347a.999.999 0 01.536-1.737l6.554-.855 2.668-5.755a1 1 0 011.814 0l2.668 5.755 6.554.855a.999.999 0 01.536 1.737l-4.876 4.347 1.37 6.544a1 1 0 01-.978 1.205z"></path></svg>' : ''}
 					</div>
 				<div>
-					<svg aria-label="More options" data-user-id="${usersData.id}" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
+					<svg aria-label="More options" data-id=${matchingData.id} data-user-id="${usersData.id}" class="js-cmore-option-button" fill="currentColor" height="24" role="img" viewBox="0 0 24 24" width="24"><title>More options</title><circle cx="12" cy="12" r="1.5"></circle><circle cx="6" cy="12" r="1.5"></circle><circle cx="18" cy="12" r="1.5"></circle></svg>
 				</div>
 			</div>
 			<div class="comments">
@@ -1265,6 +1290,8 @@ export function viewCommentSection(button) {
 	setTimeout(() => {
 		elem.style.transform = 'translate(-50%, -50%) scale(100%)';
 	}, 100);
+
+	onClickSoundButton();
 
 	function post(typePost) {
 		if (typePost === 'image') {
@@ -1349,8 +1376,6 @@ export function viewCommentSection(button) {
 		return commentsHtml;
 	}
 
-	onClickSoundButton();
-
 	// comment section functions/interactions
 	const likeBtn = document.querySelector('.js-clike-button');
 	const commentBtn = document.querySelector('.js-ccomment-button');
@@ -1389,7 +1414,7 @@ export function viewCommentSection(button) {
 
 	// share button
 	shareBtn.addEventListener('click', () => {
-		onClickShareButton();
+		onClickShareButton(id);
 	});
 
 	// save button
@@ -1407,12 +1432,12 @@ export function viewCommentSection(button) {
 			onClickPostButton(postBtn, input);
 			document.querySelector('.comments').innerHTML = showComments(id);
 		}
-	})
+	});
 
 	// more option button
 	moreOptionBtn.addEventListener('click', () => {
-		const {userId} = moreOptionBtn.dataset;
-		onClickMoreOptionButton(userId);
+		const {userId, id} = moreOptionBtn.dataset;
+		onClickMoreOptionButton(userId, id);
 	});
 
 	// like count
@@ -1440,6 +1465,10 @@ export function viewCommentSection(button) {
 			const likeBtn = document.querySelector(`.js-clike-button`);
 			onDlClickPost(vid, likeCount, likeBtn);
 		});
+	});
+
+	document.querySelector('.js-cfavorited').addEventListener('click', () => {
+		onClickFavoritedIcon();
 	});
 
 	// tooltip function
