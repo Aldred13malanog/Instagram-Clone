@@ -310,16 +310,11 @@ nav .profile-picture {
 	left: 50%;
 	transform: translate(-50%, -50%) scale(0%);
 	z-index: 10;
-	width: 420px;
 	background-color: #272727;
-	height: 72%;
+	/* height: 72%; */
 	border-radius: 12px;
 	transition: all 0.15s ease-in-out;
-	pointer-events: none;
-}
-.create-post-popup.active {
-	transform: translate(-50%, -50%) scale(100%);
-	pointer-events: all;
+	/* pointer-events: none; */
 }
 .create-overlay {
 	position: fixed;
@@ -329,8 +324,8 @@ nav .profile-picture {
 	bottom: 0;
 	background-color: #000000ad;
 	z-index: 9;
-	opacity: 0;
-	pointer-events: none;
+	/* opacity: 0; */
+	/* pointer-events: none; */
 	transition: all 0.15s;
 	
 	& svg {
@@ -339,22 +334,44 @@ nav .profile-picture {
 		right: 18px;
 	}
 }
-.create-overlay.active {
+/* .create-overlay.active {
 	opacity: 1;
 	pointer-events: all;
-}
+} */
 .create-header {
-	text-align: center;
-	border-bottom: 1px solid #444444;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: .1px solid #444;
 	padding: 10px;
 	font-weight: 500;
+	background-color: #272727;
+	border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+
+	& div:last-child {
+		color: #0095F6;
+		cursor: pointer;
+		font-size: 14px;
+	}
 }
 .create-post-con {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	height: 100%;
-	padding-top: 120px;
+	justify-content: center;
+	overflow: hidden;
+	height: 445px;
+	border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	width: 420px;
+	position: relative;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	/* & .icon {
+		margin-top: 110px;
+	} */
 	
 	& div {
 		font-size: 20px;
@@ -362,7 +379,7 @@ nav .profile-picture {
 		margin-bottom: 18px;
 	}
 
-	& button {
+	& .button {
 		padding: 8px 18px;
 		background-color: #0095F6;
 		border: none;
@@ -370,9 +387,27 @@ nav .profile-picture {
 		color: white;
 		font-weight: 500;
 		cursor: pointer;
+		transition: .15s;
+		/* margin-bottom: 100px; */
+	}
+	& .button:hover {
+		background-color: #0094f6da;
+	}
+
+	& img {
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		object-fit: cover;
+		max-height: 445px;
+		width: 100%;
+		object-position: center;
+		/* cursor: grab; */
+		cursor: pointer;
+		position: absolute;
 	}
 }
-
 .more-option {
 	transition: none;
 }

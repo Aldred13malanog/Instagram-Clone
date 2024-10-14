@@ -6,31 +6,26 @@
     <title>Upload and Display Image</title>
 </head>
 <body>
-    <input type="file"  id="imageInput" accept="image/*">
+    <label for="imageInput">Select from computer</label>
+    <input type="file" hidden id="imageInput" accept="image/*">
     <img id="displayImage" alt="Uploaded Image" style="display:none; max-width: 300px; margin-top: 10px;">
 
     <script>
-        const imageInput = document.getElementById('imageInput');
-        const displayImage = document.getElementById('displayImage');
+      const imageInput = document.getElementById('imageInput');
+      const displayImage = document.getElementById('displayImage');
 
-				document.querySelector('button').addEventListener('click', (event) => {
-					document.querySelector('button').addEventListener('change', () => {
-						console.log('sdfa')
-					})
-				})
-
-        imageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-						console.log( event)
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    displayImage.src = e.target.result;
-                    displayImage.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+      imageInput.addEventListener('change', (event) => {
+          const file = event.target.files[0];
+          console.log( file,event)
+          if (file) {
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                  displayImage.src = e.target.result;
+                  displayImage.style.display = 'block';
+              };
+              reader.readAsDataURL(file);
+          }
+      });
     </script>
 </body>
 </html>
