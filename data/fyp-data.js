@@ -151,6 +151,20 @@ export let fypData = [{
 	isLiked: false,
 	likeCount: 4088,
 	commentCount: 9,
+}, {
+	id: '12', 
+	usersId: '4',
+	timePosted: 'October 14',
+	post: [
+		'videos/Snaptik.app_7343949051953466630.mp4',
+		'videos/Snaptik.app_7342079688350633221.mp4'
+	],
+	index: 0,
+	postLink: 'wala',
+	typePost: 'videos',
+	isLiked: false,
+	likeCount: 12,
+	commentCount: 9
 }]; 
 
 export function getMatchingData(id) {

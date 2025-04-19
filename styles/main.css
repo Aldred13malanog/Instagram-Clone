@@ -492,7 +492,7 @@ header {
 	/* width: 468px; */
 	transition: transform 0.2s ease;
 
-	& .img-con {
+	& .img-con, .vid-con {
 		width: 468px;
 		/* max-height: 565px; */
 		flex-shrink: 0;
@@ -632,8 +632,9 @@ header {
 	}
 }
 .comment-img-section {
-	width: max-content;
-	display: flex;
+	/* width: max-content; */
+	width: 500px;
+	/* max-height: 100%; */
 	overflow: hidden;
 	position: relative;
 
@@ -641,22 +642,25 @@ header {
 		width: 100%;
 		object-fit: contain;
 	}
+	& img {
+		width: 100%;
+		/* height: 100%; */
+		/* max-height: 574px; */
+		object-fit: contain;
+	}
 
 }
 .cimages {
 	display: flex;
-	width: 500px;
-	transition: all 0.25s;
+	/* width: 500px; */
+	transition: transform 0.25s;
 
 	& .cimage {
-		flex-shrink: 0;
-		width: 500px;
 		position: relative;
-	}
-
-	& img {
-		width: 100%;
-		object-fit: contain;
+		flex-shrink: 0;
+		/* width: max-content; */
+		width: 500px;
+		height: 574px;
 	}
 }
 .csound-button {
@@ -679,7 +683,7 @@ header {
 }
 
 .comment-right-section {
-	max-width: 500px;
+	/* max-width: 500px; */
 	width: 500px;
 	/* height: 100%;	 */
 	display: flex;

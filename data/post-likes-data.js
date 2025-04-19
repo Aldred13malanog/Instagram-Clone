@@ -73,6 +73,9 @@ export const peopleWhoLikeData = [{
 }, {
 	id: '11',
 	users: []
+}, {
+	id: '12',
+	users: []
 }];
 
 export function getMatchingLikedData(id) {

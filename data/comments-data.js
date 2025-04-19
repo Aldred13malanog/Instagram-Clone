@@ -76,6 +76,9 @@ export const commentsData = [{
 }, {
 	id: '11',
 	comments: []
+}, {
+	id: '12',
+	comments: []
 }];
 
 export function getMatchingCommentsData(id) {
